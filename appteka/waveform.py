@@ -132,6 +132,12 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         if main:
             self.main_plot = self.plots[key]
 
+    def remove_plot(self, key):
+        pass
+
+    def remove_plots(self, keys=None):
+        pass
+
     def update_data(self, key, t, x):
         if len(t) == 0:
             return
