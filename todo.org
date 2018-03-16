@@ -1,9 +1,10 @@
 * 0.1
 ** TODO [e] Add docs
-** TODO [t] Add waveform unit from elma
+** DONE [t] Add waveform unit from elma
 ** DONE [t] Add Qt GUI helpers unit from elma
 ** DONE [t] Add state machine unit from elma
 ** DONE [!t] Change the license in setup.py to LGPL
 ** DONE [t] Add glob.py with VERSION
 ** DONE [t] Add hgignore
 ** TODO [t] Add json config stuff
+** DONE [t] Add timestamps unit from elma
