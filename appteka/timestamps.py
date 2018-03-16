@@ -16,6 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import time
+import datetime
 
 def detect_fmt(s):
     """ Attempt top detect format of timestamp. """
