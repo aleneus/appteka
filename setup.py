@@ -21,9 +21,11 @@ import os
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
+from appteka.glob import * 
+
 setup(
     name="appteka",
-    version="0.0.2",
+    version=VERSION,
     description="All goods",
     author="Aleksandr Popov",
     author_email="aleneus@gmail.com",
