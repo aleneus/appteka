@@ -1,0 +1,4 @@
+* TODO [e] Add docs
+* TODO [t] Add waveform unit from elma
+* TODO [t] Add Qt GUI helpers unit from elma
+* TODO [t] Add state machine unit from elma
