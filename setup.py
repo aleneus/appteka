@@ -23,7 +23,7 @@ def read(fname):
 
 setup(
     name="appteka",
-    version="0.0.1",
+    version="0.0.2",
     description="All goods",
     author="Aleksandr Popov",
     author_email="aleneus@gmail.com",
@@ -41,7 +41,7 @@ setup(
         "Environment :: Console",
         "Intended Audience :: Science/Research",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: Lesser GNU General Public License v3 (LGPLv3)",
+        "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
         "Operating System :: POSIX :: Linux",
         "Operating System :: Microsoft :: Windows",
         "Programming Language :: Python :: 3",
