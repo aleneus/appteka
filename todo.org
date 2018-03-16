@@ -1,5 +1,4 @@
-* 0.1
-** TODO [e] Add docs
+* 0.1.0
 ** DONE [t] Add waveform unit from elma
 ** DONE [t] Add Qt GUI helpers unit from elma
 ** DONE [t] Add state machine unit from elma
@@ -10,3 +9,7 @@
 ** DONE [t] Add timestamps unit from elma
 ** DONE [t] Add all timestamps stuff from elma
 ** DONE [t] Waveforms: add function to delete all plots from multiplot 
+* 0.1.1
+** TODO [e] Add docs
+* 0.2.0
+** TODO [t] Work carefully on structure of the package
