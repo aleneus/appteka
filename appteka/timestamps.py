@@ -17,6 +17,56 @@
 
 import time
 
+def detect_fmt(s):
+    """ Attempt top detect format of timestamp. """
+    # TODO: this is stub
+    if " " in s:
+        return "date_time"
+    else:
+        return "secs_dot"
+
+def convert_timestamp(s, fmt):
+    """ 
+    Convert string to timestamp in accordance with some format. 
+
+    Parameters
+    ----------
+    s : str
+        Some string representation of date-time.
+    fmt : str
+        Format of string. Supported formats: 
+        - "secs_dot" (for example "1505314800.40")
+        - "date_time" (for example "31/10/2017 16:30:00.000" or "12.07.2017 21:00:00.160000")
+
+    Returns
+    -------
+    t : float
+        Seconds since the epoch.
+    
+    """
+    # TODO: [3] support format used in data base
+    if fmt == "secs_dot":
+        parts = s.split(".")
+        a = parts[0]
+        b = parts[1]
+        if len(b) == 2:
+            b = '0' + b
+        v = float(a + '.' + b)
+        return v
+    elif fmt == "date_time":
+        splitted = s.replace("/", " ").replace(":", " ").replace(".", " ").split()
+        secs = datetime.datetime(
+            int(splitted[2]), # year
+            int(splitted[1]), # month
+            int(splitted[0]), # day
+            int(splitted[3]), # hours
+            int(splitted[4]), # minutes
+            int(splitted[5])  # secomds
+        ).timestamp()
+        return secs + float("0."+splitted[6]) # milliseconds
+    else:
+        return None
+
 def get_time(secs, scale="s"):
     """ 
     Return time from timestamp. 

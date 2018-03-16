@@ -8,3 +8,4 @@
 ** DONE [t] Add hgignore
 ** TODO [t] Add json config stuff
 ** DONE [t] Add timestamps unit from elma
+** DONE [t] Add all timestamps stuff from elma
