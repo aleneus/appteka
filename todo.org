@@ -4,3 +4,4 @@
 * TODO [t] Add state machine unit from elma
 * DONE [!t] Change the license in setup.py to LGPL
 * DONE [t] Add glob.py with VERSION
+* DONE [t] Add hgignore
