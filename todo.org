@@ -9,4 +9,4 @@
 ** TODO [t] Add json config stuff
 ** DONE [t] Add timestamps unit from elma
 ** DONE [t] Add all timestamps stuff from elma
-** TODO [t] Waveforms: add functions to delete plots from multiplot 
+** DONE [t] Waveforms: add function to delete all plots from multiplot 
