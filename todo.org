@@ -9,9 +9,10 @@
 ** DONE [t] Add timestamps unit from elma
 ** DONE [t] Add all timestamps stuff from elma
 ** DONE [t] Waveforms: add function to delete all plots from multiplot 
-** TODO [t] Add routines base class from elma
+** DONE [t] Add routines base class from elma
 * 0.1.1
 ** TODO [e] Inspect MultiWaveform class
 ** TODO [e] Add docs
 * 0.2.0
+** TODO [t] Add reporter from elma
 ** TODO [t] Work carefully on structure of the package
