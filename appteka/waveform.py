@@ -129,6 +129,7 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         if title is not None:
             self.plots[key].setTitle(title, justify='left')
         self.curves[key] = self.plots[key].plot()
+        self.curves[key].setPen(self.state['plot_color'])
         if main:
             self.main_plot = self.plots[key]
 
@@ -136,6 +137,7 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         for key in self.plots.keys():
             self.removeItem(self.plots[key])
         self.plots = {}
+        self.curves = {}
 
     def update_data(self, key, t, x):
         if len(t) == 0:

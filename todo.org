@@ -12,7 +12,7 @@
 ** DONE [t] Add routines base class from elma
 * 0.1.1
 ** DONE [b] No quotes in glob.py
-** TODO [b] MultiWaveform: Curve plot must be setted for all existing and future plots
+** DONE [b] MultiWaveform: Curve plot must be setted for all existing and future plots
 ** DONE [b] Add __init__.py to qt_helpers subpackage
 * 0.1.2
 ** TODO [e] Inspect MultiWaveform class
