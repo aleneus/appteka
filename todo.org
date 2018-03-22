@@ -15,8 +15,13 @@
 ** DONE [b] MultiWaveform: Curve plot must be setted for all existing and future plots
 ** DONE [b] Add __init__.py to qt_helpers subpackage
 * 0.1.2
-** TODO [e] Inspect MultiWaveform class
-** TODO [e] Add docs
+** DONE [e] Inspect MultiWaveform class
 * 0.2.0
 ** TODO [t] Add reporter from elma
 ** TODO [t] Work carefully on structure of the package
+** TODO [t] MultiWaveform. Remove get_main_plot() and set_main_plot(), add get_main() and set_main() and use key instead of plot
+** TODO [t] MultiWaveform. Add method fit() and remove reset() one
+** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
+** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
+* 0.2.1
+** TODO [e] Add docs
