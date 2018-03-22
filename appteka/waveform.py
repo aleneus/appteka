@@ -90,6 +90,7 @@ class Waveform(pg.PlotWidget):
 class MultiWaveform(pg.GraphicsLayoutWidget):
     """ Customized PyQtGraph.GraphicsLayoutWidget. """
     def __init__(self):
+        """ Initialization. """
         super().__init__()
         self.state = {
             'online' : False,
@@ -101,12 +102,15 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         self.__main_plot_limits = None
 
     def get_main_plot(self):
+        """ Return the plot used for synchronization (main plot). """
         return self._main_plot
     def set_main_plot(self, plot):
+        """ Set the plot used for synchronization (main plot). """
         self._main_plot = plot
     main_plot = property(get_main_plot, set_main_plot, doc="Plot used for synchronization")
 
     def reset(self):
+        """ Deprecated. """
         self.curves = {}
         for key in self.plots:
             self.plots[key].clear()
@@ -114,7 +118,11 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
             self.curves[key] = self.plots[key].plot()
         self.set_plot_color(self.state['plot_color'])
 
-    def _init_plot(self, plot):
+    def _init_plot(self, key):
+        """ Bring plot to initial state. """
+        if key not in self.plots.keys():
+            return
+        plot = self.plots[key]
         plot.setDownsampling(mode='peak')
         plot.showGrid(x=True, y=True)
         plot.setMouseEnabled(x=True, y=False)
@@ -124,8 +132,9 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         plot.enableAutoRange(True)
 
     def add_plot(self, key, title=None, main=False):
+        """ Add plot. """
         self.plots[key] = self.addPlot(len(self.plots), 0, axisItems=AxisItemsFactory.get_items())
-        self._init_plot(self.plots[key])
+        self._init_plot(key)
         if title is not None:
             self.plots[key].setTitle(title, justify='left')
         self.curves[key] = self.plots[key].plot()
@@ -134,12 +143,14 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
             self.main_plot = self.plots[key]
 
     def remove_plots(self):
+        """ Remove all plots. """
         for key in self.plots.keys():
             self.removeItem(self.plots[key])
         self.plots = {}
         self.curves = {}
 
     def update_data(self, key, t, x):
+        """ Update data on the plot. """
         if len(t) == 0:
             return
         
@@ -159,11 +170,13 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         self.plots[key].setRange(xRange=xlims)
         
     def set_online(self, value):
+        """ Turn on or turn off the online mode. """
         self.state['online'] = value
         for plot in self.plots.values():
             plot.setClipToView(value)
         
     def set_plot_color(self, color):
+        """ Set color for all plots. """
         for c in self.curves.values():
             c.setPen(color)
         self.state['plot_color'] = color
