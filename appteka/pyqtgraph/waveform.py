@@ -99,7 +99,6 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         self.plots = {}
         self.curves = {}
         self._main = None
-        # self._main_plot = None
         self.__main_plot_limits = None
 
     def set_main_plot(self, key):
@@ -133,7 +132,6 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         self.curves[key].setPen(self.state['plot_color'])
         if main:
             self._main = key
-            # self.main_plot = self.plots[key]
 
     def remove_plots(self):
         """ Remove all plots. """
@@ -157,10 +155,6 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
                 self.__main_plot_limits = xlims
             elif self._main is not None:
                     xlims = self.__main_plot_limits
-            # if self.plots[key] == self.main_plot:
-            #     self.__main_plot_limits = xlims
-            # elif self.main_plot is not None:
-            #         xlims = self.__main_plot_limits
                     
         self.curves[key].setData(t, x)
         self.plots[key].setLimits(xMin=xlims[0], xMax=xlims[-1])
@@ -177,3 +171,10 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         for c in self.curves.values():
             c.setPen(color)
         self.state['plot_color'] = color
+
+    def set_link_to_main(self, value=True):
+        """ Link plots to main or unlink. """
+        for key in self.plots.keys():
+            if key == self._main:
+                continue
+            self.plots[key].setXLink(self.plots[self._main] if value else None)
