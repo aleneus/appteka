@@ -22,7 +22,7 @@
 ** DONE [t] MultiWaveform. Use key in get_main_plot() and set_main_plot()
 ** DONE [t] MultiWaveform. Remove reset()
 ** DONE [t] MultiWaveform. Add set_link_to_main()
-** TODO [t] Add simplesignals unit from egegrouper
+** DONE [t] Add simplesignals unit from egegrouper
 * 0.2.1
 ** TODO [e] Add docs
 ** TODO [t] Inspect reporter unit
