@@ -98,25 +98,16 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         }
         self.plots = {}
         self.curves = {}
-        self._main_plot = None
+        self._main = None
         self.__main_plot_limits = None
 
-    def get_main_plot(self):
-        """ Return the plot used for synchronization (main plot). """
-        return self._main_plot
-    def set_main_plot(self, plot):
+    def set_main_plot(self, key):
         """ Set the plot used for synchronization (main plot). """
-        self._main_plot = plot
+        self._main = key
+    def get_main_plot(self):
+        """ Set the plot used for synchronization (main plot). """
+        return self._main
     main_plot = property(get_main_plot, set_main_plot, doc="Plot used for synchronization")
-
-    def reset(self):
-        """ Deprecated. """
-        self.curves = {}
-        for key in self.plots:
-            self.plots[key].clear()
-            self.plots[key].enableAutoRange(True)
-            self.curves[key] = self.plots[key].plot()
-        self.set_plot_color(self.state['plot_color'])
 
     def _init_plot(self, key):
         """ Bring plot to initial state. """
@@ -140,7 +131,7 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         self.curves[key] = self.plots[key].plot()
         self.curves[key].setPen(self.state['plot_color'])
         if main:
-            self.main_plot = self.plots[key]
+            self._main = key
 
     def remove_plots(self):
         """ Remove all plots. """
@@ -160,9 +151,9 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
             if not self.isVisible():
                 return
         else:
-            if self.plots[key] == self.main_plot:
+            if key == self._main:
                 self.__main_plot_limits = xlims
-            elif self.main_plot is not None:
+            elif self._main is not None:
                     xlims = self.__main_plot_limits
                     
         self.curves[key].setData(t, x)
@@ -180,3 +171,10 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         for c in self.curves.values():
             c.setPen(color)
         self.state['plot_color'] = color
+
+    def set_link_to_main(self, value=True):
+        """ Link plots to main or unlink. """
+        for key in self.plots.keys():
+            if key == self._main:
+                continue
+            self.plots[key].setXLink(self.plots[self._main] if value else None)
