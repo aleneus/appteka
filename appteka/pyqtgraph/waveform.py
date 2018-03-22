@@ -98,15 +98,16 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         }
         self.plots = {}
         self.curves = {}
-        self._main_plot = None
+        self._main = None
+        # self._main_plot = None
         self.__main_plot_limits = None
 
-    def get_main_plot(self):
-        """ Return the plot used for synchronization (main plot). """
-        return self._main_plot
-    def set_main_plot(self, plot):
+    def set_main_plot(self, key):
         """ Set the plot used for synchronization (main plot). """
-        self._main_plot = plot
+        self._main = key
+    def get_main_plot(self):
+        """ Set the plot used for synchronization (main plot). """
+        return self._main
     main_plot = property(get_main_plot, set_main_plot, doc="Plot used for synchronization")
 
     def reset(self):
@@ -140,7 +141,8 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         self.curves[key] = self.plots[key].plot()
         self.curves[key].setPen(self.state['plot_color'])
         if main:
-            self.main_plot = self.plots[key]
+            self._main = key
+            # self.main_plot = self.plots[key]
 
     def remove_plots(self):
         """ Remove all plots. """
@@ -160,10 +162,14 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
             if not self.isVisible():
                 return
         else:
-            if self.plots[key] == self.main_plot:
+            if key == self._main:
                 self.__main_plot_limits = xlims
-            elif self.main_plot is not None:
+            elif self._main is not None:
                     xlims = self.__main_plot_limits
+            # if self.plots[key] == self.main_plot:
+            #     self.__main_plot_limits = xlims
+            # elif self.main_plot is not None:
+            #         xlims = self.__main_plot_limits
                     
         self.curves[key].setData(t, x)
         self.plots[key].setLimits(xMin=xlims[0], xMax=xlims[-1])
