@@ -110,15 +110,6 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         return self._main
     main_plot = property(get_main_plot, set_main_plot, doc="Plot used for synchronization")
 
-    def reset(self):
-        """ Deprecated. """
-        self.curves = {}
-        for key in self.plots:
-            self.plots[key].clear()
-            self.plots[key].enableAutoRange(True)
-            self.curves[key] = self.plots[key].plot()
-        self.set_plot_color(self.state['plot_color'])
-
     def _init_plot(self, key):
         """ Bring plot to initial state. """
         if key not in self.plots.keys():

@@ -20,7 +20,7 @@
 ** DONE [t] Add reporter from elma
 ** DONE [t] Work on structure of the package
 ** DONE [t] MultiWaveform. Use key in get_main_plot() and set_main_plot()
-** TODO [t] MultiWaveform. Add method fit() and remove reset() one
+** DONE [t] MultiWaveform. Remove reset().
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
 ** TODO [t] Add simplesignals unit from egegrouper
