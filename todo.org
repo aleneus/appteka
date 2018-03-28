@@ -26,6 +26,7 @@
 * 0.2.1
 ** TODO [e] Add docs
 ** TODO [t] Inspect reporter unit
+** TODO [b] Add __init__.py in subfolders
 * 0.3.0
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
