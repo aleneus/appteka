@@ -24,6 +24,7 @@
 ** DONE [t] MultiWaveform. Add set_link_to_main()
 ** DONE [t] Add simplesignals unit from egegrouper
 * 0.2.1
+** DONE [b] Main must be None after removing all plots
 ** TODO [e] Add docs
 ** TODO [t] Inspect reporter unit
 ** TODO [b] Add __init__.py in subfolders
