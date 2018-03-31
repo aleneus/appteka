@@ -158,8 +158,6 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
                     xlims = self.__main_plot_limits
                     
         self.curves[key].setData(t, x)
-        print(xlims[0])
-        print(xlims[-1])
         self.plots[key].setLimits(xMin=xlims[0], xMax=xlims[-1])
         self.plots[key].setRange(xRange=xlims)
         
