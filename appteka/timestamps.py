@@ -55,12 +55,13 @@ def detect_fmt_by_list(ts):
     except Exception as ex:
         pass
 
-    if "," in ts[0]:
-        try:
-            x = float(ts[0].replace(",", "."))
-            return "sec_comma"
-        except Exception as ex:
-            pass
+    for s in ts:
+        if "," in s:
+            try:
+                x = float(ts[0].replace(",", "."))
+                return "sec_comma"
+            except Exception as ex:
+                pass
 
     return None
 
@@ -74,9 +75,12 @@ def convert_timestamp(s, fmt):
         Some string representation of date-time.
     fmt : str
         Format of string. Supported formats: 
-        - "secs_dot" (for example "1505314800.40") "date_time" (for
-        example "31/10/2017 16:30:00.000" or "12.07.2017
-        - 21:00:00.160000")
+        1. "sec_dot_msec" (old name "secs_dot") (for example
+        "1505314800.40")
+        2. "date_time" (for example "31/10/2017 16:30:00.000" or
+        "12.07.2017 21:00:00.160000")
+        3. "sec_dot" (for example, "1505314800.04")
+        4. "sec_comma" (for example, "1505314800,04")
 
     Returns
     -------
@@ -84,7 +88,7 @@ def convert_timestamp(s, fmt):
         Seconds since the epoch.
     
     """
-    if fmt == "secs_dot":
+    if (fmt == "sec_dot_msec") or (fmt == "secs_dot"):
         parts = s.split(".")
         a = parts[0]
         b = parts[1]
@@ -103,6 +107,12 @@ def convert_timestamp(s, fmt):
             int(splitted[5])  # secomds
         ).timestamp()
         return secs + float("0."+splitted[6]) # milliseconds
+    elif fmt == "sec_dot":
+        res = float(s)
+        return res
+    elif fmt == "sec_comma":
+        res = float(s.replace(",", "."))
+        return res
     else:
         return None
 
@@ -153,3 +163,4 @@ def get_date(secs):
     """
     t = time.gmtime(secs)
     return time.strftime("%y-%m-%d", t)
+    
