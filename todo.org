@@ -26,7 +26,7 @@
 * 0.2.1
 ** DONE [b] Main must be None after removing all plots
 ** TODO [b] Timestamps: UTC timestamp is not converted if used comma
-** TODO [b] Add __init__.py in subfolders
+** DONE [b] Add __init__.py in subfolders
 ** DONE [t] Timestamps: Add a function for detecting time format by several timestapms
 ** TODO [t] Timestamps: Add alternative names for fmt
 * 0.2.2
