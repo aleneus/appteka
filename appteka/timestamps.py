@@ -19,16 +19,54 @@ import time
 import datetime
 
 def detect_fmt(s):
-    """ Attempt top detect format of timestamp. """
-    # TODO: this is stub
+    """ Attempt to detect format of timestamp. """
     if " " in s:
         return "date_time"
     else:
         return "secs_dot"
 
+def detect_fmt_by_list(ts):
+    """
+    Attempt top detect format of list of string timestamps.
+
+    Parameters
+    ----------
+    ts : list of str
+        List of timestamps.
+
+    Returns
+    -------
+    fmt : str
+        Possible values: "date_time", "sec_dot_msec", "sec_dot",
+        "sec_comma".
+
+    """
+    if " " in ts[0]:
+        return date_time
+    
+    try:
+        xs = []
+        for s in ts:
+            xs.append(float(s))
+        if len(xs) == len(set(xs)):
+            return "sec_dot"
+        else:
+            return "sec_dot_msec"
+    except Exception as ex:
+        pass
+
+    if "," in ts[0]:
+        try:
+            x = float(ts[0].replace(",", "."))
+            return "sec_comma"
+        except Exception as ex:
+            pass
+
+    return None
+
 def convert_timestamp(s, fmt):
     """ 
-    Convert string to timestamp in accordance with some format. 
+    Convert string to timestamp in accordance with some format.
 
     Parameters
     ----------
@@ -36,8 +74,9 @@ def convert_timestamp(s, fmt):
         Some string representation of date-time.
     fmt : str
         Format of string. Supported formats: 
-        - "secs_dot" (for example "1505314800.40")
-        - "date_time" (for example "31/10/2017 16:30:00.000" or "12.07.2017 21:00:00.160000")
+        - "secs_dot" (for example "1505314800.40") "date_time" (for
+        example "31/10/2017 16:30:00.000" or "12.07.2017
+        - 21:00:00.160000")
 
     Returns
     -------
@@ -45,7 +84,6 @@ def convert_timestamp(s, fmt):
         Seconds since the epoch.
     
     """
-    # TODO: [3] support format used in data base
     if fmt == "secs_dot":
         parts = s.split(".")
         a = parts[0]
