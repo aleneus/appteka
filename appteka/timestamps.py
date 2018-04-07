@@ -42,7 +42,7 @@ def detect_fmt_by_list(ts):
 
     """
     if " " in ts[0]:
-        return date_time
+        return "date_time"
     
     try:
         xs = []

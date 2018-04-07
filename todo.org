@@ -31,6 +31,8 @@
 ** DONE [t] Timestamps: Add alternative names for fmt
 ** DONE [t] Timestamps: Add formats "sec_dot" and "sec_comma"
 * 0.2.2
+** DONE [b] Timestamps: Error in "date_time" format
+* 0.2.3
 ** TODO [e] Add docs
 ** TODO [t] Inspect reporter unit
 ** TODO [t] Timestamps: Dangerous implementation of convert_timestamp.
