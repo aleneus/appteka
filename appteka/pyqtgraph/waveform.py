@@ -139,6 +139,7 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
             self.removeItem(self.plots[key])
         self.plots = {}
         self.curves = {}
+        self._main = None
 
     def update_data(self, key, t, x):
         """ Update data on the plot. """
