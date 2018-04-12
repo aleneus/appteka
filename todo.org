@@ -34,11 +34,11 @@
 ** DONE [b] Timestamps: Error in "date_time" format
 * 0.2.3
 ** DONE [b] 'elma' in build_gui
+** DONE [t] Remove 'elma' from build_gui unit
 ** TODO [e] Add docs
 ** TODO [t] Inspect reporter unit
 ** TODO [t] Timestamps: Dangerous implementation of convert_timestamp.
 * 0.3.0
-** TODO [t] Remove 'elma' from build_gui unit
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
 ** TODO [t] Timestamps: Remove old names of fmt

@@ -1,12 +1,11 @@
 """ Helper functions for building Qt GUI. """
 
-import pkg_resources
 from PyQt5 import QtWidgets, QtGui
 
-def add_action(window, name, slot, package_name='elma', pic=None, shortcut=None, menu=None):
+def add_action(window, name, slot, pic=None, shortcut=None, menu=None):
     action = None
     if pic:
-        action = QtWidgets.QAction(QtGui.QIcon(pkg_resources.resource_filename(package_name, pic)), name, window)
+        action = QtWidgets.QAction(QtGui.QIcon(pic), name, window)
     else:
         action = QtWidgets.QAction(name, window)
     action.triggered.connect(slot)
