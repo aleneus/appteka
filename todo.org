@@ -35,6 +35,7 @@
 * 0.2.3
 ** DONE [b] 'elma' in build_gui
 ** DONE [t] Remove 'elma' from build_gui unit
+* 0.2.4
 ** TODO [e] Add docs
 ** TODO [t] Inspect reporter unit
 ** TODO [t] Timestamps: Dangerous implementation of convert_timestamp.
