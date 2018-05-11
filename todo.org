@@ -35,12 +35,16 @@
 * 0.2.3
 ** DONE [b] 'elma' in build_gui
 ** DONE [t] Remove 'elma' from build_gui unit
-* 0.2.4
+* 0.3.0
+** DONE [t] Redesign timestamp tools. There should be separate functions for convertions - convertors
+** DONE [e] Use pep8 and pyflakes for some units
+** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
+** TODO [t] Translation: Add init_translation from elma
+* major
+** TODO [t] Timestamp. Remove deprecated functions.
+** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
+** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
+* minor
 ** TODO [e] Add docs
 ** TODO [t] Inspect reporter unit
 ** TODO [t] Timestamps: Dangerous implementation of convert_timestamp.
-* 0.3.0
-** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
-** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
-** TODO [t] Timestamps: Remove old names of fmt
-** TODO [p] Timestamps: Redesign timestamps converting tools

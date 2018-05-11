@@ -15,19 +15,23 @@
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+""" Work with string timestamps. """
+
 import time
 import datetime
 
+
 def detect_fmt(s):
-    """ Attempt to detect format of timestamp. """
+    """ Depracated. Attempt to detect format of timestamp. """
     if " " in s:
         return "date_time"
     else:
         return "secs_dot"
 
+
 def detect_fmt_by_list(ts):
     """
-    Attempt top detect format of list of string timestamps.
+    Deprecated. Attempt top detect format of list of string timestamps.
 
     Parameters
     ----------
@@ -43,7 +47,7 @@ def detect_fmt_by_list(ts):
     """
     if " " in ts[0]:
         return "date_time"
-    
+
     try:
         xs = []
         for s in ts:
@@ -52,29 +56,30 @@ def detect_fmt_by_list(ts):
             return "sec_dot"
         else:
             return "sec_dot_msec"
-    except Exception as ex:
+    except ValueError:
         pass
 
     for s in ts:
         if "," in s:
             try:
-                x = float(ts[0].replace(",", "."))
+                float(ts[0].replace(",", "."))
                 return "sec_comma"
-            except Exception as ex:
+            except ValueError:
                 pass
 
     return None
 
+
 def convert_timestamp(s, fmt):
-    """ 
-    Convert string to timestamp in accordance with some format.
+    """
+    Depreacated. Convert string to timestamp in accordance with some format.
 
     Parameters
     ----------
     s : str
         Some string representation of date-time.
     fmt : str
-        Format of string. Supported formats: 
+        Format of string. Supported formats:
         1. "sec_dot_msec" (old name "secs_dot") (for example
         "1505314800.40")
         2. "date_time" (for example "31/10/2017 16:30:00.000" or
@@ -86,7 +91,7 @@ def convert_timestamp(s, fmt):
     -------
     t : float
         Seconds since the epoch.
-    
+
     """
     if (fmt == "sec_dot_msec") or (fmt == "secs_dot"):
         parts = s.split(".")
@@ -97,16 +102,19 @@ def convert_timestamp(s, fmt):
         v = float(a + '.' + b)
         return v
     elif fmt == "date_time":
-        splitted = s.replace("/", " ").replace(":", " ").replace(".", " ").split()
+        splitted = s.replace("/", " ").\
+                   replace(":", " ").\
+                   replace(".", " ").\
+                   split()
         secs = datetime.datetime(
-            int(splitted[2]), # year
-            int(splitted[1]), # month
-            int(splitted[0]), # day
-            int(splitted[3]), # hours
-            int(splitted[4]), # minutes
-            int(splitted[5])  # secomds
+            int(splitted[2]),  # year
+            int(splitted[1]),  # month
+            int(splitted[0]),  # day
+            int(splitted[3]),  # hours
+            int(splitted[4]),  # minutes
+            int(splitted[5])   # seconds
         ).timestamp()
-        return secs + float("0."+splitted[6]) # milliseconds
+        return secs + float("0."+splitted[6])  # milliseconds
     elif fmt == "sec_dot":
         res = float(s)
         return res
@@ -116,37 +124,40 @@ def convert_timestamp(s, fmt):
     else:
         return None
 
+
 def get_time(secs, scale="s"):
-    """ 
-    Return time from timestamp. 
+    """
+    Return time from timestamp.
 
     Parameters
     ----------
     secs : float
         Seconds since the epoch.
-    scale : str 
-        Scale. Possible values: "ms" (milliseconds), "s" (seconds), "m" (minutes), "h" (hours).
+    scale : str
+        Scale. Possible values: "ms" (milliseconds), "s" (seconds),
+        "m" (minutes), "h" (hours).
 
     Returns
     -------
     label : str
         String label representing the time.
-        
+
     """
     t = time.gmtime(secs)
-    if   scale == "s":
+    if scale == "s":
         return time.strftime("%H:%M:%S", t)
     elif scale == "m":
-        return time.strftime("%H:%M", t) 
+        return time.strftime("%H:%M", t)
     elif scale == "h":
         return time.strftime("%H", t)
     elif scale == "ms":
         ms = int(1000*(secs - int(secs)))
         return time.strftime("%H:%M:%S", secs) + ".{}".format(ms)
-    
+
+
 def get_date(secs):
-    """ 
-    Return date from timestamp. 
+    """
+    Return date from timestamp.
 
     Parameters
     ----------
@@ -159,8 +170,189 @@ def get_date(secs):
     -------
     label : str
         String label representing the date.
-    
+
     """
     t = time.gmtime(secs)
     return time.strftime("%y-%m-%d", t)
-    
+
+
+class TimeFormat:
+    """ Base class for string time formats. """
+    @staticmethod
+    def check(time_list):
+        """ Check if timestamps in list corresponds to the format."""
+        raise NotImplementedError
+
+    @staticmethod
+    def convert(str_time):
+        """ Convert timestamp from string to seconds since the epoch. """
+        raise NotImplementedError
+
+
+class SecDotFormat(TimeFormat):
+    """ Example: 1505314800.04 """
+    @staticmethod
+    def check(time_list):
+        """ Check if timestamps in list corresponds to the format."""
+        float_times = []
+        for str_time in time_list:
+            try:
+                float_time = float(str_time)
+                float_times.append(float_time)
+            except ValueError:
+                return False
+        for t_current, t_next in zip(float_times[:-1], float_times[1:]):
+            if t_current >= t_next:
+                return False
+        return True
+
+    @staticmethod
+    def convert(str_time):
+        """ Convert timestamp from string to seconds since the epoch. """
+        res = float(str_time)
+        return res
+
+
+class SecDotMsecFormat(TimeFormat):
+    """ Examples: 1505314800.20, 1505314800.200 """
+    @staticmethod
+    def check(time_list):
+        """ Check if timestamps in list corresponds to the format."""
+        float_times = []
+        for str_time in time_list:
+            try:
+                float_time = float(str_time)
+                float_times.append(float_time)
+            except ValueError:
+                return False
+        for t_current, t_next in zip(float_times[:-1], float_times[1:]):
+            if t_current >= t_next:
+                return True
+        return False
+
+    @staticmethod
+    def convert(str_time):
+        """ Convert timestamp from string to seconds since the epoch. """
+        parts = str_time.split(".")
+        left = parts[0]
+        right = parts[1]
+        if len(right) == 2:
+            right = '0' + right
+        res = float(left + '.' + right)
+        return res
+
+
+class SecCommaFormat(TimeFormat):
+    """ Example: 1505314800,04 """
+    @staticmethod
+    def check(time_list):
+        """ Check if timestamps in list corresponds to the format."""
+        float_times = []
+        for str_time in time_list:
+            if ',' not in str_time:
+                return False
+            str_time_dot = str_time.replace(',', '.')
+            try:
+                float_time = float(str_time_dot)
+                float_times.append(float_time)
+            except ValueError:
+                return False
+        return True
+
+    @staticmethod
+    def convert(str_time):
+        """ Convert timestamp from string to seconds since the epoch. """
+        str_time_dot = str_time.replace(',', '.')
+        res = float(str_time_dot)
+        return res
+
+
+class DateTimeFormat(TimeFormat):
+    """ Examples: '31/10/2017 16:30:00.000' or '12.07.2017
+        21:00:00.160000' """
+    @staticmethod
+    def check(time_list):
+        """ Check if timestamps in list corresponds to the format."""
+        for str_time in time_list:
+            if ' ' not in str_time:
+                return False
+        return True
+
+    @staticmethod
+    def convert(str_time):
+        """ Convert timestamp from string to seconds since the epoch. """
+        splitted = str_time.replace("/", " ").\
+            replace(":", " ").\
+            replace(".", " ").\
+            split()
+        secs = datetime.datetime(
+            int(splitted[2]),  # year
+            int(splitted[1]),  # month
+            int(splitted[0]),  # day
+            int(splitted[3]),  # hours
+            int(splitted[4]),  # minutes
+            int(splitted[5])   # seconds
+        ).timestamp()
+        res = secs + float("0."+splitted[6])  # milliseconds
+        return res
+
+
+class TimeConverter:
+    """ Converter from string timestamp to seconds since the epoch. """
+    def __init__(self):
+        self.formats = [
+            SecDotFormat,
+            SecCommaFormat,
+            SecDotMsecFormat,
+            DateTimeFormat,
+        ]
+        self.fmt = None
+
+    def learn(self, str_times):
+        """ Attempt to recognize time format. """
+        for fmt in self.formats:
+            if fmt.check(str_times):
+                print("D>", fmt)
+                self.set_format(fmt)
+                return True
+        return False
+
+    def set_format(self, fmt):
+        """ Set format. Can be used for manual set up converter. """
+        self.fmt = fmt
+
+    def convert(self, str_time):
+        """ Convert timestamp from string to seconds since the epoch. """
+        if self.fmt is None:
+            raise RuntimeError("Unknown time format.")
+        res = self.fmt.convert(str_time)
+        return res
+
+def example():
+    """ Example of using Converter. """
+    list_of_ts = [
+        '1505314800.0',
+        '1505314800.2',
+        '1505314800.4',
+        '1505314800.6',
+        '1505314800.8',
+        '1505314800.10',
+        '1505314800.12',
+        '1505314800.14',
+        '1505314800.16',
+    ]
+    # list_of_ts = [
+    #     '31/10/2017 16:30:00.000',
+    #     '31/10/2017 16:30:01.000',
+    # ]
+    converter = TimeConverter()
+    if not converter.learn(list_of_ts):
+        print("Unknown format")
+        exit()
+    for str_time in list_of_ts:
+        sste = converter.convert(str_time)
+        print(sste)
+
+
+if __name__ == "__main__":
+    example()
