@@ -19,6 +19,8 @@ def get_head(file_name, delimiter=';', nlines=100):
     with open(file_name) as buff:
         for i in range(nlines):
             row = buff.readline()
+            if row == '':
+                break
             row = row.replace('\n', '')
             row_splitted = row.split(delimiter)
             head.append(row_splitted)
