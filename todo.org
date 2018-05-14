@@ -40,6 +40,7 @@
 ** DONE [e] Use pep8 and pyflakes for some units
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
 ** TODO [t] Translation: Add init_translation from elma
+** DONE [t] Add module for analysing CSV-files containing time and signals values
 * major
 ** TODO [t] Timestamp. Remove deprecated functions.
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()

@@ -312,7 +312,6 @@ class TimeConverter:
         """ Attempt to recognize time format. """
         for fmt in self.formats:
             if fmt.check(str_times):
-                print("D>", fmt)
                 self.set_format(fmt)
                 return True
         return False
