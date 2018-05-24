@@ -21,110 +21,6 @@ import time
 import datetime
 
 
-def detect_fmt(s):
-    """ Depracated. Attempt to detect format of timestamp. """
-    if " " in s:
-        return "date_time"
-    else:
-        return "secs_dot"
-
-
-def detect_fmt_by_list(ts):
-    """
-    Deprecated. Attempt top detect format of list of string timestamps.
-
-    Parameters
-    ----------
-    ts : list of str
-        List of timestamps.
-
-    Returns
-    -------
-    fmt : str
-        Possible values: "date_time", "sec_dot_msec", "sec_dot",
-        "sec_comma".
-
-    """
-    if " " in ts[0]:
-        return "date_time"
-
-    try:
-        xs = []
-        for s in ts:
-            xs.append(float(s))
-        if len(xs) == len(set(xs)):
-            return "sec_dot"
-        else:
-            return "sec_dot_msec"
-    except ValueError:
-        pass
-
-    for s in ts:
-        if "," in s:
-            try:
-                float(ts[0].replace(",", "."))
-                return "sec_comma"
-            except ValueError:
-                pass
-
-    return None
-
-
-def convert_timestamp(s, fmt):
-    """
-    Depreacated. Convert string to timestamp in accordance with some format.
-
-    Parameters
-    ----------
-    s : str
-        Some string representation of date-time.
-    fmt : str
-        Format of string. Supported formats:
-        1. "sec_dot_msec" (old name "secs_dot") (for example
-        "1505314800.40")
-        2. "date_time" (for example "31/10/2017 16:30:00.000" or
-        "12.07.2017 21:00:00.160000")
-        3. "sec_dot" (for example, "1505314800.04")
-        4. "sec_comma" (for example, "1505314800,04")
-
-    Returns
-    -------
-    t : float
-        Seconds since the epoch.
-
-    """
-    if (fmt == "sec_dot_msec") or (fmt == "secs_dot"):
-        parts = s.split(".")
-        a = parts[0]
-        b = parts[1]
-        if len(b) == 2:
-            b = '0' + b
-        v = float(a + '.' + b)
-        return v
-    elif fmt == "date_time":
-        splitted = s.replace("/", " ").\
-                   replace(":", " ").\
-                   replace(".", " ").\
-                   split()
-        secs = datetime.datetime(
-            int(splitted[2]),  # year
-            int(splitted[1]),  # month
-            int(splitted[0]),  # day
-            int(splitted[3]),  # hours
-            int(splitted[4]),  # minutes
-            int(splitted[5])   # seconds
-        ).timestamp()
-        return secs + float("0."+splitted[6])  # milliseconds
-    elif fmt == "sec_dot":
-        res = float(s)
-        return res
-    elif fmt == "sec_comma":
-        res = float(s.replace(",", "."))
-        return res
-    else:
-        return None
-
-
 def get_time(secs, scale="s"):
     """
     Return time from timestamp.
@@ -143,16 +39,16 @@ def get_time(secs, scale="s"):
         String label representing the time.
 
     """
-    t = time.gmtime(secs)
+    gmt = time.gmtime(secs)
     if scale == "s":
-        return time.strftime("%H:%M:%S", t)
+        return time.strftime("%H:%M:%S", gmt)
     elif scale == "m":
-        return time.strftime("%H:%M", t)
+        return time.strftime("%H:%M", gmt)
     elif scale == "h":
-        return time.strftime("%H", t)
+        return time.strftime("%H", gmt)
     elif scale == "ms":
-        ms = int(1000*(secs - int(secs)))
-        return time.strftime("%H:%M:%S", secs) + ".{}".format(ms)
+        millisecs = int(1000*(secs - int(secs)))
+        return time.strftime("%H:%M:%S", secs) + ".{}".format(millisecs)
 
 
 def get_date(secs):
@@ -172,8 +68,8 @@ def get_date(secs):
         String label representing the date.
 
     """
-    t = time.gmtime(secs)
-    return time.strftime("%y-%m-%d", t)
+    gmt = time.gmtime(secs)
+    return time.strftime("%y-%m-%d", gmt)
 
 
 class TimeFormat:
@@ -326,6 +222,7 @@ class TimeConverter:
             raise RuntimeError("Unknown time format.")
         res = self.fmt.convert(str_time)
         return res
+
 
 def example():
     """ Example of using Converter. """

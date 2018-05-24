@@ -41,11 +41,14 @@
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
 ** TODO [t] Translation: Add init_translation from elma
 ** DONE [t] Add module for analysing CSV-files containing time and signals values
+** TODO [t] Add subpackages to setup.py
+** DONE [t] Timestamp. Remove deprecated functions.
 * major
-** TODO [t] Timestamp. Remove deprecated functions.
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
+** TODO [p] Add base class for state from pmu_trace
+** TODO [p] Add base class for Qt main window with states
+** TODO [p] Make something more convenient than conf.setting[key]
 * minor
 ** TODO [e] Add docs
 ** TODO [t] Inspect reporter unit
-** TODO [t] Timestamps: Dangerous implementation of convert_timestamp.
