@@ -39,7 +39,7 @@
 ** DONE [t] Redesign timestamp tools. There should be separate functions for convertions - convertors
 ** DONE [e] Use pep8 and pyflakes for some units
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
-** TODO [t] Translation: Add init_translation from elma
+** DONE [t] Translation: Add init_translation from elma
 ** DONE [t] Add module for analysing CSV-files containing time and signals values
 ** TODO [t] Add subpackages to setup.py
 ** DONE [t] Timestamp. Remove deprecated functions.
