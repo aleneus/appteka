@@ -2,9 +2,9 @@
 from appteka.timestamps import TimeConverter
 
 
-def get_delimiter(file_name):
+def get_delimiter(file_name, encoding='utf-8'):
     """ Attempt to detect delimiter (';' or ',') and return it. """
-    with open(file_name) as buff:
+    with open(file_name, encoding=encoding) as buff:
         first_line = buff.readline()
     if ';' in first_line:
         delimiter = ';'
@@ -13,10 +13,10 @@ def get_delimiter(file_name):
     return delimiter
 
 
-def get_head(file_name, delimiter=';', nlines=100):
+def get_head(file_name, delimiter=';', nlines=100, encoding='utf-8'):
     """ Return the first n lines of CSV file as table. """
     head = []
-    with open(file_name) as buff:
+    with open(file_name, encoding=encoding) as buff:
         for i in range(nlines):
             row = buff.readline()
             if row == '':

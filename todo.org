@@ -38,6 +38,7 @@
 * 0.3.0
 ** DONE [t] Redesign timestamp tools. There should be separate functions for convertions - convertors
 ** DONE [e] Use pep8 and pyflakes for some units
+** DONE [e] Use encoding parameter to functions in csv module
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
 ** DONE [t] Translation: Add init_translation from elma
 ** DONE [t] Add module for analysing CSV-files containing time and signals values
