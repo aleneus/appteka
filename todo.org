@@ -44,6 +44,7 @@
 ** DONE [t] Add module for analysing CSV-files containing time and signals values
 ** TODO [t] Add subpackages to setup.py
 ** DONE [t] Timestamp. Remove deprecated functions.
+** DONE [t] Check the waveform module by syntax analysers
 * major
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
