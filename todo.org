@@ -39,13 +39,17 @@
 ** DONE [t] Redesign timestamp tools. There should be separate functions for convertions - convertors
 ** DONE [e] Use pep8 and pyflakes for some units
 ** DONE [e] Use encoding parameter to functions in csv module
-** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
+** DONE [t] Add file writer which uses queue and thread from pmu_trace
+** TODO [t] Add arguments for convert function in QueuedWriter
+** TODO [e] Make QueuedWriter independent from Qt
+** TODO [t] Remove sleep from QueuedWriter
 ** DONE [t] Translation: Add init_translation from elma
 ** DONE [t] Add module for analysing CSV-files containing time and signals values
 ** TODO [t] Add subpackages to setup.py
 ** DONE [t] Timestamp. Remove deprecated functions.
 ** DONE [t] Check the waveform module by syntax analysers
 * major
+** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
 ** TODO [p] Add base class for state from pmu_trace
