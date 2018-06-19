@@ -48,13 +48,15 @@
 ** TODO [t] Add subpackages to setup.py
 ** DONE [t] Timestamp. Remove deprecated functions.
 ** DONE [t] Check the waveform module by syntax analysers
-* major
+** DONE [e] Check config module with pycodestyle and pylint3
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
+* major
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
 ** TODO [p] Add base class for state from pmu_trace
 ** TODO [p] Add base class for Qt main window with states
 ** TODO [p] Make something more convenient than conf.setting[key]
 * minor
+** TODO [e] Remove common exception in config module
 ** TODO [e] Add docs
 ** TODO [t] Inspect reporter unit

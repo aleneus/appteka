@@ -3,11 +3,13 @@
 from collections import OrderedDict
 import os
 import shutil
-import pkg_resources
 import json
+import pkg_resources
+
 
 class Config:
-    """ Work with config files: create desired file if it not exists, read and save settings. """
+    """ Work with config files: create desired file if it not exists,
+    read and save settings. """
     def __init__(self, desired_location, resource_file, package):
         """
         Initiailzation.
@@ -15,7 +17,8 @@ class Config:
         Parameters
         ----------
         desired_location : str
-            Name of default file. Full path, may incude '~'. For example: '~/config.json'
+            Name of default file. Full path, may incude '~'. For
+            example: '~/config.json'
         resource_file : str
             Package resource file name.
         package : str
@@ -35,6 +38,7 @@ class Config:
         self.desired_location = abspath
 
     def use_another_file(self, fname):
+        """ Use not default file. """
         self.save_settings()
         self.open(fname)
         try:
@@ -44,6 +48,7 @@ class Config:
             return False
 
     def open(self, fname):
+        """ Open config file. """
         self.fname = fname
 
     def open_or_create(self):
@@ -54,11 +59,12 @@ class Config:
         return True
 
     def read_settings(self):
-        """ Read settings from file. Settings then can be achieved from 'settings' (OrderedDict) field. """
+        """ Read settings from file. Settings then can be achieved
+        from 'settings' (OrderedDict) field. """
         with open(self.fname) as f:
-            json_str = f.read() 
+            json_str = f.read()
         settings = json.loads(json_str, object_pairs_hook=OrderedDict)
-           
+
         if not self.is_version_valid(settings):
             self.upgrade()
             with open(self.fname) as f:
@@ -66,7 +72,7 @@ class Config:
             settings = json.loads(json_str, object_pairs_hook=OrderedDict)
 
         self.settings = settings
-        
+
         return True
 
     def save_settings(self):
@@ -99,9 +105,12 @@ class Config:
         self._backup()
         self._copy_resource_file()
         self.open(self.desired_location)
-        
+
     def _copy_resource_file(self):
-        filename = pkg_resources.resource_filename(self.package, self.resource_file)
+        filename = pkg_resources.resource_filename(
+            self.package,
+            self.resource_file
+        )
         shutil.copy(filename, self.desired_location)
 
     def _backup(self):
@@ -110,7 +119,9 @@ class Config:
     def get_version(self):
         """ Return version. """
         return self._version
+
     def set_version(self, version):
         """ Set version. """
         self._version = version
+
     version = property(get_version, set_version, doc="The supported version.")
