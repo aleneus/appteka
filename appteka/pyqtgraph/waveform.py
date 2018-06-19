@@ -175,27 +175,31 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         """ Update data on the plot. """
         if len(t) == 0:
             return
+        if self.state['online'] and not self.isVisible():
+            return
 
         xlims = (t[0], t[-1])
 
-        if self.state['online']:
-            if not self.isVisible():
-                return
-        else:
-            if key == self._main:
-                self.__main_plot_limits = xlims
-            elif self._main is not None:
-                xlims = self.__main_plot_limits
+        if key == self._main:
+            self.__main_plot_limits = xlims
+        elif self._main is not None:
+            xlims = self.__main_plot_limits
 
         self.curves[key].setData(t, x)
         self.plots[key].setLimits(xMin=xlims[0], xMax=xlims[-1])
-        self.plots[key].setRange(xRange=xlims)
+        self.plots[key].autoRange()
 
     def set_online(self, value):
         """ Turn on or turn off the online mode. """
         self.state['online'] = value
-        for plot in self.plots.values():
-            plot.setClipToView(value)
+        if value:
+            for plot in self.plots.values():
+                plot.setClipToView(True)
+                plot.setMouseEnabled(x=False)
+        else:
+            for plot in self.plots.values():
+                plot.setClipToView(False)
+                plot.setMouseEnabled(x=True)
 
     def set_plot_color(self, color):
         """ Set color for all plots. """

@@ -49,8 +49,9 @@
 ** DONE [t] Timestamp. Remove deprecated functions.
 ** DONE [t] Check the waveform module by syntax analysers
 ** DONE [e] Check config module with pycodestyle and pylint3
-** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
+** DONE [b] Fix update data in multi wavefrom
 * major
+** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
 ** TODO [p] Add base class for state from pmu_trace
