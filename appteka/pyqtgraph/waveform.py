@@ -186,8 +186,12 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
             xlims = self.__main_plot_limits
 
         self.curves[key].setData(t, x)
-        self.plots[key].setLimits(xMin=xlims[0], xMax=xlims[-1])
-        self.plots[key].autoRange()
+        self.plots[key].setLimits(xMin=xlims[0], xMax=xlims[1])
+        self.plots[key].setRange(
+            xRange=(xlims[0], xlims[1]),
+            yRange=(min(x), max(x)),
+            disableAutoRange=False
+        )
 
     def set_online(self, value):
         """ Turn on or turn off the online mode. """
