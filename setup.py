@@ -17,11 +17,12 @@
 
 from setuptools import setup
 import os
+from appteka.glob import *
+
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
-from appteka.glob import * 
 
 setup(
     name="appteka",
@@ -29,12 +30,12 @@ setup(
     description="All goods",
     author="Aleksandr Popov",
     author_email="aleneus@gmail.com",
-    license = "LGPLv3",
-    keywords = "application, gui",
-    url = "https://bitbucket.org/aleneus/appteka",
+    license="LGPLv3",
+    keywords="application, gui",
+    url="https://bitbucket.org/aleneus/appteka",
     long_description=read('README'),
-    packages=['appteka'],
-    install_requires = [
+    packages=['appteka', 'appteka.pyqt', 'appteka.pyqtgraph'],
+    install_requires=[
         'PyQt5',
         'pyqtgraph',
     ],

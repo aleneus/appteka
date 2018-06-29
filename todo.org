@@ -45,7 +45,7 @@
 ** TODO [t] Remove sleep from QueuedWriter
 ** DONE [t] Translation: Add init_translation from elma
 ** DONE [t] Add module for analysing CSV-files containing time and signals values
-** TODO [t] Add subpackages to setup.py
+** DONE [t] Add subpackages to setup.py
 ** DONE [t] Timestamp. Remove deprecated functions.
 ** DONE [t] Check the waveform module by syntax analysers
 ** DONE [e] Check config module with pycodestyle and pylint3
