@@ -3,8 +3,8 @@ thread. Unfortunately, the current implementation depends on PyQt. """
 
 from collections import deque
 from threading import Lock, Event
-from PyQt5 import QtCore
 from time import sleep
+from PyQt5 import QtCore
 
 
 class QueuedWriter:
@@ -19,21 +19,30 @@ class QueuedWriter:
             parent=thread_parent
         )
         self._must_write = False
-        self._convert_func = None
+        self._convert_func = {
+            'name': lambda x: x,
+            'kwargs': {},
+        }
 
     def set_buff(self, buff):
         """ Set IO buffer. """
         self._buff = buff
 
-    def set_convert_func(self, func):
+    def set_convert_func(self, func, **kwargs):
         """ Set function for convertion data sample to string. """
-        self._convert_func = func
+        self._convert_func = {
+            'name': func,
+            'kwargs': kwargs,
+        }
 
     def save_queue(self):
         """ Move data from queue to buffer. """
         while len(self._queue) > 0:
             sample = self._queue.popleft()
-            line = self._convert_func(sample)
+            line = self._convert_func['name'](
+                sample,
+                **self._convert_func['kwargs'],
+            )
             self._buff.write(line)
 
     def start_record(self):

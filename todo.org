@@ -40,7 +40,7 @@
 ** DONE [e] Use pep8 and pyflakes for some units
 ** DONE [e] Use encoding parameter to functions in csv module
 ** DONE [t] Add file writer which uses queue and thread from pmu_trace
-** TODO [t] Add arguments for convert function in QueuedWriter
+** DONE [t] Add arguments for convert function in QueuedWriter
 ** TODO [e] Make QueuedWriter independent from Qt
 ** TODO [t] Remove sleep from QueuedWriter
 ** DONE [t] Translation: Add init_translation from elma
