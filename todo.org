@@ -41,8 +41,6 @@
 ** DONE [e] Use encoding parameter to functions in csv module
 ** DONE [t] Add file writer which uses queue and thread from pmu_trace
 ** DONE [t] Add arguments for convert function in QueuedWriter
-** TODO [e] Make QueuedWriter independent from Qt
-** TODO [t] Remove sleep from QueuedWriter
 ** DONE [t] Translation: Add init_translation from elma
 ** DONE [t] Add module for analysing CSV-files containing time and signals values
 ** DONE [t] Add subpackages to setup.py
@@ -50,6 +48,11 @@
 ** DONE [t] Check the waveform module by syntax analysers
 ** DONE [e] Check config module with pycodestyle and pylint3
 ** DONE [b] Fix update data in multi wavefrom
+* 0.3.1
+** TODO [e] Make QueuedWriter independent from Qt
+** TODO [t] Remove sleep from QueuedWriter
+** TODO [e] Remove common exception in config module
+** TODO [t] Inspect reporter unit
 * major
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
@@ -58,6 +61,4 @@
 ** TODO [p] Add base class for Qt main window with states
 ** TODO [p] Make something more convenient than conf.setting[key]
 * minor
-** TODO [e] Remove common exception in config module
 ** TODO [e] Add docs
-** TODO [t] Inspect reporter unit
