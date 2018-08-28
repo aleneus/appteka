@@ -48,7 +48,7 @@ def get_time(secs, scale="s"):
         return time.strftime("%H", gmt)
     elif scale == "ms":
         millisecs = int(1000*(secs - int(secs)))
-        return time.strftime("%H:%M:%S", secs) + ".{}".format(millisecs)
+        return time.strftime("%H:%M:%S", gmt) + ".{}".format(millisecs)
 
 
 def get_date(secs):
