@@ -55,12 +55,12 @@
 ** TODO [t] Remove sleep from QueuedWriter
 ** TODO [e] Remove common exception in config module
 ** TODO [t] Inspect reporter unit
-* major
+* later
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
 ** TODO [p] Add base class for state from pmu_trace
 ** TODO [p] Add base class for Qt main window with states
 ** TODO [p] Make something more convenient than conf.setting[key]
-* minor
 ** TODO [e] Add docs
+** TODO [t] Add SelectItemDialog from elma
