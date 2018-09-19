@@ -17,7 +17,7 @@
 
 from setuptools import setup
 import os
-from appteka.glob import *
+from appteka import __version__
 
 
 def read(fname):
@@ -26,7 +26,7 @@ def read(fname):
 
 setup(
     name="appteka",
-    version=VERSION,
+    version=__version__,
     description="All goods",
     author="Aleksandr Popov",
     author_email="aleneus@gmail.com",
