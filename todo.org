@@ -53,7 +53,7 @@
 * 0.3.2
 ** DONE [t] Disable wheel if Waveform is online
 ** DONE [t] Add __version__ in __init__.py
-** TODO [t] Remove glob.py
+** DONE [t] Remove glob.py
 * 0.3.3
 ** TODO [e] Make QueuedWriter independent from Qt
 ** TODO [t] Remove sleep from QueuedWriter
