@@ -83,6 +83,12 @@ class Waveform(pg.PlotWidget):
     def set_online(self, value):
         """ Set online or offline mode for waveform. """
         self.state['online'] = value
+        if value:
+            self.setClipToView(True)
+            self.setMouseEnabled(x=False)
+        else:
+            self.setClipToView(False)
+            self.setMouseEnabled(x=True)
 
     def set_plot_color(self, color):
         """ Change plot color. """

@@ -51,6 +51,9 @@
 * 0.3.1
 ** DONE [b] Fix error in get_time() with miliseconds scale
 * 0.3.2
+** DONE [t] Disable wheel if Waveform is online
+** TODO [t] Add __version__ in __init__.py
+* 0.3.3
 ** TODO [e] Make QueuedWriter independent from Qt
 ** TODO [t] Remove sleep from QueuedWriter
 ** TODO [e] Remove common exception in config module
