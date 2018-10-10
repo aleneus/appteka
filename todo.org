@@ -68,3 +68,4 @@
 ** TODO [p] Make something more convenient than conf.setting[key]
 ** TODO [e] Add docs
 ** TODO [t] Add SelectItemDialog from elma
+** TODO [t] Add about window class for Qt
