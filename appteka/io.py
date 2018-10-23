@@ -2,7 +2,9 @@
 thread. Unfortunately, the current implementation depends on PyQt. """
 
 from collections import deque
-from threading import Lock, Event
+# ref
+from threading import Thread, Lock, Event
+# from threading import Lock, Event
 from time import sleep
 from PyQt5 import QtCore
 
@@ -87,3 +89,65 @@ class RecordThread(QtCore.QThread):
             self._must_write = False
         self._can_quit.wait()
         self.quit()
+
+
+class PyRecordThread(Thread):
+    """ Thread in which samples recorded to IO buffer. """
+    def __init__(self, context=None):
+        super().__init__()
+        self._lock = Lock()
+        self._must_write = False
+        self._can_quit = Event()
+        self._context = context
+
+    def run(self):
+        """ Record data from queue to buffer. """
+        self._can_quit.clear()
+        with self._lock:
+            self._must_write = True
+        while self._must_write:
+            print("====================")
+            sleep(1)
+            self._context.save_queue()
+        self._context.save_queue()
+        self._can_quit.set()
+
+    def stop(self):
+        """ Stop thread. """
+        with self._lock:
+            self._must_write = False
+        self._can_quit.wait()
+
+
+def _example():
+    from random import randint
+
+    def convert_func(sample):
+        return '{}: {}\n'.format(*sample)
+
+    writer = QueuedWriter()
+    writer.set_convert_func(convert_func)
+    buf = open('output.txt', 'w')
+    writer.set_buff(buf)
+
+    thread = PyRecordThread(context=writer)
+    thread.start()
+    i = 0
+    while True:
+        try:
+            sample = (i, randint(0, 100))
+            print(sample)
+            writer.add_data(sample)
+            writer.save_queue()
+            sleep(0.02)
+            i += 1
+        except KeyboardInterrupt:
+            print("Good bye...")
+            break
+
+    thread.stop()
+    buf.close()
+
+
+if __name__ == "__main__":
+    _example()

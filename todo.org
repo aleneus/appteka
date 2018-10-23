@@ -55,7 +55,8 @@
 ** DONE [t] Add __version__ in __init__.py
 ** DONE [t] Remove glob.py
 * 0.3.3
-** TODO [e] Make QueuedWriter independent from Qt
+** DONE [e] io.py: Add thread class independent from Qt
+** TODO [e] Refactor io.py
 ** TODO [t] Remove sleep from QueuedWriter
 ** TODO [e] Remove common exception in config module
 ** TODO [t] Inspect reporter unit
