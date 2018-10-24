@@ -56,6 +56,7 @@
 ** DONE [t] Remove glob.py
 * 0.3.3
 ** DONE [e] io.py: Add thread class independent from Qt
+** DONE [e] Set utf-8 encoding for html report
 ** TODO [e] Refactor io.py
 ** TODO [t] Remove sleep from QueuedWriter
 ** TODO [e] Remove common exception in config module
