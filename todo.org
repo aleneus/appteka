@@ -55,11 +55,11 @@
 ** DONE [t] Add __version__ in __init__.py
 ** DONE [t] Remove glob.py
 * 0.3.3
-** TODO [e] Make QueuedWriter independent from Qt
-** TODO [t] Remove sleep from QueuedWriter
-** TODO [e] Remove common exception in config module
-** TODO [t] Inspect reporter unit
+** DONE [e] io.py: Add thread class independent from Qt
+** DONE [e] Set utf-8 encoding for html report
+** DONE [e] Refactor io.py
 * later
+** TODO [t] Place old queued writer to pyqt part of package
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
@@ -68,3 +68,6 @@
 ** TODO [p] Make something more convenient than conf.setting[key]
 ** TODO [e] Add docs
 ** TODO [t] Add SelectItemDialog from elma
+** TODO [t] Add about window class for Qt
+** TODO [e] Specify exceptions in config module
+** TODO [t] Remove sleep from QueuedWriter
