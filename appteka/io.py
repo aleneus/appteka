@@ -1,10 +1,25 @@
+# appteka - helpers collection
+
+# Copyright (C) 2018 Aleksandr Popov
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the Lesser GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# Lesser GNU General Public License for more details.
+
+# You should have received a copy of the Lesser GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 """ Writing data to IO text buffer using queue and working in separate
 thread. Unfortunately, the current implementation depends on PyQt. """
 
 from collections import deque
-# ref
 from threading import Thread, Lock, Event
-# from threading import Lock, Event
 from time import sleep
 from PyQt5 import QtCore
 
@@ -93,12 +108,13 @@ class RecordThread(QtCore.QThread):
 
 class PyRecordThread(Thread):
     """ Thread in which samples recorded to IO buffer. """
-    def __init__(self, context=None):
+    def __init__(self, context=None, parent=None):
         super().__init__()
         self._lock = Lock()
         self._must_write = False
         self._can_quit = Event()
         self._context = context
+        self._parent = parent
 
     def run(self):
         """ Record data from queue to buffer. """
@@ -106,7 +122,6 @@ class PyRecordThread(Thread):
         with self._lock:
             self._must_write = True
         while self._must_write:
-            print("====================")
             sleep(1)
             self._context.save_queue()
         self._context.save_queue()
@@ -123,6 +138,7 @@ def _example():
     from random import randint
 
     def convert_func(sample):
+        """Convert function."""
         return '{}: {}\n'.format(*sample)
 
     writer = QueuedWriter()
