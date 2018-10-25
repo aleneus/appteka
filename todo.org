@@ -60,6 +60,8 @@
 ** DONE [e] Refactor io.py
 * 0.4.0
 ** DONE [t] Use python threads in queued writer (io.py)
+** DONE [t] Add function for showing about window
+** TODO [t] Brush pyqt.gui
 ** TODO [t] Remove sleep from QueuedWriter
 ** TODO [p] Place old queued writer to pyqt part of package
 * later
@@ -73,3 +75,4 @@
 ** TODO [t] Add SelectItemDialog from elma
 ** TODO [t] Add about window class for Qt
 ** TODO [e] Specify exceptions in config module
+** TODO [t] Remove deprecated build_gui module
