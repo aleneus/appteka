@@ -20,7 +20,9 @@
 
 from PyQt5 import QtWidgets, QtGui
 
+
 def add_action(window, name, slot, pic=None, shortcut=None, menu=None):
+    """Add action conected with clot to the main window."""
     action = None
     if pic:
         action = QtWidgets.QAction(QtGui.QIcon(pic), name, window)
@@ -33,7 +35,9 @@ def add_action(window, name, slot, pic=None, shortcut=None, menu=None):
         menu.addAction(action)
     return action
 
+
 def add_sublayout(parent_layout, direction="h"):
+    """Add sublayout."""
     if direction.lower() == "h":
         layout = QtWidgets.QHBoxLayout()
     elif direction.lower() == "v":
@@ -43,37 +47,40 @@ def add_sublayout(parent_layout, direction="h"):
     parent_layout.addLayout(layout)
     return layout
 
+
 def add_button(text, slot, layout):
+    """Add button connected with slot to layout."""
     button = QtWidgets.QPushButton(text)
     button.clicked.connect(slot)
     layout.addWidget(button)
     return button
 
+
 def add_edit(layout):
+    """Add line edit to layout."""
     edit = QtWidgets.QLineEdit()
     layout.addWidget(edit)
     return edit
 
+
 def add_label(text, layout):
+    """Add text label to layout."""
     label = QtWidgets.QLabel(text)
     layout.addWidget(label)
     return label
 
+
 def add_widget(widget, layout):
+    """Add widget to layout."""
     layout.addWidget(widget)
     return widget
 
 
-def show_about(title="About program", name="", version="", years="",
-               authors="", parent=None):
+def show_about(title="About program", name="", version="", descr="", parent=None):
     """Show about window."""
     mbox = QtWidgets.QMessageBox(parent)
     mbox.setWindowTitle(title)
     text = "<p><b>{} {}</b></p>".format(name, version)
-    text += "<p>"
-    text += _("Copyright")
-    text += " (C) {} ".format(years)
-    text += authors
-    text += "</p>"
+    text += "<p> {} </p>".format(descr)
     mbox.setText(text)
     mbox.exec()
