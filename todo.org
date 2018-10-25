@@ -58,8 +58,10 @@
 ** DONE [e] io.py: Add thread class independent from Qt
 ** DONE [e] Set utf-8 encoding for html report
 ** DONE [e] Refactor io.py
+* 0.4.0
+** DONE [t] Use python threads in queued writer (io.py)
+** TODO [p] Place old queued writer to pyqt part of package
 * later
-** TODO [t] Place old queued writer to pyqt part of package
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
