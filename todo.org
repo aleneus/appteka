@@ -62,6 +62,7 @@
 ** DONE [t] Use python threads in queued writer (io.py)
 ** DONE [t] Add function for showing about window
 ** DONE [t] Brush pyqt.gui
+** DONE [t] Add function for building name of build folder from elma
 ** TODO [t] Remove sleep from QueuedWriter
 ** TODO [p] Place old queued writer to pyqt part of package
 * later
