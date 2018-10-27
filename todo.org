@@ -63,6 +63,7 @@
 ** DONE [t] Add function for showing about window
 ** DONE [t] Brush pyqt.gui
 ** DONE [t] Add function for building name of build folder from elma
+** DONE [t] Remove mentions about Qt from io.py
 ** TODO [t] Remove sleep from QueuedWriter
 ** TODO [p] Place old queued writer to pyqt part of package
 * later

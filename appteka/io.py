@@ -16,18 +16,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """Writing data to IO text buffer using queue and working in separate
-thread. Unfortunately, the current implementation depends on PyQt."""
+thread."""
 
 
 from collections import deque
 from threading import Thread, Lock, Event
 from time import sleep
-from PyQt5 import QtCore
 
 
 class QueuedWriter:
-    """Tool for record data to text buffer using queue and
-    thread."""
+    """Tool for record data to text buffer using queue and thread."""
     def __init__(self, buff=None):
         self._buff = buff
         self._queue = deque([])
