@@ -15,7 +15,10 @@
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-print("""WARNING: appketa.pyqt.build_gui is deprecated and will be
-removed. Use appteka.pyqt.gui instead.""")
-
+import warnings
 from appteka.pyqt.gui import *
+
+warnings.warn(
+    "Module appketa.pyqt.build_gui is deprecated. Use appteka.pyqt.gui instead.",
+    DeprecationWarning
+)
