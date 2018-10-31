@@ -65,14 +65,15 @@
 ** DONE [t] Add function for building name of build folder from elma
 ** DONE [t] Remove mentions about Qt from io.py
 ** DONE [t] Use warnings for messaging about deprecations
-** TODO [t] Remove sleep from QueuedWriter
+** DONE [t] Allow to use sleep or event in QueuedWriter
+** TODO [e] io.py seems too tricky, refactor it
 ** TODO [p] Place old queued writer to pyqt part of package
+** TODO [p] Add base class for Qt main window with states
+** TODO [p] Add base class for state
 * later
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
-** TODO [p] Add base class for state from pmu_trace
-** TODO [p] Add base class for Qt main window with states
 ** TODO [p] Make something more convenient than conf.setting[key]
 ** TODO [e] Add docs
 ** TODO [t] Add SelectItemDialog from elma
