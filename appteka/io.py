@@ -26,19 +26,18 @@ from time import sleep
 
 class QueuedWriter:
     """Tool for record data to text buffer using queue and thread."""
-    def __init__(self, buff=None,
-                 use_sleep=True, write_period=1, use_event=False):
+    def __init__(self, buff=None, write_on='time', write_every=1):
         self._buff = buff
         self._queue = deque([])
         self._lock = Lock()
         self._must_write = False
-        self._convert_func = {
-            'name': lambda x: x,
-            'kwargs': {},
-        }
-        self.use_sleep = use_sleep
-        self.write_period = write_period
-        self.use_event = use_event
+        self._convert_func = {'name': lambda x: x,
+                              'kwargs': {}}
+        if write_on not in ['time', 'data']:
+            raise RuntimeError("write_on must be 'time' or 'data'.")
+        self.write_on = write_on
+        self.write_every = write_every
+        self._thread = None
 
     def set_buff(self, buff):
         """Set IO buffer."""
@@ -53,6 +52,7 @@ class QueuedWriter:
 
     def save_queue(self):
         """Move data from queue to buffer."""
+        print("D> ------------------")
         while len(self._queue) > 0:
             sample = self._queue.popleft()
             line = self._convert_func['name'](
@@ -63,8 +63,9 @@ class QueuedWriter:
 
     def start_record(self):
         """Start record."""
-        self._thread = PyRecordThread(self.use_sleep, self.write_period,
-                                      self.use_event)
+        use_sleep = (self.write_on == 'time')
+        use_event = (self.write_on == 'data')
+        self._thread = PyRecordThread(use_sleep, self.write_every, use_event)
         self._thread.set_writer(self)
         self._thread.start()
 
