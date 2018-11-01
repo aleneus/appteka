@@ -29,15 +29,10 @@ class QueuedWriter:
     def __init__(self, buff=None, write_on='time', write_every=1):
         self._buff = buff
         self._queue = deque([])
-        self._lock = Lock()
-        self._must_write = False
-        self._convert_func = {'name': lambda x: x,
-                              'kwargs': {}}
-        if write_on not in ['time', 'data']:
-            raise RuntimeError("write_on must be 'time' or 'data'.")
-        self.write_on = write_on
-        self.write_every = write_every
         self._thread = None
+        self._thread_args = (self._save_queue, write_on, write_every)
+        self._convert_func = lambda x: x
+        self._convert_func_kwargs = {}
 
     def set_buff(self, buff):
         """Set IO buffer."""
@@ -45,83 +40,75 @@ class QueuedWriter:
 
     def set_convert_func(self, func, **kwargs):
         """Set function for convertion data sample to string."""
-        self._convert_func = {
-            'name': func,
-            'kwargs': kwargs,
-        }
-
-    def save_queue(self):
-        """Move data from queue to buffer."""
-        print("D> ------------------")
-        while len(self._queue) > 0:
-            sample = self._queue.popleft()
-            line = self._convert_func['name'](
-                sample,
-                **self._convert_func['kwargs'],
-            )
-            self._buff.write(line)
+        self._convert_func = func
+        self._convert_func_kwargs = kwargs
 
     def start_record(self):
         """Start record."""
-        use_sleep = (self.write_on == 'time')
-        use_event = (self.write_on == 'data')
-        self._thread = PyRecordThread(use_sleep, self.write_every, use_event)
-        self._thread.set_writer(self)
+        self._thread = PyRecordThread(*self._thread_args)
         self._thread.start()
-
-    def stop_record(self):
-        """Stop record."""
-        self._thread.write_data()
-        self._thread.stop()
-        with self._lock:
-            self._must_write = False
 
     def add_data(self, sample):
         """Add data sample."""
         self._queue.append(sample)
         self._thread.write_data()
 
+    def _save_queue(self):
+        """Move data from queue to buffer."""
+        print("D> ------------------")
+        while len(self._queue) > 0:
+            sample = self._queue.popleft()
+            line = self._convert_func(
+                sample,
+                **self._convert_func_kwargs
+            )
+            self._buff.write(line)
+
+    def stop_record(self):
+        """Stop record."""
+        self._thread.write_data()
+        self._thread.stop()
+
 
 class PyRecordThread(Thread):
     """Thread in which samples recorded to IO buffer."""
-    def __init__(self, use_sleep, write_period, use_event):
+    def __init__(self, save_func, write_on='time', write_every=1):
         super().__init__()
         self._lock = Lock()
         self._must_write = False
         self._can_quit = Event()
-        self._writer = None
         self._have_data = Event()
-        self.use_sleep = use_sleep
-        self.write_period = write_period
-        self.use_event = use_event
-
-    def set_writer(self, writer):
-        self._writer = writer
+        self.save_func = save_func
+        if write_on == 'time':
+            self._loop_func = self._sleep_loop
+            self._loop_func_args = (write_every, )
+        elif write_on == 'data':
+            self._loop_func = self._event_loop
+            self._loop_func_args = ()
+        else:
+            raise RuntimeError("write_on must be 'time' or 'data'.")
 
     def run(self):
         """Record data from queue to buffer."""
         self._can_quit.clear()
         with self._lock:
             self._must_write = True
-        if self.use_sleep:
-            self._sleep_loop(self.write_period)
-        elif self.use_event:
-            self._event_loop()
-        self._writer.save_queue()
+        self._loop_func(*self._loop_func_args)
         self._can_quit.set()
 
     def _sleep_loop(self, period):
         while self._must_write:
             sleep(period)
-            self._writer.save_queue()
+            self.save_func()
 
     def _event_loop(self):
         while self._must_write:
             self._have_data.clear()
             self._have_data.wait()
-            self._writer.save_queue()
+            self.save_func()
 
     def write_data(self):
+        """Ask to write data."""
         self._have_data.set()
 
     def stop(self):
@@ -139,7 +126,7 @@ def _example():
         """Convert function."""
         return '{}: {}\n'.format(*sample)
 
-    writer = QueuedWriter()
+    writer = QueuedWriter(write_on='time')
     writer.set_convert_func(convert_func)
     buf = open('output.txt', 'w')
     writer.set_buff(buf)
