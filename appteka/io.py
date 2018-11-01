@@ -113,7 +113,7 @@ class PyRecordThread(Thread):
             self.save_func()
 
     def write_data(self):
-        """Ask to write data."""
+        """Ask thread to write data."""
         self._have_data.set()
 
     def stop(self):
