@@ -67,7 +67,7 @@
 ** DONE [t] Use warnings for messaging about deprecations
 ** DONE [t] Allow to use sleep or event in QueuedWriter
 ** DONE [e] io.py seems too tricky, refactor it
-** TODO [t] io.py: add args to convert_func()
+** DONE [t] Add deprecations
 ** TODO [p] Place old queued writer to pyqt part of package
 ** TODO [p] Add base class for Qt main window with states
 ** TODO [p] Add base class for state

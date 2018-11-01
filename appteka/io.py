@@ -22,6 +22,7 @@ thread."""
 from collections import deque
 from threading import Thread, Lock, Event
 from time import sleep
+from warnings import warn
 
 
 class QueuedWriter:
@@ -32,21 +33,24 @@ class QueuedWriter:
         self._thread = None
         self._thread_args = (self._save_queue, write_on, write_every)
         self._convert_func = lambda x: x
-        self._convert_func_kwargs = {}
 
     def set_buff(self, buff):
         """Set IO buffer."""
         self._buff = buff
 
-    def set_convert_func(self, func, **kwargs):
+    def set_convert_func(self, func):
         """Set function for convertion data sample to string."""
         self._convert_func = func
-        self._convert_func_kwargs = kwargs
 
-    def start_record(self):
-        """Start record."""
+    def start_thread(self):
+        """Start recording thread."""
         self._thread = PyRecordThread(*self._thread_args)
         self._thread.start()
+
+    def start_record(self):
+        """Deprecated."""
+        warn("start_record() is deprecated. Use start_thread().")
+        self.start_thread()
 
     def add_data(self, sample):
         """Add data sample."""
@@ -55,19 +59,20 @@ class QueuedWriter:
 
     def _save_queue(self):
         """Move data from queue to buffer."""
-        print("D> ------------------")
         while len(self._queue) > 0:
             sample = self._queue.popleft()
-            line = self._convert_func(
-                sample,
-                **self._convert_func_kwargs
-            )
+            line = self._convert_func(sample)
             self._buff.write(line)
 
-    def stop_record(self):
-        """Stop record."""
+    def stop_thread(self):
+        """Stop recording record."""
         self._thread.write_data()
         self._thread.stop()
+
+    def stop_record(self):
+        """Deprecated."""
+        warn("stop_record() is deprecated. Use stop_thread().")
+        self.stop_thread()
 
 
 class PyRecordThread(Thread):
@@ -130,7 +135,7 @@ def _example():
     writer.set_convert_func(convert_func)
     buf = open('output.txt', 'w')
     writer.set_buff(buf)
-    writer.start_record()
+    writer.start_thread()
 
     i = 0
     while True:
@@ -144,7 +149,7 @@ def _example():
             print("Good bye...")
             break
 
-    writer.stop_record()
+    writer.stop_thread()
     buf.close()
 
 
