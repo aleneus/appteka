@@ -29,4 +29,4 @@ release:
 	hg up develop
 
 upload:
-	python3 sdist upload
+	python3 setup.py sdist upload
