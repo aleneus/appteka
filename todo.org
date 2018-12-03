@@ -68,6 +68,7 @@
 ** DONE [t] Allow to use sleep or event in QueuedWriter
 ** DONE [e] io.py seems too tricky, refactor it
 ** DONE [t] Add deprecations
+** DONE [t] Add Makefile
 ** TODO [p] Add base class for Qt main window with states
 ** TODO [p] Add base class for state
 * later
