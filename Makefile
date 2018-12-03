@@ -1,19 +1,23 @@
 PACKAGE = appteka
 
-.PHONY: flake uml release
+.PHONY: style flakes uml release
 
 all: help
 
 help:
-	@echo "make flake"
+	@echo "make style"
+	@echo "make flakes"
 	@echo "make uml"
 	@echo "make release ver=value"
 
-flake:
-	@flake8 $(PACKAGE)
+style:
+	pycodestyle $(PACKAGE)
+
+flakes:
+	pyflakes $(PACKAGE)
 
 uml:
-	@pyreverse3 $(PACKAGE) -o png
+	pyreverse3 $(PACKAGE) -o png
 
 release:
 	@echo $(ver)

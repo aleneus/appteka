@@ -1,10 +1,11 @@
 """ This module implements the base class for routines. """
 
+
 class Routine:
     """ Base routine class. """
     def __init__(self):
-        self.progress_hook = lambda x : True
-        self.finished_hook = lambda : True
+        self.progress_hook = lambda x: True
+        self.finished_hook = lambda: True
         self.volume = 1
         self.ready = 0
 

@@ -18,6 +18,7 @@
 """ This module implements the SimpleSignal class which makes the
 event handling more convenient. """
 
+
 class SimpleSignal:
     """Provides simple signals and slots mechanism."""
     def __init__(self):
@@ -35,29 +36,27 @@ class SimpleSignal:
 
     def connect(self, slot):
         """Connect signal with slot.
-        
+
         Parameters
         ----------
         slot
             Function to be connected with signal.
-        
         """
         for i in range(len(self.slots)):
             if self.slots[i] == slot:
                 return
-            if self.slots[i] == None:
+            if self.slots[i] is None:
                 self.slots[i] = slot
                 return
         self.slots.append(slot)
 
     def disconnect(self, slot):
         """Disconnect slot from signal.
-        
+
         Parameters
         ----------
         slot
             Name of connected function.
-        
         """
         for i in range(len(self.slots)):
             if self.slots[i] == slot:

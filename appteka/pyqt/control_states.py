@@ -42,7 +42,7 @@ class ControlsStateMachine:
         for c in self.__controls:
             c.setVisible(c not in self.__states[state_name]['invisible'])
             c.setEnabled(c not in self.__states[state_name]['disabled'])
-            
+
     def _setup_controls_state(self, controls, state_name, key):
         """ Helper function. """
         self.__states[state_name][key] = []

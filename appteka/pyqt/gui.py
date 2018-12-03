@@ -76,7 +76,8 @@ def add_widget(widget, layout):
     return widget
 
 
-def show_about(title="About program", name="", version="", descr="", parent=None):
+def show_about(title="About program", name="", version="",
+               descr="", parent=None):
     """Show about window."""
     mbox = QtWidgets.QMessageBox(parent)
     mbox.setWindowTitle(title)
