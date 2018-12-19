@@ -19,6 +19,9 @@
 
 import time
 import datetime
+from warnings import warn
+
+warn("appteka.timestamps is deprecated and will be removed.")
 
 
 def get_time(secs, scale="s"):

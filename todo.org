@@ -72,7 +72,16 @@
 ** DONE [t] Brush code
 * 0.4.1
 ** DONE [t] Add upload to Makefile
+* 0.4.2
+** DONE [t] Add deprecations
+*** DONE [t] Deprecate module timestamps
+*** DONE [t] Deprecate module csv
+** TODO [e] Raise pylint result
 * later
+** TODO [t] Remove deprecated stuff
+*** TODO [t] Remove csv module
+*** TODO [t] Remove timestamps module
+*** TODO [t] Remove deprecated build_gui module
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
@@ -81,4 +90,3 @@
 ** TODO [t] Add SelectItemDialog from elma
 ** TODO [t] Add about window class for Qt
 ** TODO [e] Specify exceptions in config module
-** TODO [t] Remove deprecated build_gui module
