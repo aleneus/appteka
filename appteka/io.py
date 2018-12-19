@@ -59,7 +59,7 @@ class QueuedWriter:
 
     def _save_queue(self):
         """Move data from queue to buffer."""
-        while len(self._queue) > 0:
+        while self._queue:
             sample = self._queue.popleft()
             line = self._convert_func(sample)
             self._buff.write(line)

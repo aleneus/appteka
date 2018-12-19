@@ -1,8 +1,8 @@
-""" This module implements the base class for routines. """
+"""This module implements the base class for routines."""
 
 
 class Routine:
-    """ Base routine class. """
+    """Base routine class."""
     def __init__(self):
         self.progress_hook = lambda x: True
         self.finished_hook = lambda: True
@@ -10,6 +10,7 @@ class Routine:
         self.ready = 0
 
     def add_progress(self, part):
+        """Add part value to progress."""
         self.ready += part
         self.progress_hook(int(100*self.ready/self.volume))
 

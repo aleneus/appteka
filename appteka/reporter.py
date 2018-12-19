@@ -28,11 +28,9 @@ class Reporter:
     def begin(self):
         """Start the building of report. Some actions may be needed
         fisrt. Make it here."""
-        pass
 
     def end(self):
         """Some actions in the end of the process of building."""
-        pass
 
     def add_header(self, header_text, level=1):
         """Add header.
@@ -66,7 +64,7 @@ class Reporter:
         """
         raise NotImplementedError
 
-    def report(self):
+    def report(self, file_name, encoding):
         """Save report."""
         raise NotImplementedError
 
