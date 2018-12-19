@@ -1,5 +1,8 @@
 """ Analysis of CSV files containing time and several signals values. """
+from warnings import warn
 from appteka.timestamps import TimeConverter
+
+warn("appteka.csv is deprecated and will be removed")
 
 
 def get_delimiter(file_name, encoding='utf-8'):

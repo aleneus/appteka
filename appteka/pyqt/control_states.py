@@ -16,6 +16,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+"""State machine for enabling/disabling controls."""
+
+
 class ControlsStateMachine:
     """ State machine for enable/disable/hide/show controls. """
     def __init__(self):

@@ -1,12 +1,13 @@
 PACKAGE = appteka
 
-.PHONY: style flakes uml release upload
+.PHONY: style flakes lint uml release upload
 
 all: help
 
 help:
 	@echo "make style"
 	@echo "make flakes"
+	@echo "make lint"
 	@echo "make uml"
 	@echo "make release ver=value"
 	@echo "make upload"
@@ -16,6 +17,9 @@ style:
 
 flakes:
 	pyflakes $(PACKAGE)
+
+lint:
+	pylint $(PACKAGE)
 
 uml:
 	pyreverse3 $(PACKAGE) -o png
@@ -29,4 +33,4 @@ release:
 	hg up develop
 
 upload:
-	python3 sdist upload
+	python3 setup.py sdist upload

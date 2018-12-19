@@ -99,7 +99,7 @@ class Waveform(pg.PlotWidget):
         """ Update plot. """
         if self.state['online'] and not self.isVisible():
             return
-        if len(t) <= 0:
+        if not t:
             return
         self.curve.setData(t, x)
         self.setLimits(xMin=t[0], xMax=t[-1])
@@ -179,7 +179,7 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
 
     def update_data(self, key, t, x):
         """ Update data on the plot. """
-        if len(t) == 0:
+        if not t:
             return
         if self.state['online'] and not self.isVisible():
             return
