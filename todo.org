@@ -77,6 +77,8 @@
 *** DONE [t] Deprecate module timestamps
 *** DONE [t] Deprecate module csv
 ** DONE [e] Raise pylint result
+* 0.4.3
+** DONE [b] fix waveform
 * later
 ** TODO [t] Remove deprecated stuff
 *** TODO [t] Remove csv module
