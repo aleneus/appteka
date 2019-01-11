@@ -79,16 +79,21 @@
 ** DONE [e] Raise pylint result
 * 0.4.3
 ** DONE [b] fix waveform
-* later
+* 0.5.0
+** TODO [t] Get rid of import timestamps in waveform
+** TODO [t] Think about more clean structure of the project
+** TODO [t] Use namespaced package technology in appteka
+** TODO [t] Add console progress messages from cases project
 ** TODO [t] Remove deprecated stuff
 *** TODO [t] Remove csv module
 *** TODO [t] Remove timestamps module
 *** TODO [t] Remove deprecated build_gui module
-** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
-** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
-** TODO [p] Make something more convenient than conf.setting[key]
-** TODO [e] Add docs
 ** TODO [t] Add SelectItemDialog from elma
 ** TODO [t] Add about window class for Qt
 ** TODO [e] Specify exceptions in config module
+* later
+** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
+** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
+** TODO [p] Make something more convenient than conf.setting[key]
+** TODO [e] Add docs
