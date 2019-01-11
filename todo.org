@@ -80,7 +80,7 @@
 * 0.4.3
 ** DONE [b] fix waveform
 * 0.5.0
-** TODO [t] Get rid of import timestamps in waveform
+** DONE [t] Get rid of import timestamps in waveform
 ** TODO [t] Think about more clean structure of the project
 ** TODO [t] Use namespaced package technology in appteka
 ** TODO [t] Add console progress messages from cases project

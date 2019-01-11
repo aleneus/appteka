@@ -17,8 +17,8 @@
 
 """ Waveform widgets. """
 
+import time
 import pyqtgraph as pg
-from appteka.timestamps import get_time, get_date
 
 
 class TimeStampAxisItem(pg.AxisItem):
@@ -32,9 +32,12 @@ class TimeStampAxisItem(pg.AxisItem):
 
     def tickStrings(self, values, scale, spacing):
         if self.what_show == 'time':
-            return [get_time(v) for v in values]
-        elif self.what_show == 'date':
-            return [get_date(v) for v in values]
+            return [time.strftime("%H:%M:%S", time.gmtime(secs))
+                    for secs in values]
+        if self.what_show == 'date':
+            return [time.strftime("%y-%m-%d", time.gmtime(secs))
+                    for secs in values]
+        raise RuntimeError("scale must be time or date")
 
 
 def get_time_stamp_axis_item(top=True):
