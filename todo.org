@@ -81,10 +81,10 @@
 ** DONE [b] fix waveform
 * 0.5.0
 ** DONE [t] Get rid of import timestamps in waveform
-** TODO [t] Remove deprecated stuff
+** DONE [t] Remove deprecated stuff
 *** DONE [t] Remove csv module
 *** DONE [t] Remove deprecated build_gui module
-*** TODO [t] Remove timestamps module
+*** DONE [t] Remove timestamps module
 ** TODO [t] Think about more clean structure of the project
 ** TODO [t] Use namespaced package technology in appteka
 ** TODO [t] Add console progress messages from cases project
