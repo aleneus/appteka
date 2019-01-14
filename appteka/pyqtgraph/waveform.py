@@ -18,6 +18,8 @@
 """Waveform widgets."""
 
 import time
+from warnings import warn
+
 import pyqtgraph as pg
 
 
@@ -215,6 +217,13 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
                 plot.setMouseEnabled(x=True)
 
     def set_plot_color(self, color):
+        """Set color for all plots."""
+        message = "MultiWaveform.set_plot_color() is deprecated. "
+        message += "Use MultiWaveform.set_plots_color()."
+        warn(message)
+        self.set_plots_color(color)
+
+    def set_plots_color(self, color):
         """Set color for all plots."""
         for curve in self.curves.values():
             curve.setPen(color)

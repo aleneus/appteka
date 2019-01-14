@@ -89,7 +89,7 @@
 ** DONE [t] Add console progress messages from cases project
 ** DONE [e] Add pylint config to the project
 ** DONE [e] Lint waveform module
-** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
+** DONE [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** TODO [t] Add SelectItemDialog from elma
 ** TODO [e] Specify exceptions in config module
 ** TODO [t] Update years in license
@@ -99,4 +99,6 @@
 ** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
 ** TODO [p] Make something more convenient than conf.setting[key]
 ** TODO [e] Add docs
-** TODO [t] Remove deprecater rtanslation.py
+** TODO [t] Remove depretaced
+*** TODO [t] Remove deprecated translation.py
+*** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
