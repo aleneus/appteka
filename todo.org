@@ -87,7 +87,7 @@
 *** DONE [t] Remove timestamps module
 ** DONE [t] Merge translation to distrib
 ** DONE [t] Add console progress messages from cases project
-** TODO [e] Add pylint config to the project
+** DONE [e] Add pylint config to the project
 ** TODO [e] Lint waveform module
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** TODO [t] Add SelectItemDialog from elma
