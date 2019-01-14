@@ -87,12 +87,14 @@
 *** DONE [t] Remove timestamps module
 ** DONE [t] Merge translation to distrib
 ** DONE [t] Add console progress messages from cases project
-** TODO [t] Use namespaced package technology in appteka
+** TODO [e] Add pylint config to the project
+** TODO [e] Lint waveform module
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** TODO [t] Add SelectItemDialog from elma
-** TODO [t] Add about window class for Qt
 ** TODO [e] Specify exceptions in config module
+** TODO [t] Update years in license
 * later
+** TODO [p] Use namespaced package technology in appteka
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
 ** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
 ** TODO [p] Make something more convenient than conf.setting[key]
