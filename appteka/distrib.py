@@ -42,7 +42,7 @@ def init_translation(package_name, resource_name, module_name):
     """ Returns function for specifying of places to be translated. """
     lang = locale.getdefaultlocale()[0]
     gettext.install(module_name)
-    
+
     def _echo(text):
         return text
 
