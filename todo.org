@@ -92,7 +92,7 @@
 ** DONE [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** DONE [t] Add SelectItemDialog from elma
 ** DONE [e] Write the type of exception in config module to the log
-** TODO [t] Update years in license
+** DONE [t] Update years in license
 * later
 ** TODO [p] Use namespaced package technology in appteka
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections

@@ -1,6 +1,6 @@
 # appteka - helpers collection
 
-# Copyright (C) 2018 Aleksandr Popov
+# Copyright (C) 2018-2019 Aleksandr Popov
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the Lesser GNU General Public License as published by
@@ -15,4 +15,4 @@
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-__version__ = '0.4.3'
+__version__ = '0.5.0'
