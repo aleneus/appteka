@@ -15,14 +15,14 @@
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-""" Waveform widgets. """
+"""Waveform widgets."""
 
 import time
 import pyqtgraph as pg
 
 
 class TimeStampAxisItem(pg.AxisItem):
-    """ Axis with times or dates as ticks. """
+    """Axis with times or dates as ticks."""
     def __init__(self, what_show='time', *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.enableAutoSIPrefix(enable=False)
@@ -41,7 +41,7 @@ class TimeStampAxisItem(pg.AxisItem):
 
 
 def get_time_stamp_axis_item(top=True):
-    """ Return custom axis item with time stamps. """
+    """Return custom axis item with time stamps."""
     res = {
         'bottom': TimeStampAxisItem(
             what_show='time',
@@ -57,7 +57,7 @@ def get_time_stamp_axis_item(top=True):
 
 
 class Waveform(pg.PlotWidget):
-    """ Customized PyQtGraph.PlotWidget. """
+    """Customized PyQtGraph.PlotWidget."""
     def __init__(self, xlabel=None):
         super().__init__(axisItems=get_time_stamp_axis_item())
         self.state = {
@@ -76,7 +76,7 @@ class Waveform(pg.PlotWidget):
         self.curve = self.plot()
 
     def reset(self):
-        """ Clear plot. """
+        """Clear plot."""
         self.clear()
         self.curve = self.plot()
         self.set_plot_color(self.state['plot_color'])
@@ -84,7 +84,7 @@ class Waveform(pg.PlotWidget):
         self.enableAutoRange(True)
 
     def set_online(self, value):
-        """ Set online or offline mode for waveform. """
+        """Set online or offline mode for waveform."""
         self.state['online'] = value
         if value:
             self.setClipToView(True)
@@ -94,12 +94,12 @@ class Waveform(pg.PlotWidget):
             self.setMouseEnabled(x=True)
 
     def set_plot_color(self, color):
-        """ Change plot color. """
+        """Change plot color."""
         self.curve.setPen(color)
         self.state['plot_color'] = color
 
     def update_data(self, t, x):
-        """ Update plot. """
+        """Update plot."""
         if self.state['online'] and not self.isVisible():
             return
         if len(t) == 0:
@@ -114,9 +114,9 @@ class Waveform(pg.PlotWidget):
 
 
 class MultiWaveform(pg.GraphicsLayoutWidget):
-    """ Customized PyQtGraph.GraphicsLayoutWidget. """
+    """Customized PyQtGraph.GraphicsLayoutWidget."""
     def __init__(self):
-        """ Initialization. """
+        """Initialization."""
         super().__init__()
         self.state = {
             'online': False,
@@ -128,11 +128,11 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         self.__main_plot_limits = None
 
     def set_main_plot(self, key):
-        """ Set the plot used for synchronization (main plot). """
+        """Set the plot used for synchronization (main plot)."""
         self._main = key
 
     def get_main_plot(self):
-        """ Set the plot used for synchronization (main plot). """
+        """Set the plot used for synchronization (main plot)."""
         return self._main
 
     main_plot = property(
@@ -142,7 +142,7 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
     )
 
     def _init_plot(self, key):
-        """ Bring plot to initial state. """
+        """Bring plot to initial state."""
         if key not in self.plots.keys():
             return
         plot = self.plots[key]
@@ -158,7 +158,7 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         plot.enableAutoRange(True)
 
     def add_plot(self, key, title=None, main=False):
-        """ Add plot. """
+        """Add plot."""
         self.plots[key] = self.addPlot(
             len(self.plots),
             0,
@@ -173,15 +173,15 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
             self._main = key
 
     def remove_plots(self):
-        """ Remove all plots. """
-        for key in self.plots.keys():
+        """Remove all plots."""
+        for key in self.plots:
             self.removeItem(self.plots[key])
         self.plots = {}
         self.curves = {}
         self._main = None
 
     def update_data(self, key, t, x):
-        """ Update data on the plot. """
+        """Update data on the plot."""
         if len(t) == 0:
             return
         if self.state['online'] and not self.isVisible():
@@ -203,7 +203,7 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         )
 
     def set_online(self, value):
-        """ Turn on or turn off the online mode. """
+        """Turn on or turn off the online mode."""
         self.state['online'] = value
         if value:
             for plot in self.plots.values():
@@ -215,14 +215,14 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
                 plot.setMouseEnabled(x=True)
 
     def set_plot_color(self, color):
-        """ Set color for all plots. """
-        for c in self.curves.values():
-            c.setPen(color)
+        """Set color for all plots."""
+        for curve in self.curves.values():
+            curve.setPen(color)
         self.state['plot_color'] = color
 
     def set_link_to_main(self, value=True):
-        """ Link plots to main or unlink. """
-        for key in self.plots.keys():
+        """Link plots to main or unlink."""
+        for key in self.plots:
             if key == self._main:
                 continue
             self.plots[key].setXLink(self.plots[self._main] if value else None)
