@@ -20,6 +20,9 @@
 
 import sys
 import platform
+import locale
+import gettext
+from pkg_resources import resource_filename as resource
 
 
 def build_folder_name(name, version, appendix=None):
@@ -33,3 +36,22 @@ def build_folder_name(name, version, appendix=None):
         res += "-{}".format(appendix)
     res += "-{}-{}".format(os_name, bit_version)
     return res
+
+
+def init_translation(package_name, resource_name, module_name):
+    """ Returns function for specifying of places to be translated. """
+    lang = locale.getdefaultlocale()[0]
+    gettext.install(module_name)
+    
+    def _echo(text):
+        return text
+
+    try:
+        trans = gettext.translation(
+            module_name,
+            resource(package_name, resource_name),
+            languages=[lang],
+        )
+        return trans.gettext
+    except (ImportError, FileNotFoundError):
+        return _echo

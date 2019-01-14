@@ -85,7 +85,7 @@
 *** DONE [t] Remove csv module
 *** DONE [t] Remove deprecated build_gui module
 *** DONE [t] Remove timestamps module
-** TODO [t] Think about more clean structure of the project
+** DONE [t] Merge translation to distrib
 ** TODO [t] Use namespaced package technology in appteka
 ** TODO [t] Add console progress messages from cases project
 ** TODO [t] MultiWaveform. set_plot_color --> set_plots_color()
