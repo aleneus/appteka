@@ -90,7 +90,7 @@
 ** DONE [e] Add pylint config to the project
 ** DONE [e] Lint waveform module
 ** DONE [t] MultiWaveform. set_plot_color --> set_plots_color()
-** TODO [t] Add SelectItemDialog from elma
+** DONE [t] Add SelectItemDialog from elma
 ** TODO [e] Specify exceptions in config module
 ** TODO [t] Update years in license
 * later
