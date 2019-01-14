@@ -91,7 +91,7 @@
 ** DONE [e] Lint waveform module
 ** DONE [t] MultiWaveform. set_plot_color --> set_plots_color()
 ** DONE [t] Add SelectItemDialog from elma
-** TODO [e] Specify exceptions in config module
+** DONE [e] Write the type of exception in config module to the log
 ** TODO [t] Update years in license
 * later
 ** TODO [p] Use namespaced package technology in appteka

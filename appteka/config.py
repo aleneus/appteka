@@ -22,6 +22,9 @@ import os
 import shutil
 import json
 import pkg_resources
+import logging
+
+LOG = logging.getLogger(__name__)
 
 
 class Config:
@@ -61,7 +64,9 @@ class Config:
         try:
             self.read_settings()
             return True
-        except Exception:
+        except Exception as expt:
+            msg = "appteka.config: {} raised".format(type(expt))
+            LOG.info(msg)
             return False
 
     def open(self, fname):
