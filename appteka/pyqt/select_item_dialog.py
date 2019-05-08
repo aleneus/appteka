@@ -23,7 +23,7 @@ from appteka.pyqt import gui
 
 class SelectItemDialog(QtWidgets.QDialog):
     """ Dialog for selecting string item from list. """
-    def __init__(self, title="Select column", question="Select item",
+    def __init__(self, title="Select item", question="Select item",
                  ok_caption="Ok", cancel_caption="Cancel",
                  parent=None):
         QtWidgets.QDialog.__init__(self, parent)

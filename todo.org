@@ -79,26 +79,29 @@
 ** DONE [e] Raise pylint result
 * 0.4.3
 ** DONE [b] fix waveform
-* 0.5.0
-** DONE [t] Get rid of import timestamps in waveform
-** DONE [t] Remove deprecated stuff
+* 0.5
+** 0.5.0
+*** DONE [t] Get rid of import timestamps in waveform
+*** DONE [t] Remove deprecated stuff
 *** DONE [t] Remove csv module
 *** DONE [t] Remove deprecated build_gui module
 *** DONE [t] Remove timestamps module
-** DONE [t] Merge translation to distrib
-** DONE [t] Add console progress messages from cases project
-** DONE [e] Add pylint config to the project
-** DONE [e] Lint waveform module
-** DONE [t] MultiWaveform. set_plot_color --> set_plots_color()
-** DONE [t] Add SelectItemDialog from elma
-** DONE [e] Write the type of exception in config module to the log
-** DONE [t] Update years in license
+*** DONE [t] Merge translation to distrib
+*** DONE [t] Add console progress messages from cases project
+*** DONE [e] Add pylint config to the project
+*** DONE [e] Lint waveform module
+*** DONE [t] MultiWaveform. set_plot_color --> set_plots_color()
+*** DONE [t] Add SelectItemDialog from elma
+*** DONE [e] Write the type of exception in config module to the log
+*** DONE [t] Update years in license
+** 0.5.1
+*** DONE [b] SelectItemDialog: generalize default title
+* 0.7
+** 0.7.0
+*** TODO [t] Remove deprecated translation.py
+*** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
 * later
 ** TODO [p] Use namespaced package technology in appteka
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
-** TODO [t] MultiWaveform. Let the set_plot_color() uses key and work for one plot
 ** TODO [p] Make something more convenient than conf.setting[key]
 ** TODO [e] Add docs
-** TODO [t] Remove depretaced
-*** TODO [t] Remove deprecated translation.py
-*** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
