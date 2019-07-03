@@ -96,8 +96,9 @@
 *** DONE [t] Update years in license
 ** 0.5.1
 *** DONE [b] SelectItemDialog: generalize default title
-* 0.7
-** 0.7.0
+* 0.6
+** 0.6.0
+*** DONE [t] pyqtgraph.waveform: Allow user to control axis in waveforms
 *** TODO [t] Remove deprecated translation.py
 *** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
 * later

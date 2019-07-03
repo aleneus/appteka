@@ -60,16 +60,22 @@ def get_time_stamp_axis_item(top=True):
 
 class Waveform(pg.PlotWidget):
     """Customized PyQtGraph.PlotWidget."""
-    def __init__(self, xlabel=None):
-        super().__init__(axisItems=get_time_stamp_axis_item())
+    def __init__(self, xlabel=None, time_axes=True):
+        if time_axes:
+            axisItems = get_time_stamp_axis_item()
+        else:
+            axisItems = None
+        super().__init__(axisItems=axisItems)
+
+        self.showAxis('top')
+        self.showAxis('right')
+
         self.state = {
             'online': False,
             'plot_color': (255, 255, 255),
         }
         self.showGrid(x=True, y=True)
         self.setMouseEnabled(x=True, y=False)
-        self.showAxis('top')
-        self.showAxis('right')
         if xlabel is not None:
             self.setLabel('bottom', xlabel)
         self.setDownsampling(mode='peak')
@@ -159,13 +165,14 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
             )
         plot.enableAutoRange(True)
 
-    def add_plot(self, key, title=None, main=False):
+    def add_plot(self, key, title=None, main=False, time_axes=False):
         """Add plot."""
-        self.plots[key] = self.addPlot(
-            len(self.plots),
-            0,
-            axisItems=get_time_stamp_axis_item()
-        )
+        if time_axes:
+            axes = get_time_stamp_axis_item()
+        else:
+            axes = None
+
+        self.plots[key] = self.addPlot(len(self.plots), 0, axisItems=axes)
         self._init_plot(key)
         if title is not None:
             self.plots[key].setTitle(title, justify='left')
