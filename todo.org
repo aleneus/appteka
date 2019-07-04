@@ -99,6 +99,9 @@
 * 0.6
 ** 0.6.0
 *** DONE [t] pyqtgraph.waveform: Allow user to control axis in waveforms
+*** TODO [t] pyqtgraph.waveform: Refactoring
+*** TODO [t] pyqtgraph.waveform: Add 'synchronized' to state
+* 0.7
 *** TODO [t] Remove deprecated translation.py
 *** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
 * later

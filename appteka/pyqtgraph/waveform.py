@@ -150,6 +150,7 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
     )
 
     def _init_plot(self, key):
+        # TODO: move this code to add_plot
         """Bring plot to initial state."""
         if key not in self.plots.keys():
             return
@@ -174,10 +175,14 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
 
         self.plots[key] = self.addPlot(len(self.plots), 0, axisItems=axes)
         self._init_plot(key)
+
         if title is not None:
             self.plots[key].setTitle(title, justify='left')
+
         self.curves[key] = self.plots[key].plot()
         self.curves[key].setPen(self.state['plot_color'])
+
+        # TODO: deprecate main argument
         if main:
             self._main = key
 
@@ -204,6 +209,7 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
             xlims = self.__main_plot_limits
 
         self.curves[key].setData(t, x)
+
         self.plots[key].setLimits(xMin=xlims[0], xMax=xlims[1])
         self.plots[key].setRange(
             xRange=(xlims[0], xlims[1]),
