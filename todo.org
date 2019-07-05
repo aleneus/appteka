@@ -99,6 +99,7 @@
 * 0.6
 ** 0.6.0
 *** DONE [t] pyqtgraph.waveform: Allow user to control axis in waveforms
+** 0.6.1
 *** TODO [t] pyqtgraph.waveform: Refactoring
 *** TODO [t] pyqtgraph.waveform: Add 'synchronized' to state
 * 0.7
