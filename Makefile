@@ -38,3 +38,6 @@ release:
 
 upload:
 	python3 setup.py sdist upload
+
+check:
+	python3 test/pyqtgraph/test_phasor.py

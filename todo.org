@@ -96,15 +96,17 @@
 *** DONE [t] Update years in license
 ** 0.5.1
 *** DONE [b] SelectItemDialog: generalize default title
-* 0.6
-** 0.6.0
-*** DONE [t] pyqtgraph.waveform: Allow user to control axis in waveforms
-** 0.6.1
-*** TODO [t] pyqtgraph.waveform: Refactoring
-*** TODO [t] pyqtgraph.waveform: Add 'synchronized' to state
+* 0.6.0
+** DONE [t] pyqtgraph.waveform: Allow user to control axis in waveforms
 * 0.7
-*** TODO [t] Remove deprecated translation.py
-*** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
+** DONE [t] Add tool for unit testing widgets
+** DONE [t] Add widget for phasor diagram
+* 0.7.1
+** TODO [t] pyqtgraph.waveform: Refactoring
+** TODO [t] pyqtgraph.waveform: Add 'synchronized' to state
+* 0.8
+** TODO [t] Remove deprecated translation.py
+** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
 * later
 ** TODO [p] Use namespaced package technology in appteka
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
