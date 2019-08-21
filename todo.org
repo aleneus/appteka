@@ -99,7 +99,9 @@
 * 0.6.0
 ** DONE [t] pyqtgraph.waveform: Allow user to control axis in waveforms
 * 0.7
-** TODO [t] Add widget for phasor diagram
+** DONE [t] Add tool for unit testing widgets
+** DONE [t] Add widget for phasor diagram
+* 0.7.1
 ** TODO [t] pyqtgraph.waveform: Refactoring
 ** TODO [t] pyqtgraph.waveform: Add 'synchronized' to state
 * 0.8
