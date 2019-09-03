@@ -10,7 +10,6 @@ help:
 	@echo "make flakes"
 	@echo "make lint"
 	@echo "make uml"
-	@echo "make release ver=value"
 	@echo "make upload"
 
 diff:
@@ -28,16 +27,8 @@ lint:
 uml:
 	pyreverse3 $(PACKAGE) -o png
 
-release:
-	@echo $(ver)
-	hg up default
-	hg merge develop
-	hg ci -m 'merge from develop'
-	hg tag $(ver)
-	hg up develop
-
 upload:
 	python3 setup.py sdist upload
 
 check:
-	python3 test/pyqtgraph/test_phasor.py
+	python3 test/test_phasor.py
