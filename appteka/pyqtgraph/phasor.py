@@ -43,6 +43,13 @@ class PhasorDiagram(pg.PlotWidget):
 
         self.phasors = {}
 
+        self.setMouseEnabled(x=False, y=False)
+        self.disableAutoRange()
+        self.plotItem.setMenuEnabled(False)
+        self.hideButtons()
+
+        self.legend = None
+
     def set_range(self, value):
         """Set range of diagram."""
         self.__update_grid(value)
@@ -68,11 +75,17 @@ class PhasorDiagram(pg.PlotWidget):
             r = (i + 1) * value / DEFAULT_CIRCLES_NUM
             self.circles[i].setRect(-r, -r, r*2, r*2)
 
+        self.setRange(
+            xRange=(-r, r),
+            yRange=(-r, r),
+            disableAutoRange=True
+        )
+
     def __update_labels(self, value):
         self.labels[0].setText("{}".format(value / 2))
-        self.labels[0].setPos(value / 2, 0)
+        self.labels[0].setPos(0, value / 2)
         self.labels[1].setText("{}".format(value))
-        self.labels[1].setPos(value, 0)
+        self.labels[1].setPos(0, value)
 
     def add_phasor(self, name, am=0, ph=0, color=(255, 255, 255)):
         """Add phasor to the diagram."""
@@ -89,6 +102,20 @@ class PhasorDiagram(pg.PlotWidget):
         phasor['line'].setPen(color)
         self.phasors[name] = phasor
         self.__update()
+
+    def remove_phasors(self):
+        """Remove phasors and legend."""
+        for key in self.phasors:
+            item = self.phasors[key]['point']
+            self.removeItem(item)
+            item = self.phasors[key]['line']
+            self.removeItem(item)
+        self.phasors = {}
+
+        # remove legend
+        if self.legend is not None:
+            self.legend.scene().removeItem(self.legend)
+        self.legend = None
 
     def update_phasor(self, name, am, ph):
         """Change phasor value."""
@@ -108,8 +135,7 @@ class PhasorDiagram(pg.PlotWidget):
 
     def show_legend(self):
         """Show legend."""
-        self.plotItem.addLegend()
+        self.legend = self.plotItem.addLegend()
         for key in self.phasors:
             self.plotItem.legend.addItem(
-                self.phasors[key]['line'], key
-            )
+                self.phasors[key]['line'], key)
