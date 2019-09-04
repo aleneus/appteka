@@ -31,4 +31,5 @@ upload:
 	python3 setup.py sdist upload
 
 check:
+	python3 test/test_waveform.py
 	python3 test/test_phasor.py

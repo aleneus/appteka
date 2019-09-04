@@ -25,8 +25,8 @@ DEFAULT_CIRCLES_NUM = 6
 
 class PhasorDiagram(pg.PlotWidget):
     """Widget for plotting phasor diagram."""
-    def __init__(self, size=500):
-        super().__init__()
+    def __init__(self, parent=None, size=500):
+        super().__init__(parent)
         self.setAspectLocked(True)
         self.addLine(x=0, pen=0.2)
         self.addLine(y=0, pen=0.2)

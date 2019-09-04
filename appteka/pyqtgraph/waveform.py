@@ -60,12 +60,12 @@ def get_time_stamp_axis_item(top=True):
 
 class Waveform(pg.PlotWidget):
     """Customized PyQtGraph.PlotWidget."""
-    def __init__(self, xlabel=None, time_axes=True):
-        if time_axes:
+    def __init__(self, parent=None, xlabel=None, time_axis=True):
+        if time_axis:
             axisItems = get_time_stamp_axis_item()
         else:
             axisItems = None
-        super().__init__(axisItems=axisItems)
+        super().__init__(parent, axisItems=axisItems)
 
         self.showAxis('top')
         self.showAxis('right')
@@ -76,8 +76,10 @@ class Waveform(pg.PlotWidget):
         }
         self.showGrid(x=True, y=True)
         self.setMouseEnabled(x=True, y=False)
+
         if xlabel is not None:
             self.setLabel('bottom', xlabel)
+
         self.setDownsampling(mode='peak')
         self.setClipToView(True)
         self.enableAutoRange(True)
@@ -123,9 +125,9 @@ class Waveform(pg.PlotWidget):
 
 class MultiWaveform(pg.GraphicsLayoutWidget):
     """Customized PyQtGraph.GraphicsLayoutWidget."""
-    def __init__(self):
+    def __init__(self, parent=None):
         """Initialization."""
-        super().__init__()
+        super().__init__(parent)
         self.state = {
             'online': False,
             'plot_color': (255, 255, 255),

@@ -98,6 +98,8 @@ class TestDialog(QtWidgets.QDialog):
 
     def __report(self):
         print('-----------------------------')
+        print(self.__class__.__name__)
+        print()
         verdict = 'PASSED'
         for test in self.tests:
             print("{}... {}".format(test['name'], test['result']))
@@ -106,6 +108,7 @@ class TestDialog(QtWidgets.QDialog):
 
         print('-----------------------------')
         print(verdict)
+        print()
 
     def __add_test(self, name):
         test = {

@@ -102,8 +102,11 @@
 ** DONE [t] Add tool for unit testing widgets
 ** DONE [t] Add widget for phasor diagram
 * 0.7.1
-** TODO [t] Fixes in pyqtgraph.phasor
+** DONE [t] Fixes in pyqtgraph.phasor
 * 0.7.2
+** DONE [t] Add parent to qt widgets
+** DONE [t] Add test unit for pyqtgraph.waveform
+* 0.7.3
 ** TODO [t] pyqtgraph.waveform: Refactoring
 ** TODO [t] pyqtgraph.waveform: Add 'synchronized' to state
 * 0.8
