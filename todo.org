@@ -108,7 +108,7 @@
 ** DONE [t] Add test unit for pyqtgraph.waveform
 * 0.8.0
 ** DONE [t] Remove deprecated translation.py
-** TODO [t] Add CodeTextEdit from es_plan
+** DONE [t] Add CodeTextEdit from es_plan
 ** TODO [t] Add database testing helper
 * 0.9.0
 ** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
