@@ -1,6 +1,6 @@
 PACKAGE = appteka
 
-.PHONY: style flakes lint uml release upload
+.PHONY: style flakes lint uml check upload
 
 all: help
 
