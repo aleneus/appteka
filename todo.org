@@ -106,12 +106,14 @@
 * 0.7.2
 ** DONE [t] Add parent to qt widgets
 ** DONE [t] Add test unit for pyqtgraph.waveform
-* 0.7.3
+* 0.8.0
+** DONE [t] Remove deprecated translation.py
+** TODO [t] Add CodeTextEdit from es_plan
+** TODO [t] Add database testing helper
+* 0.9.0
+** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
 ** TODO [t] pyqtgraph.waveform: Refactoring
 ** TODO [t] pyqtgraph.waveform: Add 'synchronized' to state
-* 0.8
-** TODO [t] Remove deprecated translation.py
-** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
 * later
 ** TODO [p] Use namespaced package technology in appteka
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
