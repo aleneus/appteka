@@ -160,6 +160,7 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         plot.setDownsampling(mode='peak')
         plot.showGrid(x=True, y=True)
         plot.setMouseEnabled(x=True, y=False)
+        plot.showAxis('top')
         plot.showAxis('right')
         for axis in ['left', 'right']:
             plot.getAxis(axis).setStyle(

@@ -11,7 +11,7 @@ import os
 sys.path.insert(0, os.path.abspath("."))
 
 from appteka.pyqt import testing
-from appteka.pyqtgraph.waveform import Waveform
+from appteka.pyqtgraph.waveform import Waveform, MultiWaveform
 
 
 class TestWaveform(testing.TestDialog):
@@ -47,8 +47,27 @@ class TestWaveform(testing.TestDialog):
         self.set_text(text)
 
 
+class TestMultiWaveform(testing.TestDialog):
+    """Test case for MultiWaveform widget."""
+    def __init__(self):
+        super().__init__()
+        self.resize(600, 600)
+
+    def test_top_axis(self):
+        # Given multiwaveform
+        w = MultiWaveform(self)
+        self.set_widget(w)
+
+        # When add plot
+        w.add_plot('a', title='plot A')
+
+        # Then there is top axis
+        text = "- there is top axis"
+        self.set_text(text)
+
+
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    d = TestWaveform()
-    d.run()
+    TestWaveform().run()
+    TestMultiWaveform().run()
     sys.exit(app.exec())

@@ -8,7 +8,7 @@
 ** DONE [t] Add json config stuff from elma
 ** DONE [t] Add timestamps unit from elma
 ** DONE [t] Add all timestamps stuff from elma
-** DONE [t] Waveforms: add function to delete all plots from multiplot 
+** DONE [t] Waveforms: add function to delete all plots from multiplot
 ** DONE [t] Add routines base class from elma
 * 0.1.1
 ** DONE [b] No quotes in glob.py
@@ -110,6 +110,8 @@
 ** DONE [t] Remove deprecated translation.py
 ** DONE [t] Add CodeTextEdit from es_plan
 ** DONE [t] Add database testing helper
+* 0.8.1
+** DONE [b] Add top axis in multiwafefrom
 * 0.9.0
 ** TODO [t] Rename codetextedit.py to code_text_edit.py
 ** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
