@@ -1,15 +1,10 @@
+import os
 import sys
 
 from PyQt5 import QtWidgets
 from PyQt5 import QtCore
 
-import sys
-import os
-import time
-from random import randint
-
 sys.path.insert(0, os.path.abspath("."))
-
 from appteka.pyqt import gui, testing
 from appteka.pyqtgraph import phasor
 
@@ -152,6 +147,23 @@ class TestPhasor(testing.TestDialog):
 
         text = "- Phasors smoothly rotating\n"
         text += "- Amplitude of red phasor grows"
+        self.set_text(text)
+
+    def test_width_of_phasors(self):
+        # Given phasor diagram
+        d = phasor.PhasorDiagram()
+        self.set_widget(d)
+
+        # When add two phasors
+        # And widths of phasors are set to be significantly differ
+        d.add_phasor('ph-1', color=(255, 255, 255), width=1)
+        d.add_phasor('ph-2', color=(255, 255, 255), width=4)
+        d.update_phasor('ph-1', 100, 1)
+        d.update_phasor('ph-2', 100, 2)
+        d.set_range(100)
+
+        # Then widths of phasors are differ
+        text = "widths of phasors are differ"
         self.set_text(text)
 
 

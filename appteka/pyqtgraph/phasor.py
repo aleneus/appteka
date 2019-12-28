@@ -87,7 +87,7 @@ class PhasorDiagram(pg.PlotWidget):
         self.labels[1].setText("{}".format(value))
         self.labels[1].setPos(0, value)
 
-    def add_phasor(self, name, am=0, ph=0, color=(255, 255, 255)):
+    def add_phasor(self, name, am=0, ph=0, color=(255, 255, 255), width=1):
         """Add phasor to the diagram."""
         phasor = {
             'end': (
@@ -97,9 +97,9 @@ class PhasorDiagram(pg.PlotWidget):
             'line': self.plot(),
         }
         phasor['point'] = self.plot(pen=None, symbolBrush=color,
-                                    symbolSize=7, symbolPen=None,
+                                    symbolSize=width+5, symbolPen=None,
                                     name=name)
-        phasor['line'].setPen(color)
+        phasor['line'].setPen(pg.mkPen(color, width=width))
         self.phasors[name] = phasor
         self.__update()
 
