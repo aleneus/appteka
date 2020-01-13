@@ -116,7 +116,7 @@
 ** DONE [t] Add the width of vector in phase diagram
 * 0.8.3
 ** DONE [t] Use CTRL and SHIFT in waveforms scaling
-** TODO [t] Update licence years
+** DONE [t] Update licence years
 * 0.9.0
 ** TODO [t] Rename codetextedit.py to code_text_edit.py
 ** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
