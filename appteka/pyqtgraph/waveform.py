@@ -20,6 +20,8 @@
 import time
 from warnings import warn
 
+from PyQt5.QtCore import Qt
+
 import pyqtgraph as pg
 
 
@@ -75,7 +77,6 @@ class Waveform(pg.PlotWidget):
             'plot_color': (255, 255, 255),
         }
         self.showGrid(x=True, y=True)
-        self.setMouseEnabled(x=True, y=False)
 
         if xlabel is not None:
             self.setLabel('bottom', xlabel)
@@ -90,7 +91,7 @@ class Waveform(pg.PlotWidget):
         self.clear()
         self.curve = self.plot()
         self.set_plot_color(self.state['plot_color'])
-        self.setMouseEnabled(x=True, y=False)
+        self.setMouseEnabled(x=True, y=True)
         self.enableAutoRange(True)
 
     def set_online(self, value):
@@ -121,6 +122,23 @@ class Waveform(pg.PlotWidget):
             yRange=(min(x), max(x)),
             disableAutoRange=False
         )
+
+    def keyPressEvent(self, ev):
+        if ev.key() == Qt.Key_Shift:
+            self.setMouseEnabled(x=False, y=True)
+
+        if ev.key() == Qt.Key_Control:
+            self.setMouseEnabled(x=True, y=False)
+
+        super().keyPressEvent(ev)
+
+    def keyReleaseEvent(self, ev):
+        self.setMouseEnabled(x=True, y=True)
+        super().keyReleaseEvent(ev)
+
+    def leaveEvent(self, ev):
+        self.setMouseEnabled(x=True, y=True)
+        super().leaveEvent(ev)
 
 
 class MultiWaveform(pg.GraphicsLayoutWidget):
@@ -159,7 +177,6 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         plot = self.plots[key]
         plot.setDownsampling(mode='peak')
         plot.showGrid(x=True, y=True)
-        plot.setMouseEnabled(x=True, y=False)
         plot.showAxis('top')
         plot.showAxis('right')
         for axis in ['left', 'right']:
@@ -251,3 +268,24 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
             if key == self._main:
                 continue
             self.plots[key].setXLink(self.plots[self._main] if value else None)
+
+    def keyPressEvent(self, ev):
+        if ev.key() == Qt.Key_Shift:
+            for plot in self.plots.values():
+                plot.setMouseEnabled(x=False, y=True)
+
+        if ev.key() == Qt.Key_Control:
+            for plot in self.plots.values():
+                plot.setMouseEnabled(x=True, y=False)
+
+        super().keyPressEvent(ev)
+
+    def keyReleaseEvent(self, ev):
+        for plot in self.plots.values():
+            plot.setMouseEnabled(x=True, y=True)
+        super().keyReleaseEvent(ev)
+
+    def leaveEvent(self, ev):
+        for plot in self.plots.values():
+            plot.setMouseEnabled(x=True, y=True)
+        super().leaveEvent(ev)

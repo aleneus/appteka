@@ -25,6 +25,7 @@ uml:
 
 check:
 	python3 test/test_waveform.py
+	python3 test/test_multiwaveform.py
 	python3 test/test_phasor.py
 	python3 test/test_editor.py
 
