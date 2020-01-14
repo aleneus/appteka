@@ -117,9 +117,12 @@
 * 0.8.3
 ** DONE [t] Use CTRL and SHIFT in waveforms scaling
 ** DONE [t] Update licence years
+* 0.8.4
+** DONE [e] widget testing: Add add_assert(), deprecate set_text()
 * 0.9.0
 ** TODO [t] Rename codetextedit.py to code_text_edit.py
 ** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
+** TODO [t] pyqt.testing: Remove deprecated TestDialog.set_text()
 ** TODO [t] pyqtgraph.waveform: Refactoring
 ** TODO [t] pyqtgraph.waveform: Add 'synchronized' to state
 * later

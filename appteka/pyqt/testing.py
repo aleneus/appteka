@@ -20,6 +20,7 @@
 
 from PyQt5 import QtWidgets
 from appteka.pyqt import gui
+from warnings import warn
 
 
 class TestDialog(QtWidgets.QDialog):
@@ -40,12 +41,13 @@ class TestDialog(QtWidgets.QDialog):
         self.label_descr = gui.add_label("", self.descr_layout)
         self.label_descr.setWordWrap(True)
 
-        self.widget_layout = gui.add_sublayout(main_layout, "h")
-
         # text
         self.assert_layout = gui.add_sublayout(main_layout, "h")
         self.label_assert = gui.add_label("", self.assert_layout)
         self.label_assert.setWordWrap(True)
+
+        # place for widget to be tested
+        self.widget_layout = gui.add_sublayout(main_layout, "h")
 
         # buttons
         self.button_layout = gui.add_sublayout(main_layout, "h")
@@ -71,8 +73,17 @@ class TestDialog(QtWidgets.QDialog):
         self.widget = gui.add_widget(widget, self.widget_layout)
 
     def set_text(self, value):
-        """Set assertion text."""
+        """Deprecated."""
+        warn('TestDialog.set_text() deprecated. Use add_assertion.')
         self.label_assert.setText(value)
+
+    def add_assertion(self, line):
+        """Add assertion."""
+        lines = self.label_assert.text()
+        if lines:
+            lines += "\n"
+        lines += "- {}".format(line)
+        self.label_assert.setText(lines)
 
     def __run_next_test(self):
         if self.test_num == len(self.tests):
@@ -80,7 +91,9 @@ class TestDialog(QtWidgets.QDialog):
             self.close()
             return
 
-        self.label_descr.setText(self.tests[self.test_num]['name'])
+        self._clear_asserts()
+        self._set_test_name(self.tests[self.test_num]['name'])
+
         self.tests[self.test_num]['func']()
         self.test_num += 1
 
@@ -95,6 +108,12 @@ class TestDialog(QtWidgets.QDialog):
 
         self.test_num = 0
         self.__run_next_test()
+
+    def _clear_asserts(self):
+        self.label_assert.setText("")
+
+    def _set_test_name(self, text):
+        self.label_descr.setText("<b>{}</b>".format(text))
 
     def __report(self):
         print('-----------------------------')

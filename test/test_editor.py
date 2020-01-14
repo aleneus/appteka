@@ -23,14 +23,12 @@ class TestCodeTextEdit(testing.TestDialog):
         code += '  "a": 1,\n'
         code += '  "b": 2\n'
         code += '}'
-
         e.set_text(code)
-        text = ""
-        text += "- Some text is printed\n"
-        text += "- Lines numbered\n"
-        text += "- Current line is highlighted\n"
-        text += "- Font is monospace"
-        self.set_text(text)
+
+        self.add_assertion("Some text is printed")
+        self.add_assertion("Lines numbered")
+        self.add_assertion("Current line is highlighted")
+        self.add_assertion("Font is monospace")
 
 
 if __name__ == "__main__":
