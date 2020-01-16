@@ -1,11 +1,9 @@
 import sys
 import os
 
-from PyQt5 import QtWidgets
-
 sys.path.insert(0, os.path.abspath("."))
 from appteka.pyqt import testing
-from appteka.pyqtgraph.waveform import Waveform, MultiWaveform
+from appteka.pyqtgraph.waveform import MultiWaveform
 
 
 class TestMultiWaveform(testing.TestDialog):
@@ -46,7 +44,4 @@ class TestMultiWaveform(testing.TestDialog):
         self.add_assertion("y-scaling with SHIFT pressed")
 
 
-if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    TestMultiWaveform().run()
-    sys.exit(app.exec())
+testing.run(TestMultiWaveform)

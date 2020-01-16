@@ -15,12 +15,14 @@
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Implementation of the tool for visual testing of widgets."""
 
-from PyQt5 import QtWidgets
-from appteka.pyqt import gui
+import sys
 from warnings import warn
+
+from PyQt5 import QtWidgets
+
+from appteka.pyqt import gui
 
 
 class TestDialog(QtWidgets.QDialog):
@@ -154,3 +156,21 @@ class TestDialog(QtWidgets.QDialog):
         """Enable buttons."""
         self.button_ok.setEnabled(True)
         self.button_err.setEnabled(True)
+
+
+def run(class_name, *args, **kwargs):
+    """Run tests.
+
+    Examples
+    --------
+    >>> class TestSomeWidget(testing.TestDialog):
+    >>>     def __init__(self):
+    >>>         ...
+    >>>     ...
+    >>>
+    >>> testing.run(TestSomeWidget)
+
+    """
+    app = QtWidgets.QApplication(sys.argv)
+    class_name(*args, **kwargs).run()
+    return app.exec()

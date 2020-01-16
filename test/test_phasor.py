@@ -1,11 +1,10 @@
 import os
 import sys
 
-from PyQt5 import QtWidgets
 from PyQt5 import QtCore
 
 sys.path.insert(0, os.path.abspath("."))
-from appteka.pyqt import gui, testing
+from appteka.pyqt import testing
 from appteka.pyqtgraph import phasor
 
 
@@ -154,8 +153,4 @@ class TestPhasor(testing.TestDialog):
         self.add_assertion("widths of phasors are differ")
 
 
-if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    d = TestPhasor()
-    d.run()
-    sys.exit(app.exec())
+testing.run(TestPhasor)

@@ -119,6 +119,9 @@
 ** DONE [t] Update licence years
 * 0.8.4
 ** DONE [e] widget testing: Add add_assert(), deprecate set_text()
+* 0.8.5
+** DONE [t] pyqt.testing: add run(class_name, ...)
+** TODO [t] test_sqlite_schema: fix docstring
 * 0.9.0
 ** TODO [t] Rename codetextedit.py to code_text_edit.py
 ** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()

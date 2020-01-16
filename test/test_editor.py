@@ -1,8 +1,6 @@
 import sys
 import os
 
-from PyQt5 import QtWidgets
-
 sys.path.insert(0, os.path.abspath("."))
 from appteka.pyqt import testing
 from appteka.pyqt.codetextedit import CodeTextEdit
@@ -31,8 +29,4 @@ class TestCodeTextEdit(testing.TestDialog):
         self.add_assertion("Font is monospace")
 
 
-if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    d = TestCodeTextEdit()
-    d.run()
-    sys.exit(app.exec())
+testing.run(TestCodeTextEdit)
