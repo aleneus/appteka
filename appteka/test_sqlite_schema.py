@@ -21,12 +21,28 @@ import sqlite3
 
 
 class TestSchemaHelper:
-    """This class holds sqlite3 connection and cursor.
+    """This class holds sqlite3 connection and cursor and allows to test
+    select queries.
+
+    Use it within test_ functions of uinttest.TestCase.
 
     Parameters
     ----------
-    test_case: object
+    test_case: unittest.TestCase
         Instance of test case.
+
+    Examples
+    --------
+    >>> class TestMySchema(unittest.TestCase):
+    >>>     def __init__(self):
+    >>>         self.h = TestSchemaHelper()
+    >>>         ...
+    >>>
+    >>>     def test_some_query(self):
+    >>>         q = "SELECT ..."
+    >>>         r = [(...), (...), ...]
+    >>>         self.h.test_select(self, q, r)
+
     """
     def __init__(self, test_case):
         self._conn = sqlite3.connect(":memory:")
@@ -39,7 +55,7 @@ class TestSchemaHelper:
         self._test_case.assertEqual(res, ref)
 
     def dot_read(self, path):
-        """Execute all queries from path."""
+        """Execute all queries from path. See .read command of sqlite."""
         with open(path) as buf:
             script = buf.read()
 

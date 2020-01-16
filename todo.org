@@ -121,7 +121,7 @@
 ** DONE [e] widget testing: Add add_assert(), deprecate set_text()
 * 0.8.5
 ** DONE [t] pyqt.testing: add run(class_name, ...)
-** TODO [t] test_sqlite_schema: fix docstring
+** DONE [t] test_sqlite_schema: fix docstring
 * 0.9.0
 ** TODO [t] Rename codetextedit.py to code_text_edit.py
 ** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
@@ -129,6 +129,7 @@
 ** TODO [t] pyqtgraph.waveform: Refactoring
 ** TODO [t] pyqtgraph.waveform: Add 'synchronized' to state
 * later
+** TODO [t] Add demo for test_sqlite_schema
 ** TODO [p] Use namespaced package technology in appteka
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
 ** TODO [p] Make something more convenient than conf.setting[key]
