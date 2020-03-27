@@ -122,12 +122,17 @@
 * 0.8.5
 ** DONE [t] pyqt.testing: add run(class_name, ...)
 ** DONE [t] test_sqlite_schema: fix docstring
+* 0.8.6
+** DONE [t] add set_title() to Multivaweform
+** DONE [t] clean a little
 * 0.9.0
 ** TODO [t] Rename codetextedit.py to code_text_edit.py
+** TODO [t] MultiWaveform.add_plot: deprecate main argument
 ** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
 ** TODO [t] pyqt.testing: Remove deprecated TestDialog.set_text()
 ** TODO [t] pyqtgraph.waveform: Refactoring
 ** TODO [t] pyqtgraph.waveform: Add 'synchronized' to state
+** TODO [p] make class for plot and add get_plot for waveforms class
 * later
 ** TODO [t] Add demo for test_sqlite_schema
 ** TODO [p] Use namespaced package technology in appteka

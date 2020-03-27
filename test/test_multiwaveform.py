@@ -6,25 +6,29 @@ from appteka.pyqt import testing
 from appteka.pyqtgraph.waveform import MultiWaveform
 
 
-class TestMultiWaveform(testing.TestDialog):
-    """Test case for MultiWaveform widget."""
+class TestAxes(testing.TestDialog):
+    """Axes."""
     def __init__(self):
         super().__init__()
         self.resize(600, 600)
 
     def test_top_axis(self):
-        # Given multiwaveform
+        """Switch on top axis."""
         w = MultiWaveform(self)
         self.set_widget(w)
-
-        # When add plot
         w.add_plot('a', title='plot A')
 
-        # Then there is top axis
         self.add_assertion("There is top axis")
 
+
+class TestScaling(testing.TestDialog):
+    """Scaling with mouse."""
+    def __init__(self):
+        super().__init__()
+        self.resize(600, 600)
+
     def test_scaling(self):
-        # Scenario: scaling with keys CONTROL and SHIFT
+        """Scaling with keys CONTROL and SHIFT"""
         w = MultiWaveform(self)
         self.set_widget(w)
 
@@ -44,4 +48,23 @@ class TestMultiWaveform(testing.TestDialog):
         self.add_assertion("y-scaling with SHIFT pressed")
 
 
-testing.run(TestMultiWaveform)
+class TestTitle(testing.TestDialog):
+    """Feature: title of given plot."""
+    def __init__(self):
+        super().__init__()
+        self.resize(600, 600)
+
+    def test_set_title(self):
+        """Scenario: change title of given plot."""
+        w = MultiWaveform(self)
+        self.set_widget(w)
+        w.add_plot('a', title='Title one')
+        w.update_data('a', [0, 1, 2, 3], [1, 2, 1, 2])
+        w.set_title(plot_key='a', value='Frequency: 50.123')
+
+        self.add_assertion("Title is 'Frequency: 50.123'")
+
+
+testing.run(TestAxes)
+testing.run(TestScaling)
+testing.run(TestTitle)

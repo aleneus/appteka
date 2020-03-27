@@ -170,7 +170,6 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
     )
 
     def _init_plot(self, key):
-        # TODO: move this code to add_plot
         """Bring plot to initial state."""
         if key not in self.plots.keys():
             return
@@ -202,9 +201,12 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
         self.curves[key] = self.plots[key].plot()
         self.curves[key].setPen(self.state['plot_color'])
 
-        # TODO: deprecate main argument
         if main:
             self._main = key
+
+    def set_title(self, plot_key, value):
+        """Changes title of the given plot."""
+        self.plots[plot_key].setTitle(value, justify='left')
 
     def remove_plots(self):
         """Remove all plots."""
