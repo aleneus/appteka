@@ -1,0 +1,35 @@
+PyQt
+====
+
+Build GUI helpers
+-----------------
+
+.. automodule:: appteka.pyqt.gui
+   :members:
+
+Unit testing of widgets
+-----------------------
+
+.. automodule:: appteka.pyqt.testing
+   :members:
+
+Enabling/disabling controls
+---------------------------
+
+.. automodule:: appteka.pyqt.control_states
+   :members:
+
+Custom components
+-----------------
+
+Primitive code editor
+^^^^^^^^^^^^^^^^^^^^^
+
+.. automodule:: appteka.pyqt.codetextedit
+   :members:
+
+Dialog for selecting item
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. automodule:: appteka.pyqt.select_item_dialog
+   :members:

@@ -2,6 +2,8 @@
 *.png
 *.pyc
 
-build/*
-dist/*
-appteka.egg-info/*
+build
+dist
+appteka.egg-info
+
+docs/build

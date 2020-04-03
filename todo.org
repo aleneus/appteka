@@ -125,6 +125,8 @@
 * 0.8.6
 ** DONE [t] add set_title() to Multivaweform
 ** DONE [t] clean a little
+* 0.8.7
+** DONE [e] Add docs
 * 0.9.0
 ** TODO [t] Rename codetextedit.py to code_text_edit.py
 ** TODO [t] MultiWaveform.add_plot: deprecate main argument
@@ -138,4 +140,3 @@
 ** TODO [p] Use namespaced package technology in appteka
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
 ** TODO [p] Make something more convenient than conf.setting[key]
-** TODO [e] Add docs

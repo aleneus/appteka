@@ -24,8 +24,6 @@ class TestSchemaHelper:
     """This class holds sqlite3 connection and cursor and allows to test
     select queries.
 
-    Use it within test_ functions of uinttest.TestCase.
-
     Parameters
     ----------
     test_case: unittest.TestCase
