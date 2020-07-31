@@ -128,15 +128,18 @@
 * 0.8.7
 ** DONE [e] Add docs
 * 0.9.0
-** TODO [t] Rename codetextedit.py to code_text_edit.py
-** TODO [t] MultiWaveform.add_plot: deprecate main argument
+** DONE [t] ref: rename codetextedit.py to code_text_edit.py
+** TODO [t] ref: brush names in code_text_edit.py
+** TODO [e] docs: add release checklist
+** TODO [t] ref: MultiWaveform.add_plot: deprecate main argument
+* later
 ** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
 ** TODO [t] pyqt.testing: Remove deprecated TestDialog.set_text()
 ** TODO [t] pyqtgraph.waveform: Refactoring
 ** TODO [t] pyqtgraph.waveform: Add 'synchronized' to state
 ** TODO [p] make class for plot and add get_plot for waveforms class
-* later
 ** TODO [t] Add demo for test_sqlite_schema
 ** TODO [p] Use namespaced package technology in appteka
 ** TODO [p] Configuration: Implement tools for adding of unexisting parameters and sections
 ** TODO [p] Make something more convenient than conf.setting[key]
+** TODO [t] ref: remove deprecated codetextedit.py
