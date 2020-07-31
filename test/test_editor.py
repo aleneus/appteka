@@ -3,7 +3,7 @@ import os
 
 sys.path.insert(0, os.path.abspath("."))
 from appteka.pyqt import testing
-from appteka.pyqt.codetextedit import CodeTextEdit
+from appteka.pyqt.code_text_edit import CodeTextEdit
 
 
 class TestCodeTextEdit(testing.TestDialog):
