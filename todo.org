@@ -130,8 +130,9 @@
 * 0.9.0
 ** DONE [t] ref: rename codetextedit.py to code_text_edit.py
 ** DONE [e] ref: brush names in code_text_edit.py
+** DONE [t] ref: MultiWaveform.add_plot: deprecate main argument
+** TODO [t] test: update for CodeTextEdit class
 ** TODO [e] docs: add release checklist
-** TODO [t] ref: MultiWaveform.add_plot: deprecate main argument
 * later
 ** TODO [t] pyqtgraph.waveform: Remove deprecated MultiWaveform.set_plot_color()
 ** TODO [t] pyqt.testing: Remove deprecated TestDialog.set_text()
