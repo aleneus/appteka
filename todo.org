@@ -129,7 +129,7 @@
 ** DONE [e] Add docs
 * 0.9.0
 ** DONE [t] ref: rename codetextedit.py to code_text_edit.py
-** TODO [t] ref: brush names in code_text_edit.py
+** DONE [e] ref: brush names in code_text_edit.py
 ** TODO [e] docs: add release checklist
 ** TODO [t] ref: MultiWaveform.add_plot: deprecate main argument
 * later
