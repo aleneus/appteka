@@ -47,7 +47,6 @@ class ControlsStateMachine:
             c.setEnabled(c not in self.__states[state_name]['disabled'])
 
     def _setup_controls_state(self, controls, state_name, key):
-        """ Helper function. """
         self.__states[state_name][key] = []
         for c in controls:
             if c not in self.__controls:

@@ -21,8 +21,8 @@ from collections import OrderedDict
 import os
 import shutil
 import json
-import pkg_resources
 import logging
+import pkg_resources
 
 LOG = logging.getLogger(__name__)
 
@@ -117,8 +117,7 @@ class Config:
         if 'version' in settings.keys() and self.version is not None:
             if settings['version'] != self.version:
                 return False
-            else:
-                return True
+            return True
         return True
 
     def upgrade(self):

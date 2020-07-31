@@ -64,10 +64,10 @@ class Waveform(pg.PlotWidget):
     """Customized PyQtGraph.PlotWidget."""
     def __init__(self, parent=None, xlabel=None, time_axis=True):
         if time_axis:
-            axisItems = get_time_stamp_axis_item()
+            axis_items = get_time_stamp_axis_item()
         else:
-            axisItems = None
-        super().__init__(parent, axisItems=axisItems)
+            axis_items = None
+        super().__init__(parent, axisItems=axis_items)
 
         self.showAxis('top')
         self.showAxis('right')

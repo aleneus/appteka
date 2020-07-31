@@ -132,8 +132,12 @@
 ** DONE [e] ref: brush names in code_text_edit.py
 ** DONE [t] ref: MultiWaveform.add_plot: deprecate main argument
 ** DONE [t] test: update for CodeTextEdit class
-** TODO [e] docs: add release checklist
+** DONE [e] docs: add release checklist
+** DONE [t] test: put all multiwaveform tests to one class
+** DONE [t] lint: up result
 * later
+** TODO [b] fix: pyqt.testing: multiwaveform: can not run several test classes in one file
+** TODO [t] ref: setup_state(self, state_name, invisible=[], disabled=[])
 ** TODO [p] feat: pyqtgraph: new widget for waveforms
 ** TODO [t] ref: redloc pyqtgraph.waveform
 ** TODO [t] feat: pyqtgraph.waveform: Add 'synchronized' to state

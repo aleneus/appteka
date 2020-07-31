@@ -57,7 +57,7 @@ class PhasorDiagram(pg.PlotWidget):
 
     def __build_grid(self):
         self.circles = []
-        for i in range(DEFAULT_CIRCLES_NUM):
+        for _ in range(DEFAULT_CIRCLES_NUM):
             circle = pg.QtGui.QGraphicsEllipseItem()
             circle.setPen(pg.mkPen(0.2))
             self.circles.append(circle)
@@ -65,7 +65,7 @@ class PhasorDiagram(pg.PlotWidget):
 
     def __build_labels(self):
         self.labels = []
-        for i in range(2):
+        for _ in range(2):
             label = pg.TextItem()
             self.labels.append(label)
             self.addItem(label)

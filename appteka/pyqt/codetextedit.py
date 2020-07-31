@@ -24,4 +24,4 @@ warn("codetextedit.py is deprecated. Use code_text_edit.py")
 
 
 class CodeTextEdit(code_text_edit.CodeTextEdit):
-    pass
+    """Deprecated."""
