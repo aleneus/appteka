@@ -128,23 +128,32 @@
 * 0.8.7
 ** DONE [e] Add docs
 * 0.9.0
-** DONE [t] ref: rename codetextedit.py to code_text_edit.py
-** DONE [e] ref: brush names in code_text_edit.py
-** DONE [t] ref: MultiWaveform.add_plot: deprecate main argument
-** DONE [t] test: update for CodeTextEdit class
-** DONE [e] docs: add release checklist
-** DONE [t] test: put all multiwaveform tests to one class
-** DONE [t] lint: up result
+** DONE ref: rename codetextedit.py to code_text_edit.py
+** DONE ref: brush names in code_text_edit.py
+** DONE ref: MultiWaveform.add_plot: deprecate main argument
+** DONE test: update for CodeTextEdit class
+** DONE docs: add release checklist
+** DONE test: put all multiwaveform tests to one class
+** DONE lint: up result
+* 0.9.1
+** DONE docs: add release-checklist
+** TODO feat: combine test widget stuff with unittest
+** TODO test: use nose2
+** TODO docs: add coverage to release-checklist
+** TODO fix: waveform, phsor: keyword arguments
+** TODO docs: check if all modules are included
+** TODO docs: update history
+** TODO other: add versiond for the requirements
 * later
-** TODO [b] fix: pyqt.testing: multiwaveform: can not run several test classes in one file
-** TODO [t] ref: setup_state(self, state_name, invisible=[], disabled=[])
-** TODO [p] feat: pyqtgraph: new widget for waveforms
-** TODO [t] ref: redloc pyqtgraph.waveform
-** TODO [t] feat: pyqtgraph.waveform: Add 'synchronized' to state
-** TODO [p] feat: make Plot class and add get_plot() to waveforms classes
-** TODO [t] docs: add demo for test_sqlite_schema
-** TODO [p] feat: configuration: tools for adding of unexisting parameters and sections
-** TODO [p] feat: find something more convenient than conf.setting[key]
-** TODO [t] depr: remove MultiWaveform.set_plot_color()
-** TODO [t] depr: remove TestDialog.set_text()
-** TODO [t] depr: remove codetextedit.py
+** TODO fix: pyqt.testing: multiwaveform: can not run several test classes in one file
+** TODO ref: setup_state(self, state_name, invisible=[], disabled=[])
+** TODO feat: pyqtgraph: new widget for waveforms
+** TODO ref: redloc pyqtgraph.waveform
+** TODO feat: pyqtgraph.waveform: Add 'synchronized' to state
+** TODO feat: make Plot class and add get_plot() to waveforms classes
+** TODO docs: add demo for test_sqlite_schema
+** TODO feat: configuration: tools for adding of unexisting parameters and sections
+** TODO feat: find something more convenient than conf.setting[key]
+** TODO depr: remove MultiWaveform.set_plot_color()
+** TODO depr: remove TestDialog.set_text()
+** TODO depr: remove codetextedit.py

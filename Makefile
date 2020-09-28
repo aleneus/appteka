@@ -1,17 +1,17 @@
 PACKAGE = appteka
 
-.PHONY: check style flakes lint upload uml
+.PHONY: docs
 
 all: help
 
 help:
-	@echo "make check"
-	@echo "make style"
-	@echo "make flakes"
-	@echo "make lint"
-	@echo "make upload"
-
-	@echo "make uml"
+	@echo "check"
+	@echo "flake"
+	@echo "lint"
+	@echo "lint-e"
+	@echo "upload"
+	@echo "uml"
+	@echo "docs"
 
 check:
 	python3 test/test_waveform.py
@@ -19,14 +19,17 @@ check:
 	python3 test/test_phasor.py
 	python3 test/test_editor.py
 
-style:
-	pycodestyle $(PACKAGE)
-
-flakes:
-	pyflakes $(PACKAGE)
+flake:
+	flake8 $(PACKAGE)
 
 lint:
 	pylint $(PACKAGE)
+
+lint-e:
+	pylint --disable=R,C,W $(PACKAGE)
+
+docs:
+	sphinx-build docs/source/ docs/build/
 
 upload:
 	python3 setup.py sdist upload
