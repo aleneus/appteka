@@ -15,17 +15,45 @@
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Implementation of the tool for visual testing of widgets."""
+"""The tool for visual testing of widgets."""
 
 import sys
-import threading
-
 from PyQt5 import QtWidgets
-
 from appteka.pyqt import gui
 
 
-class _TestDialog(QtWidgets.QDialog):
+class TestApp:
+    """An application for displaying a widget that has been set to a
+    certain state and asking questions that express the requirements
+    of the test case.
+
+    Parameters
+    ----------
+    context: unittest.TestCase
+        The class in that the test case should being ran.
+    """
+
+    __app = None
+
+    def __init__(self, context):
+        if not TestApp.__app:
+            TestApp.__app = QtWidgets.QApplication(sys.argv)
+
+        self.answer = False
+        self.dialog = _Dialog(self)
+        self.context = context
+
+    def __call__(self, widget, assertions):
+        self.dialog.set_widget(widget)
+        self.dialog.set_assertions(assertions)
+
+        self.dialog.show()
+        TestApp.__app.exec()
+
+        self.context.assertTrue(self.answer)
+
+
+class _Dialog(QtWidgets.QDialog):
     def __init__(self, app, parent=None):
         super().__init__(parent)
         self.app = app
@@ -47,17 +75,15 @@ class _TestDialog(QtWidgets.QDialog):
                                          self.button_layout)
 
     def set_widget(self, widget):
+        """Set widget to be shown."""
         self.widget_layout.addWidget(widget)
 
-    def set_asserts(self, asserts):
+    def set_assertions(self, assertions):
+        """Set assertions to be printed in dialog."""
         lines = ""
-        for assrt in asserts:
-            lines += "- {}\n".format(assrt)
+        for asr in assertions:
+            lines += "- {}\n".format(asr)
         self.label_assert.setText(lines)
-
-    def set_enabled(self, value=True):
-        self.button_yes.setEnabled(value)
-        self.button_no.setEnabled(value)
 
     def __on_button_no(self):
         self.app.answer = False
@@ -66,42 +92,3 @@ class _TestDialog(QtWidgets.QDialog):
     def __on_button_yes(self):
         self.app.answer = True
         self.accept()
-
-
-class TestApp:
-    __app = None
-
-    def __init__(self, context):
-        if not TestApp.__app:
-            TestApp.__app = QtWidgets.QApplication(sys.argv)
-
-        self.answer = False
-        self.dialog = _TestDialog(self)
-        self.context = context
-
-    def set_widget(self, widget):
-        self.dialog.set_widget(widget)
-
-    def set_asserts(self, asserts):
-        self.dialog.set_asserts(asserts)
-
-    def enable_after(self, func, interval):
-
-        def enable():
-            self.dialog.set_enabled(True)
-
-        self.dialog.set_enabled(False)
-
-        t = threading.Timer(interval, enable)
-        func()
-        t.start()
-
-    def act(self):
-        self.dialog.show()
-        TestApp.__app.exec()
-        return self.answer
-
-    def __call__(self, w, asserts):
-        self.set_widget(w)
-        self.set_asserts(asserts)
-        self.context.assertTrue(self.act())
