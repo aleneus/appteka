@@ -6,6 +6,7 @@ all: help
 
 help:
 	@echo "check"
+	@echo "cover"
 	@echo "flake"
 	@echo "lint"
 	@echo "lint-e"
@@ -14,10 +15,10 @@ help:
 	@echo "docs"
 
 check:
-	python3 test/test_waveform.py
-	python3 test/test_multiwaveform.py
-	python3 test/test_phasor.py
-	python3 test/test_editor.py
+	@nose2 -vvv
+
+cover:
+	@nose2 --with-coverage --coverage-report=html
 
 flake:
 	flake8 $(PACKAGE)

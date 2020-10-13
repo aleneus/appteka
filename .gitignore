@@ -7,3 +7,6 @@ dist
 appteka.egg-info
 
 docs/build
+
+htmlcov/*
+.coverage

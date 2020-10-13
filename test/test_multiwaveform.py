@@ -1,29 +1,31 @@
 import sys
 import os
+import unittest
 
 sys.path.insert(0, os.path.abspath("."))
 from appteka.pyqt import testing
 from appteka.pyqtgraph.waveform import MultiWaveform
 
 
-class TestMultiWavefrom(testing.TestDialog):
+class TestMultiWavefrom(unittest.TestCase):
     """MultiWavefrom."""
-    def __init__(self):
-        super().__init__()
-        self.resize(600, 600)
-
     def test_top_axis(self):
         """Switch on top axis."""
-        w = MultiWaveform(self)
-        self.set_widget(w)
+        app = testing.TestApp(self)
+
+        w = MultiWaveform()
+
         w.add_plot('a', title='plot A')
 
-        self.add_assertion("There is top axis")
+        app(w, [
+            "There is top axis",
+        ])
 
     def test_scaling(self):
         """Scaling with keys CONTROL and SHIFT."""
-        w = MultiWaveform(self)
-        self.set_widget(w)
+        app = testing.TestApp(self)
+
+        w = MultiWaveform()
 
         w.add_plot('a', title='plot A')
         w.update_data('a',
@@ -35,20 +37,22 @@ class TestMultiWavefrom(testing.TestDialog):
                       [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
                       [2, 1, 1, 1, 4, 6, 2, 3, 4, 3])
 
-        self.add_assertion("both axis scaling with mouse wheel")
-        self.add_assertion("x-scaling with CONTROL pressed")
-        self.add_assertion("y-scaling with SHIFT pressed")
+        app(w, [
+            "both axis scaling with mouse wheel",
+            "x-scaling with CONTROL pressed",
+            "y-scaling with SHIFT pressed",
+        ])
 
     def test_set_title(self):
         """Change title of given plot."""
-        w = MultiWaveform(self)
-        self.set_widget(w)
+        app = testing.TestApp(self)
+
+        w = MultiWaveform()
 
         w.add_plot('a', title='Title one')
         w.update_data('a', [0, 1, 2, 3], [1, 2, 1, 2])
         w.set_title(plot_key='a', value='Frequency: 50.123')
 
-        self.add_assertion("Title is 'Frequency: 50.123'")
-
-
-testing.run(TestMultiWavefrom)
+        app(w, [
+            "Title is 'Frequency: 50.123'",
+        ])

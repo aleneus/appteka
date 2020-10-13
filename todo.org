@@ -135,15 +135,19 @@
 ** DONE docs: add release checklist
 ** DONE test: put all multiwaveform tests to one class
 ** DONE lint: up result
-* 0.9.1
+* 0.10.0
 ** DONE docs: add release-checklist
-** TODO feat: combine test widget stuff with unittest
-** TODO test: use nose2
+** DONE test: Makefile: use nose2
+** DONE feat: use unittest for testing widgets
+** TODO docs: widget testing: check docstrings
+** TODO ref: rename test_sqlite_schema.py
+** TODO ref: widget testing: extract asker
+** TODO docs: widget testing: inspect, update docs
 ** TODO docs: add coverage to release-checklist
-** TODO fix: waveform, phsor: keyword arguments
+** TODO fix: waveform, phasor: keyword arguments
 ** TODO docs: check if all modules are included
 ** TODO docs: update history
-** TODO other: add versiond for the requirements
+** TODO other: add versions for the requirements
 * later
 ** TODO fix: pyqt.testing: multiwaveform: can not run several test classes in one file
 ** TODO ref: setup_state(self, state_name, invisible=[], disabled=[])
