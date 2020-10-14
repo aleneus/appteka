@@ -147,13 +147,14 @@
 ** DONE feat: use unittest for testing widgets
 ** DONE docs: pyqt.testing: write docstrings
 ** DONE ref: extract package for sqlite, replace the module for schema testing to there
-** TODO docs: add coverage to release-checklist
+** DONE docs: add coverage to release-checklist
+** TODO fix: waveform, phasor: keyword arguments
 ** TODO ref: widget testing: extract asker
 ** TODO docs: widget testing: inspect, update docs
-** TODO fix: waveform, phasor: keyword arguments
 ** TODO docs: check if all modules are included
 ** TODO docs: update history
 ** TODO other: add versions for the requirements
+** TODO ref: up lint result
 * later
 ** TODO fix: pyqt.testing: multiwaveform: can not run several test classes in one file
 ** TODO ref: setup_state(self, state_name, invisible=[], disabled=[])
