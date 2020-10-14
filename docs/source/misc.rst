@@ -42,9 +42,3 @@ GUI actions handling
 
 .. automodule:: appteka.simple_signal
    :members:
-
-Testing DB schemas
-------------------
-
-.. automodule:: appteka.test_sqlite_schema
-   :members:

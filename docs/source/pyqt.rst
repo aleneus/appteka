@@ -25,7 +25,7 @@ Custom components
 Primitive code editor
 ^^^^^^^^^^^^^^^^^^^^^
 
-.. automodule:: appteka.pyqt.codetextedit
+.. automodule:: appteka.pyqt.code_text_edit
    :members:
 
 Dialog for selecting item

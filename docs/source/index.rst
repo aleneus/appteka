@@ -19,6 +19,7 @@ Parts
 
    pyqt
    grph
+   sqlite
    misc
 
 

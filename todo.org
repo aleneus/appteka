@@ -150,12 +150,12 @@
 ** DONE docs: add coverage to release-checklist
 ** DONE fix: SchemaTester: update example in docstring
 ** DONE fix: waveform, phasor: update_data()
-** TODO ref: widget testing: extract asker
-** TODO docs: widget testing: inspect, update docs
-** TODO docs: check if all modules are included
+** DONE docs: update (renaming modules)
 ** TODO docs: update history
-** TODO other: add versions for the requirements
 * later
+** TODO other: add versions for the requirements
+** TODO other: reqs: update pyqtgraph version
+** TODO ref: widget testing: extract asker
 ** TODO fix: pyqt.testing: multiwaveform: can not run several test classes in one file
 ** TODO ref: setup_state(self, state_name, invisible=[], disabled=[])
 ** TODO feat: pyqtgraph: new widget for waveforms
