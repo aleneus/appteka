@@ -18,6 +18,7 @@
 """Implementation of the phasor diagram."""
 
 import math
+from PyQt5 import QtCore
 import pyqtgraph as pg
 
 DEFAULT_CIRCLES_NUM = 6
@@ -72,14 +73,10 @@ class PhasorDiagram(pg.PlotWidget):
 
     def __update_grid(self, value):
         for i in range(DEFAULT_CIRCLES_NUM):
-            r = (i + 1) * value / DEFAULT_CIRCLES_NUM
-            self.circles[i].setRect(-r, -r, r*2, r*2)
+            rad = (i + 1) * value / DEFAULT_CIRCLES_NUM
+            self.circles[i].setRect(-rad, -rad, rad*2, rad*2)
 
-        self.setRange(
-            xRange=(-r, r),
-            yRange=(-r, r),
-            disableAutoRange=True
-        )
+        self.setRange(QtCore.QRectF(-rad, rad, 2*rad, -2*rad))
 
     def __update_labels(self, value):
         self.labels[0].setText("{}".format(value / 2))

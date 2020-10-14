@@ -1,6 +1,7 @@
 import sys
 import os
 import unittest
+from PyQt5 import QtCore
 
 sys.path.insert(0, os.path.abspath("."))
 from appteka.pyqt import testing
@@ -49,4 +50,32 @@ class TestWaveform(unittest.TestCase):
             "both axis scaling with mouse wheel",
             "x-scaling with CONTROL pressed",
             "y-scaling with SHIFT pressed",
+        ])
+
+
+class TestWaveform_Animation(unittest.TestCase):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.counter = 0
+
+    def test_it(self):
+        app = testing.TestApp(self)
+
+        w = Waveform()
+
+        def rotate():
+            ts = [self.counter+i for i in range(10)]
+            xs = [t for t in ts]
+            w.update_data(ts, xs)
+            self.counter = self.counter + 1
+
+        timer = QtCore.QTimer()
+        timer.setInterval(500)
+        timer.timeout.connect(rotate)
+        self.counter = 0
+        timer.start()
+
+        app(w, [
+            "t values grow",
+            "x values grow",
         ])

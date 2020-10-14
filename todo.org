@@ -149,13 +149,12 @@
 ** DONE ref: extract package for sqlite, replace the module for schema testing to there
 ** DONE docs: add coverage to release-checklist
 ** DONE fix: SchemaTester: update example in docstring
-** TODO fix: waveform, phasor: keyword arguments
+** DONE fix: waveform, phasor: update_data()
 ** TODO ref: widget testing: extract asker
 ** TODO docs: widget testing: inspect, update docs
 ** TODO docs: check if all modules are included
 ** TODO docs: update history
 ** TODO other: add versions for the requirements
-** TODO ref: up lint result
 * later
 ** TODO fix: pyqt.testing: multiwaveform: can not run several test classes in one file
 ** TODO ref: setup_state(self, state_name, invisible=[], disabled=[])

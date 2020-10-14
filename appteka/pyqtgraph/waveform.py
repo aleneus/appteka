@@ -19,9 +19,7 @@
 
 import time
 from warnings import warn
-
 from PyQt5.QtCore import Qt
-
 import pyqtgraph as pg
 
 
@@ -117,11 +115,6 @@ class Waveform(pg.PlotWidget):
             return
         self.curve.setData(t, x)
         self.setLimits(xMin=t[0], xMax=t[-1])
-        self.setRange(
-            xRange=(t[0], t[-1]),
-            yRange=(min(x), max(x)),
-            disableAutoRange=False
-        )
 
     def keyPressEvent(self, ev):
         if ev.key() == Qt.Key_Shift:
@@ -231,13 +224,7 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
             xlims = self.__main_plot_limits
 
         self.curves[key].setData(t, x)
-
         self.plots[key].setLimits(xMin=xlims[0], xMax=xlims[1])
-        self.plots[key].setRange(
-            xRange=(xlims[0], xlims[1]),
-            yRange=(min(x), max(x)),
-            disableAutoRange=False
-        )
 
     def set_online(self, value):
         """Turn on or turn off the online mode."""
