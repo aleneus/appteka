@@ -148,6 +148,7 @@
 ** DONE docs: pyqt.testing: write docstrings
 ** DONE ref: extract package for sqlite, replace the module for schema testing to there
 ** DONE docs: add coverage to release-checklist
+** DONE fix: SchemaTester: update example in docstring
 ** TODO fix: waveform, phasor: keyword arguments
 ** TODO ref: widget testing: extract asker
 ** TODO docs: widget testing: inspect, update docs

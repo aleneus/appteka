@@ -33,13 +33,13 @@ class SchemaTester:
     --------
     >>> class TestMySchema(unittest.TestCase):
     >>>     def __init__(self):
-    >>>         self.h = SchemaTester()
+    >>>         self.h = SchemaTester(self)
     >>>         ...
     >>>
     >>>     def test_some_query(self):
     >>>         q = "SELECT ..."
     >>>         r = [(...), (...), ...]
-    >>>         self.h.test_select(self, q, r)
+    >>>         self.h.assert_select(self, q, r)
 
     """
     def __init__(self, test_case):
