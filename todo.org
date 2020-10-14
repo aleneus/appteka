@@ -151,7 +151,7 @@
 ** DONE fix: SchemaTester: update example in docstring
 ** DONE fix: waveform, phasor: update_data()
 ** DONE docs: update (renaming modules)
-** TODO docs: update history
+** DONE docs: update history
 * later
 ** TODO other: add versions for the requirements
 ** TODO other: reqs: update pyqtgraph version
