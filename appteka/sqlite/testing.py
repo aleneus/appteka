@@ -20,7 +20,7 @@
 import sqlite3
 
 
-class TestSchemaHelper:
+class SchemaTester:
     """This class holds sqlite3 connection and cursor and allows to test
     select queries.
 
@@ -33,7 +33,7 @@ class TestSchemaHelper:
     --------
     >>> class TestMySchema(unittest.TestCase):
     >>>     def __init__(self):
-    >>>         self.h = TestSchemaHelper()
+    >>>         self.h = SchemaTester()
     >>>         ...
     >>>
     >>>     def test_some_query(self):
@@ -47,20 +47,19 @@ class TestSchemaHelper:
         self._cur = self._conn.cursor()
         self._test_case = test_case
 
-    def test_select(self, query, ref):
-        """Execute select query and compare result with reference one."""
+    def assert_select(self, query, ref):
+        """Execute select query and compare result with reference
+        one."""
         res = list(self._cur.execute(query))
         self._test_case.assertEqual(res, ref)
 
     def dot_read(self, path):
-        """Execute all queries from path. See .read command of sqlite."""
+        """Execute all queries from path. See .read command of
+        sqlite."""
         with open(path) as buf:
             script = buf.read()
-
-        queries = script.split(";")
-
-        for query in queries:
-            self._cur.execute(query)
+            for query in script.split(";"):
+                self._cur.execute(query)
 
     def close(self):
         """Close connection with database."""

@@ -19,6 +19,7 @@
 
 import sys
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import Qt
 from appteka.pyqt import gui
 
 
@@ -73,6 +74,7 @@ class _Dialog(QtWidgets.QDialog):
                                         self.button_layout)
         self.button_yes = gui.add_button("Yes", self.__on_button_yes,
                                          self.button_layout)
+        self.button_yes.setFocus(Qt.ActiveWindowFocusReason)
 
     def set_widget(self, widget):
         """Set widget to be shown."""

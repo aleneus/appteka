@@ -146,10 +146,10 @@
 ** DONE test: Makefile: use nose2
 ** DONE feat: use unittest for testing widgets
 ** DONE docs: pyqt.testing: write docstrings
-** TODO ref: rename test_sqlite_schema.py
+** DONE ref: extract package for sqlite, replace the module for schema testing to there
+** TODO docs: add coverage to release-checklist
 ** TODO ref: widget testing: extract asker
 ** TODO docs: widget testing: inspect, update docs
-** TODO docs: add coverage to release-checklist
 ** TODO fix: waveform, phasor: keyword arguments
 ** TODO docs: check if all modules are included
 ** TODO docs: update history
