@@ -5,8 +5,8 @@ PACKAGE = appteka
 all: help
 
 help:
+	@echo "todo"
 	@echo "check"
-	@echo "cover"
 	@echo "flake"
 	@echo "lint"
 	@echo "lint-e"
@@ -14,10 +14,10 @@ help:
 	@echo "uml"
 	@echo "docs"
 
-check:
-	@nose2 -vvv
+todo:
+	@rgrep "TODO" --include="*py" --include="*md" --exclude="release-checklist.md"
 
-cover:
+check:
 	@nose2 --with-coverage --coverage-report=html
 
 flake:

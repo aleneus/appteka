@@ -7,7 +7,7 @@
 
 ## Code
 
-* No `TODO`
+* No `TODO` (`make todo`)
 * No flakes (`make flake`)
   - Note: unused imports are allowed in deprecated modules
 * No lint errors (`make lint-e`)
