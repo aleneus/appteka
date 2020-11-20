@@ -159,9 +159,8 @@
 ** DONE make: combine cover and check targets
 ** DONE make: add todo target
 * later
-** TODO feat: QueuedWriter: check write_on in init
-** TODO other: add versions for the requirements
-** TODO other: reqs: update pyqtgraph version
+** TODO dist: add versions for the requirements
+** TODO dist: reqs: update pyqtgraph version
 ** TODO ref: widget testing: extract asker
 ** TODO fix: pyqt.testing: multiwaveform: can not run several test classes in one file
 ** TODO ref: setup_state(self, state_name, invisible=[], disabled=[])
