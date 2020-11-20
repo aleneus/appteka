@@ -21,7 +21,6 @@ thread."""
 from collections import deque
 from threading import Thread, Lock, Event
 from time import sleep
-from warnings import warn
 
 
 class QueuedWriter:
@@ -46,11 +45,6 @@ class QueuedWriter:
         self._thread = PyRecordThread(*self._thread_args)
         self._thread.start()
 
-    def start_record(self):
-        """Deprecated."""
-        warn("start_record() is deprecated. Use start_thread().")
-        self.start_thread()
-
     def add_data(self, sample):
         """Add data sample."""
         self._queue.append(sample)
@@ -67,11 +61,6 @@ class QueuedWriter:
         """Stop recording record."""
         self._thread.write_data()
         self._thread.stop()
-
-    def stop_record(self):
-        """Deprecated."""
-        warn("stop_record() is deprecated. Use stop_thread().")
-        self.stop_thread()
 
 
 class PyRecordThread(Thread):

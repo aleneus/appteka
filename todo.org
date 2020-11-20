@@ -152,11 +152,10 @@
 ** DONE fix: waveform, phasor: update_data()
 ** DONE docs: update (renaming modules)
 ** DONE docs: update history
-* 0.11.0
+* 0.10.1
 ** DONE test: io.py: cover
-** TODO ref: io.py: rename
+** DONE feat: QueuedWriter: remove stop_record() and start_record()
 ** TODO ref: PyRecordThread: write_on stuff
-** TODO depr: QueuedWriter: remove stop_record() and start_record()
 ** TODO make: combine cover and check targets
 ** TODO make: add todo target
 ** TODO deploy: update coverage requirement
@@ -174,6 +173,10 @@
 ** TODO docs: add demo for test_sqlite_schema
 ** TODO feat: configuration: tools for adding of unexisting parameters and sections
 ** TODO feat: find something more convenient than conf.setting[key]
-** TODO depr: remove MultiWaveform.set_plot_color()
-** TODO depr: remove TestDialog.set_text()
-** TODO depr: remove codetextedit.py
+* depr
+** TODO remove MultiWaveform.set_plot_color()
+   <2021-01-29 Пт>
+** TODO remove TestDialog.set_text()
+   <2021-01-29 Пт>
+** TODO remove codetextedit.py
+   <2021-01-29 Пт>
