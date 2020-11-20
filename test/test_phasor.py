@@ -1,10 +1,5 @@
-import os
-import sys
 import unittest
-
 from PyQt5 import QtCore
-
-sys.path.insert(0, os.path.abspath("."))
 from appteka.pyqt import testing
 from appteka.pyqtgraph import phasor
 

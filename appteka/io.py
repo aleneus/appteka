@@ -18,7 +18,6 @@
 """Writing data to IO text buffer using queue and working in separate
 thread."""
 
-
 from collections import deque
 from threading import Thread, Lock, Event
 from time import sleep
@@ -84,12 +83,15 @@ class PyRecordThread(Thread):
         self._can_quit = Event()
         self._have_data = Event()
         self.save_func = save_func
+
         if write_on == 'time':
             self._loop_func = self._sleep_loop
             self._loop_func_args = (write_every, )
+
         elif write_on == 'data':
             self._loop_func = self._event_loop
             self._loop_func_args = ()
+
         else:
             raise RuntimeError("write_on must be 'time' or 'data'.")
 
@@ -122,36 +124,3 @@ class PyRecordThread(Thread):
             self._must_write = False
         self._can_quit.wait()
         self.join()
-
-
-def _example():
-    from random import randint
-
-    def convert_func(sample):
-        """Convert function."""
-        return '{}: {}\n'.format(*sample)
-
-    writer = QueuedWriter(write_on='time')
-    writer.set_convert_func(convert_func)
-    buf = open('output.txt', 'w')
-    writer.set_buff(buf)
-    writer.start_thread()
-
-    i = 0
-    while True:
-        try:
-            sample = (i, randint(0, 100))
-            print(sample)
-            writer.add_data(sample)
-            sleep(0.02)
-            i += 1
-        except KeyboardInterrupt:
-            print("Good bye...")
-            break
-
-    writer.stop_thread()
-    buf.close()
-
-
-if __name__ == "__main__":
-    _example()

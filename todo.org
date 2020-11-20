@@ -152,7 +152,16 @@
 ** DONE fix: waveform, phasor: update_data()
 ** DONE docs: update (renaming modules)
 ** DONE docs: update history
+* 0.11.0
+** DONE test: io.py: cover
+** TODO ref: io.py: rename
+** TODO ref: PyRecordThread: write_on stuff
+** TODO depr: QueuedWriter: remove stop_record() and start_record()
+** TODO make: combine cover and check targets
+** TODO make: add todo target
+** TODO deploy: update coverage requirement
 * later
+** TODO feat: QueuedWriter: check write_on in init
 ** TODO other: add versions for the requirements
 ** TODO other: reqs: update pyqtgraph version
 ** TODO ref: widget testing: extract asker
