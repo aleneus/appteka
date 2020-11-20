@@ -155,7 +155,7 @@
 * 0.10.1
 ** DONE test: io.py: cover
 ** DONE feat: QueuedWriter: remove stop_record() and start_record()
-** TODO ref: PyRecordThread: write_on stuff
+** DONE ref: PyRecordThread: write_on stuff
 ** TODO make: combine cover and check targets
 ** TODO make: add todo target
 ** TODO deploy: update coverage requirement

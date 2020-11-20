@@ -26,6 +26,8 @@ from time import sleep
 class QueuedWriter:
     """Tool for record data to text buffer using queue and thread."""
     def __init__(self, buff=None, write_on='time', write_every=1):
+        _check_write_on(write_on)
+
         self._buff = buff
         self._queue = deque([])
         self._thread = None
@@ -73,16 +75,15 @@ class PyRecordThread(Thread):
         self._have_data = Event()
         self.save_func = save_func
 
+        _check_write_on(write_on)
+
         if write_on == 'time':
             self._loop_func = self._sleep_loop
             self._loop_func_args = (write_every, )
 
-        elif write_on == 'data':
+        if write_on == 'data':
             self._loop_func = self._event_loop
             self._loop_func_args = ()
-
-        else:
-            raise RuntimeError("write_on must be 'time' or 'data'.")
 
     def run(self):
         """Record data from queue to buffer."""
@@ -113,3 +114,9 @@ class PyRecordThread(Thread):
             self._must_write = False
         self._can_quit.wait()
         self.join()
+
+
+def _check_write_on(write_on):
+    values = ['time', 'data']
+    if write_on not in values:
+        raise RuntimeError("write_on must be in {}".format(values))

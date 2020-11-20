@@ -50,18 +50,5 @@ class TestQueuedWriter(unittest.TestCase):
         os.remove(TMP_FILE_NAME)
 
     def test_wront_write_on(self):
-        writer = QueuedWriter(write_on='dollar fault')
-
-        writer.set_convert_func(convert_func)
-        buf = open(TMP_FILE_NAME, 'w')
-        writer.set_buff(buf)
-
         with self.assertRaises(RuntimeError):
-            writer.start_thread()
-
-        buf.close()
-
-        try:
-            os.remove(TMP_FILE_NAME)
-        except Exception:
-            pass
+            QueuedWriter(write_on='dollar fault')
