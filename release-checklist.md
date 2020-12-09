@@ -3,15 +3,14 @@
 ## Tests
 
 * All passed (`make check`)
-* Coverage >= 51% (`htmlcov`)
+* Coverage >= 53% (`htmlcov`)
 
 ## Code
 
 * No `TODO` (`make todo`)
 * No flakes (`make flake`)
-  - Note: unused imports are allowed in deprecated modules
 * No lint errors (`make lint-e`)
-* Lint result >= 9.35 (`make lint`)
+* Lint result >= 9.40 (`make lint`)
 
 ## Docs
 

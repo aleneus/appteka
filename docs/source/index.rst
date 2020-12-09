@@ -21,6 +21,7 @@ Parts
    grph
    sqlite
    misc
+   history
 
 
 Indices and tables

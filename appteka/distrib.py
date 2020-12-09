@@ -39,7 +39,8 @@ def build_folder_name(name, version, appendix=None):
 
 
 def init_translation(package_name, resource_name, module_name):
-    """ Returns function for specifying of places to be translated. """
+    """Return function for specifying of places to be translated."""
+
     lang = locale.getdefaultlocale()[0]
     gettext.install(module_name)
 
@@ -55,3 +56,29 @@ def init_translation(package_name, resource_name, module_name):
         return trans.gettext
     except (ImportError, FileNotFoundError):
         return _echo
+
+
+def major_version(ver):
+    """Return major version as int."""
+    return __get_version_part(ver, 0)
+
+
+def minor_version(ver):
+    """Return minor version as int."""
+    return __get_version_part(ver, 1)
+
+
+def micro_version(ver):
+    """Return micro (maintenance) version as int."""
+    return __get_version_part(ver, 2)
+
+
+def __get_version_part(ver, ind):
+    default_value = 0
+
+    parts = ver.split(".")
+
+    try:
+        return int(parts[ind])
+    except IndexError:
+        return default_value

@@ -158,6 +158,8 @@
 ** DONE ref: PyRecordThread: write_on stuff
 ** DONE make: combine cover and check targets
 ** DONE make: add todo target
+* 0.11.0
+** DONE feat: distrib: add get_minor
 * later
 ** TODO dist: add versions for the requirements
 ** TODO dist: reqs: update pyqtgraph version
