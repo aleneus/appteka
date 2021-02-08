@@ -22,7 +22,7 @@ from appteka import __version__
 # -- Project information -----------------------------------------------------
 
 project = 'appteka'
-copyright = '2020, Aleksandr Popov'
+copyright = '2021, Aleksandr Popov'
 author = 'Aleksandr Popov'
 
 # The full version, including alpha/beta/rc tags

@@ -33,7 +33,8 @@ docs:
 	sphinx-build docs/source/ docs/build/
 
 upload:
-	python3 setup.py sdist upload
+	python3 setup.py sdist
+	python3 -m twine upload --repository pypi dist/*
 
 uml:
 	pyreverse3 $(PACKAGE) -o png

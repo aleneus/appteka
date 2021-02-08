@@ -160,6 +160,8 @@
 ** DONE make: add todo target
 * 0.11.0
 ** DONE feat: distrib: add get_minor
+* 0.11.1
+** DONE docs: license: update years
 * later
 ** TODO dist: add versions for the requirements
 ** TODO dist: reqs: update pyqtgraph version
