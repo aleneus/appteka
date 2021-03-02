@@ -18,6 +18,7 @@
 """Implementation of the phasor diagram."""
 
 import math
+import cmath
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore
 
@@ -35,7 +36,6 @@ class PhasorDiagram(pg.PlotWidget):
         self.showAxis('bottom', False)
         self.showAxis('left', False)
 
-        # fix size
         self.setFixedSize(size, size)
 
         self.__build_grid()
@@ -43,14 +43,15 @@ class PhasorDiagram(pg.PlotWidget):
 
         self.set_range(1)
 
-        self.phasors = {}
-
         self.setMouseEnabled(x=False, y=False)
         self.disableAutoRange()
         self.plotItem.setMenuEnabled(False)
         self.hideButtons()
 
         self.legend = None
+
+        self.coordinates = {}
+        self.items = {}
 
     def set_range(self, value):
         """Set range of diagram."""
@@ -87,28 +88,31 @@ class PhasorDiagram(pg.PlotWidget):
 
     def add_phasor(self, name, am=0, ph=0, color=(255, 255, 255), width=1):
         """Add phasor to the diagram."""
-        phasor = {
-            'end': (
-                am * math.cos(ph),
-                am * math.sin(ph)
-            ),
-            'line': self.plot(),
+
+        # add coordinates
+        self.coordinates[name] = {
+            'end': cmath.rect(am, ph),
         }
-        phasor['point'] = self.plot(pen=None, symbolBrush=color,
-                                    symbolSize=width+5, symbolPen=None,
-                                    name=name)
-        phasor['line'].setPen(pg.mkPen(color, width=width))
-        self.phasors[name] = phasor
+
+        # add items to be painted
+        items = {
+            'line': self.plot(),
+            'point': self.plot(pen=None, symbolBrush=color,
+                               symbolSize=width+5, symbolPen=None,
+                               name=name),
+        }
+        items['line'].setPen(pg.mkPen(color, width=width))
+        self.items[name] = items
+
         self.__update()
 
     def remove_phasors(self):
         """Remove phasors and legend."""
-        for key in self.phasors:
-            item = self.phasors[key]['point']
-            self.removeItem(item)
-            item = self.phasors[key]['line']
-            self.removeItem(item)
-        self.phasors = {}
+        for key in self.items:
+            self.removeItem(self.items[key]['point'])
+            self.removeItem(self.items[key]['line'])
+
+        self.coordinates = {}
 
         # remove legend
         if self.legend is not None:
@@ -117,23 +121,22 @@ class PhasorDiagram(pg.PlotWidget):
 
     def update_phasor(self, name, am, ph):
         """Change phasor value."""
-        self.phasors[name]['end'] = (
-            am * math.cos(ph),
-            am * math.sin(ph)
-        )
+        self.coordinates[name]['end'] = cmath.rect(am, ph)
         self.__update()
 
     def __update(self):
-        for key in self.phasors:
-            phasor = self.phasors[key]
-            x = phasor['end'][0]
-            y = phasor['end'][1]
-            phasor['line'].setData([0, x], [0, y])
-            phasor['point'].setData([x], [y])
+        for key in self.coordinates:
+            data = self.coordinates[key]
+            x = data['end'].real
+            y = data['end'].imag
+
+            items = self.items[key]
+            items['line'].setData([0, x], [0, y])
+            items['point'].setData([x], [y])
 
     def show_legend(self):
         """Show legend."""
         self.legend = self.plotItem.addLegend()
-        for key in self.phasors:
+        for key in self.items:
             self.plotItem.legend.addItem(
-                self.phasors[key]['line'], key)
+                self.items[key]['line'], key)
