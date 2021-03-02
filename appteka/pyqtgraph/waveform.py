@@ -19,12 +19,14 @@
 
 import time
 from warnings import warn
-from PyQt5.QtCore import Qt
+
 import pyqtgraph as pg
+from pyqtgraph.Qt import QtCore
 
 
 class TimeStampAxisItem(pg.AxisItem):
     """Axis with times or dates as ticks."""
+
     def __init__(self, what_show='time', *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.enableAutoSIPrefix(enable=False)
@@ -44,6 +46,7 @@ class TimeStampAxisItem(pg.AxisItem):
 
 def get_time_stamp_axis_item(top=True):
     """Return custom axis item with time stamps."""
+
     res = {
         'bottom': TimeStampAxisItem(
             what_show='time',
@@ -60,6 +63,7 @@ def get_time_stamp_axis_item(top=True):
 
 class Waveform(pg.PlotWidget):
     """Customized PyQtGraph.PlotWidget."""
+
     def __init__(self, parent=None, xlabel=None, time_axis=True):
         if time_axis:
             axis_items = get_time_stamp_axis_item()
@@ -117,10 +121,10 @@ class Waveform(pg.PlotWidget):
         self.setLimits(xMin=t[0], xMax=t[-1])
 
     def keyPressEvent(self, ev):
-        if ev.key() == Qt.Key_Shift:
+        if ev.key() == QtCore.Qt.Key_Shift:
             self.setMouseEnabled(x=False, y=True)
 
-        if ev.key() == Qt.Key_Control:
+        if ev.key() == QtCore.Qt.Key_Control:
             self.setMouseEnabled(x=True, y=False)
 
         super().keyPressEvent(ev)
@@ -136,6 +140,7 @@ class Waveform(pg.PlotWidget):
 
 class MultiWaveform(pg.GraphicsLayoutWidget):
     """Customized PyQtGraph.GraphicsLayoutWidget."""
+
     def __init__(self, parent=None):
         """Initialization."""
         super().__init__(parent)

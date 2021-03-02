@@ -18,7 +18,7 @@ todo:
 	@rgrep "TODO" --include="*py" --include="*md" --exclude="release-checklist.md"
 
 check:
-	@nose2 --with-coverage --coverage-report=html
+	@nose2 -vvv --with-coverage --coverage-report=html
 
 flake:
 	flake8 $(PACKAGE)

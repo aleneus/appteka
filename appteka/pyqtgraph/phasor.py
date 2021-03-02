@@ -18,14 +18,15 @@
 """Implementation of the phasor diagram."""
 
 import math
-from PyQt5 import QtCore
 import pyqtgraph as pg
+from pyqtgraph.Qt import QtCore
 
 DEFAULT_CIRCLES_NUM = 6
 
 
 class PhasorDiagram(pg.PlotWidget):
     """Widget for plotting phasor diagram."""
+
     def __init__(self, parent=None, size=500):
         super().__init__(parent)
         self.setAspectLocked(True)
