@@ -4,7 +4,7 @@
 ## Test
 
 * All passed: `make check`
-* Coverage >= 58%: `make check`
+* Coverage >= 59%: `make check`
 
 ## Code
 

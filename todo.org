@@ -168,9 +168,9 @@
 ** DONE feat: pyqtgraph: phasor: selecting the type of end (circle, arrow)
 ** DONE test: removing phasors with arrows
 ** TODO feat: remove old deprecated code
-*** DONE feat: remove MultiWaveform.set_plot_color()
-*** TODO feat: remove TestDialog.set_text()
-*** TODO feat: remove codetextedit.py
+*** DONE feat: MultiWaveform.set_plot_color(): remove
+*** DONE feat: codetextedit.py: remove
+*** TODO feat: MultiWaveform.add_plot(): main arg: remove
 * later
 ** TODO ref: pyqtgraph: phasor
 ** TODO dist: add versions for the requirements
