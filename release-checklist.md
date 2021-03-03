@@ -1,6 +1,5 @@
 # Release checklist
 
-
 ## Test
 
 * All passed: `make check`
@@ -20,8 +19,8 @@
 * History is updated: `head -n 20 docs/source/history.rst`
 * All necessary modules are included
 
-## Distr
+## Distribution
 
-* Actual version  (`__init__.py`)
-* Dependencies are relevant (`setup.py`)
-* Installation successful (`python3 setup.py install --user`)
+* Actual version: `make ver`
+* Dependencies are relevant: `setup.py`
+* Installation successful: `python3 setup.py install --user`

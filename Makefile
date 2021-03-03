@@ -1,6 +1,6 @@
-PACKAGE = appteka
-
 .PHONY: docs
+
+PACKAGE_FOLDER = appteka
 
 all: help
 
@@ -11,6 +11,7 @@ help:
 	@echo "flake"
 	@echo "lint"
 	@echo "lint-e"
+	@echo "ver"
 	@echo "upload"
 	@echo "uml"
 	@echo "docs"
@@ -25,20 +26,23 @@ todo:
 	@rgrep "TODO" --include="*py" --include="*md" --include="*rst" --exclude="release-checklist.md" || true
 
 flake:
-	flake8 $(PACKAGE)
+	flake8 $(PACKAGE_FOLDER)
 
 lint:
-	pylint $(PACKAGE)
+	pylint $(PACKAGE_FOLDER)
 
 lint-e:
-	pylint --disable=R,C,W $(PACKAGE)
+	pylint --disable=R,C,W $(PACKAGE_FOLDER)
 
 docs:
 	sphinx-build docs/source/ docs/build/
+
+ver:
+	@cat $(PACKAGE_FOLDER)/__init__.py | grep __version__
 
 upload:
 	python3 setup.py sdist
 	python3 -m twine upload --repository pypi dist/*
 
 uml:
-	pyreverse3 $(PACKAGE) -o png
+	pyreverse3 $(PACKAGE_FOLDER) -o png
