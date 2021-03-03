@@ -166,9 +166,10 @@
 ** DONE depl: pyqtgraph: use Qt from pyqtgraph (free from Qt version)
 ** DONE ref: PhasorDiagram.phasors: split data and graphic items
 ** DONE feat: pyqtgraph: phasor: selecting the type of end (circle, arrow)
-** TODO test: removing phasors with arrows
-** TODO ref: pyqtgraph: phasor: processing of end type
+** DONE test: removing phasors with arrows
+** TODO feat: remove deprecated code
 * later
+** TODO ref: pyqtgraph: phasor
 ** TODO dist: add versions for the requirements
 ** TODO dist: reqs: update pyqtgraph version
 ** TODO ref: widget testing: extract asker

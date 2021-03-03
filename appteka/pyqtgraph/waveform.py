@@ -264,11 +264,11 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
             self.plots[key].setXLink(self.plots[self._main] if value else None)
 
     def keyPressEvent(self, ev):
-        if ev.key() == Qt.Key_Shift:
+        if ev.key() == QtCore.Qt.Key_Shift:
             for plot in self.plots.values():
                 plot.setMouseEnabled(x=False, y=True)
 
-        if ev.key() == Qt.Key_Control:
+        if ev.key() == QtCore.Qt.Key_Control:
             for plot in self.plots.values():
                 plot.setMouseEnabled(x=True, y=False)
 

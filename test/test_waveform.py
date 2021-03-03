@@ -72,6 +72,6 @@ class TestWaveform_Animation(unittest.TestCase):
         timer.start()
 
         app(w, [
-            "t values grow",
             "x values grow",
+            "y values grow",
         ])

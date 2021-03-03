@@ -1,16 +1,18 @@
 # Release checklist
 
-## Tests
 
-* All passed (`make check`)
-* Coverage >= 53% (`htmlcov`)
+## Test
+
+* All passed: `make check`
+* Coverage >= 58%: `make check`
 
 ## Code
 
-* No `TODO` (`make todo`)
-* No flakes (`make flake`)
-* No lint errors (`make lint-e`)
-* Lint result >= 9.40 (`make lint`)
+* No TODO notes: `make todo`
+* No flakes: `make flake`
+* No lint errors: `make lint-e`
+* Lint result >= 9.40: `make lint`
+* Old deprecated code is removed (todo list)
 
 ## Docs
 

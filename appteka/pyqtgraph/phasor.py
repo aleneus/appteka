@@ -75,7 +75,7 @@ class PhasorDiagram(pg.PlotWidget):
         self.__update_grid()
         self.__update_labels()
 
-    def add_phasor(self, name, am=0, ph=0, color=(255, 255, 255), width=1):
+    def add_phasor(self, name, amp=0, phi=0, color=(255, 255, 255), width=1):
         """Add phasor to the diagram."""
 
         # add items to be painted
@@ -97,12 +97,12 @@ class PhasorDiagram(pg.PlotWidget):
         self.items[name] = items
 
         # add coordinates
-        self.update_phasor(name, am, ph)
+        self.update_phasor(name, amp, phi)
 
-    def update_phasor(self, name, am, ph):
+    def update_phasor(self, name, amp, phi):
         """Change phasor value."""
 
-        self.phasors[name] = (am, ph)
+        self.phasors[name] = (amp, phi)
         self.__update()
 
     def remove_phasors(self):
@@ -127,13 +127,13 @@ class PhasorDiagram(pg.PlotWidget):
                 self.items[key]['line'], key)
 
     def __update(self):
-        s = ARROW_SIZE_PX * 2 * self.__range / self.height()
+        arr_size = ARROW_SIZE_PX * 2 * self.__range / self.height()
 
         for key in self.phasors:
-            ph = self.phasors[key]
-            c = cmath.rect(*ph)
-            x = c.real
-            y = c.imag
+            phasor = self.phasors[key]
+            compl = cmath.rect(*phasor)
+            x = compl.real
+            y = compl.imag
 
             items = self.items[key]
 
@@ -144,15 +144,15 @@ class PhasorDiagram(pg.PlotWidget):
             if self.__end == 'arrow':
                 items['line'].setData([0, x], [0, y])
 
-                ang_l = ph[1] + math.pi - ARROW_SHARPENING_ANGLE
-                xl = s * math.cos(ang_l) + x
-                yl = s * math.sin(ang_l) + y
-                items['arr_l'].setData([xl, x], [yl, y])
+                ang_l = phasor[1] + math.pi - ARROW_SHARPENING_ANGLE
+                arr_xl = arr_size * math.cos(ang_l) + x
+                arr_yl = arr_size * math.sin(ang_l) + y
+                items['arr_l'].setData([arr_xl, x], [arr_yl, y])
 
-                ang_r = ph[1] + math.pi + ARROW_SHARPENING_ANGLE
-                xr = s * math.cos(ang_r) + x
-                yr = s * math.sin(ang_r) + y
-                items['arr_r'].setData([xr, x], [yr, y])
+                ang_r = phasor[1] + math.pi + ARROW_SHARPENING_ANGLE
+                arr_xr = arr_size * math.cos(ang_r) + x
+                arr_yr = arr_size * math.sin(ang_r) + y
+                items['arr_r'].setData([arr_xr, x], [arr_yr, y])
 
     def __build_grid(self):
         self.circles = []

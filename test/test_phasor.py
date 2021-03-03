@@ -97,6 +97,14 @@ class TestPhasor(unittest.TestCase):
 
         self.assertTrue(raised)
 
+    def test_phasor_end_arrow_clear(self):
+        app = testing.TestApp(self)
+        d = phasor.PhasorDiagram(end='arrow')
+        d.set_range(100)
+        d.add_phasor('ph-1', 80, 0, (0, 255, 0))
+        d.remove_phasors()
+        app(d, ["Only grid"])
+
     def test_three_phasors(self):
         app = testing.TestApp(self)
         d = phasor.PhasorDiagram(end='arrow')
@@ -137,9 +145,7 @@ class TestPhasor(unittest.TestCase):
         d.update_phasor('ph-1', 100, 1)
         d.set_range(100)
 
-        app(d, [
-            "Grid corresponds to phasor",
-        ])
+        app(d, ["Grid corresponds to phasor"])
 
     def test_legend(self):
         app = testing.TestApp(self)
