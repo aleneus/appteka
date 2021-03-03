@@ -11,14 +11,14 @@
 * No TODO notes: `make todo`
 * No flakes: `make flake`
 * No lint errors: `make lint-e`
-* Lint result >= 9.40: `make lint`
+* Lint result >= 9.45: `make lint`
 * Old deprecated code is removed (todo list)
 
 ## Docs
 
-* Docs is successfully built (`make docs`)
-* All necessary modules are included to docs
-* History is updated in docs
+* Successful build: `make docs`
+* History is updated: `head -n 20 docs/source/history.rst`
+* All necessary modules are included
 
 ## Distr
 

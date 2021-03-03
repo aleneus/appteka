@@ -1,6 +1,12 @@
 Releases
 ========
 
+0.12
+----
+
+* Now you can choose the end of the phasor: circle or arrow
+* Some deprecated code has been removed
+
 0.11
 ----
 
