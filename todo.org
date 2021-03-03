@@ -167,10 +167,10 @@
 ** DONE ref: PhasorDiagram.phasors: split data and graphic items
 ** DONE feat: pyqtgraph: phasor: selecting the type of end (circle, arrow)
 ** DONE test: removing phasors with arrows
-** TODO feat: remove old deprecated code
+** DONE feat: remove old deprecated code
 *** DONE feat: MultiWaveform.set_plot_color(): remove
 *** DONE feat: codetextedit.py: remove
-*** TODO feat: MultiWaveform.add_plot(): main arg: remove
+*** DONE feat: MultiWaveform.add_plot(): main arg: remove
 * later
 ** TODO ref: pyqtgraph: phasor
 ** TODO dist: add versions for the requirements

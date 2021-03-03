@@ -18,7 +18,6 @@
 """Waveform widgets."""
 
 import time
-from warnings import warn
 
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore
@@ -183,7 +182,7 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
             )
         plot.enableAutoRange(True)
 
-    def add_plot(self, key, title=None, main=None, time_axes=False):
+    def add_plot(self, key, title=None, time_axes=False):
         """Add plot."""
         if time_axes:
             axes = get_time_stamp_axis_item()
@@ -198,9 +197,6 @@ class MultiWaveform(pg.GraphicsLayoutWidget):
 
         self.curves[key] = self.plots[key].plot()
         self.curves[key].setPen(self.state['plot_color'])
-
-        if main is not None:
-            warn("MultiWaveform.add_plot(): deprecated main arg was ignored")
 
     def set_title(self, plot_key, value):
         """Changes title of the given plot."""
