@@ -22,13 +22,25 @@ import cmath
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore
 
-DEFAULT_CIRCLES_NUM = 6
+GRID_DEFAULT_CIRCLES_NUM = 6
+
+ARROW_SHARPENING_ANGLE = math.pi / 18
+ARROW_SIZE_PX = 10
 
 
 class PhasorDiagram(pg.PlotWidget):
-    """Widget for plotting phasor diagram."""
+    """Widget for plotting phasor diagram.
 
-    def __init__(self, parent=None, size=500):
+    Parameters
+    ----------
+    parent: object
+        Parent object
+    size: int
+        Size of the widget
+    end: str
+        Can be 'circle' or 'arrow'
+    """
+    def __init__(self, parent=None, size=500, end='circle'):
         super().__init__(parent)
         self.setAspectLocked(True)
         self.addLine(x=0, pen=0.2)
@@ -50,21 +62,112 @@ class PhasorDiagram(pg.PlotWidget):
 
         self.legend = None
 
-        self.coordinates = {}
+        self.phasors = {}
         self.items = {}
+
+        if end not in ['circle', 'arrow']:
+            raise ValueError('Unknown end value: {}'.format(end))
+        self.__end = end
 
     def set_range(self, value):
         """Set range of diagram."""
-        self.__update_grid(value)
-        self.__update_labels(value)
+        self.__range = value
+        self.__update_grid()
+        self.__update_labels()
+
+    def add_phasor(self, name, am=0, ph=0, color=(255, 255, 255), width=1):
+        """Add phasor to the diagram."""
+
+        # add items to be painted
+        if self.__end == 'circle':
+            items = {
+                'line': self.plot(pen=pg.mkPen(color, width=width)),
+                'point': self.plot(pen=None, symbolBrush=color,
+                                   symbolSize=width+5, symbolPen=None,
+                                   name=name),
+            }
+
+        if self.__end == 'arrow':
+            items = {
+                'line': self.plot(pen=pg.mkPen(color, width=width)),
+                'arr_r': self.plot(pen=pg.mkPen(color, width=width)),
+                'arr_l': self.plot(pen=pg.mkPen(color, width=width)),
+            }
+
+        self.items[name] = items
+
+        # add coordinates
+        self.update_phasor(name, am, ph)
+
+    def update_phasor(self, name, am, ph):
+        """Change phasor value."""
+
+        self.phasors[name] = (am, ph)
+        self.__update()
+
+    def remove_phasors(self):
+        """Remove phasors and legend."""
+
+        for key in self.items:
+            for subkey in self.items[key]:
+                self.removeItem(self.items[key][subkey])
+
+        self.phasors = {}
+
+        if self.legend is not None:
+            self.legend.scene().removeItem(self.legend)
+        self.legend = None
+
+    def show_legend(self):
+        """Show legend."""
+
+        self.legend = self.plotItem.addLegend()
+        for key in self.items:
+            self.plotItem.legend.addItem(
+                self.items[key]['line'], key)
+
+    def __update(self):
+        s = ARROW_SIZE_PX * 2 * self.__range / self.height()
+
+        for key in self.phasors:
+            ph = self.phasors[key]
+            c = cmath.rect(*ph)
+            x = c.real
+            y = c.imag
+
+            items = self.items[key]
+
+            if self.__end == 'circle':
+                items['line'].setData([0, x], [0, y])
+                items['point'].setData([x], [y])
+
+            if self.__end == 'arrow':
+                items['line'].setData([0, x], [0, y])
+
+                ang_l = ph[1] + math.pi - ARROW_SHARPENING_ANGLE
+                xl = s * math.cos(ang_l) + x
+                yl = s * math.sin(ang_l) + y
+                items['arr_l'].setData([xl, x], [yl, y])
+
+                ang_r = ph[1] + math.pi + ARROW_SHARPENING_ANGLE
+                xr = s * math.cos(ang_r) + x
+                yr = s * math.sin(ang_r) + y
+                items['arr_r'].setData([xr, x], [yr, y])
 
     def __build_grid(self):
         self.circles = []
-        for _ in range(DEFAULT_CIRCLES_NUM):
+        for _ in range(GRID_DEFAULT_CIRCLES_NUM):
             circle = pg.QtGui.QGraphicsEllipseItem()
             circle.setPen(pg.mkPen(0.2))
             self.circles.append(circle)
             self.addItem(circle)
+
+    def __update_grid(self):
+        for i in range(GRID_DEFAULT_CIRCLES_NUM):
+            rad = (i + 1) * self.__range / GRID_DEFAULT_CIRCLES_NUM
+            self.circles[i].setRect(-rad, -rad, rad*2, rad*2)
+
+        self.setRange(QtCore.QRectF(-rad, rad, 2*rad, -2*rad))
 
     def __build_labels(self):
         self.labels = []
@@ -73,70 +176,8 @@ class PhasorDiagram(pg.PlotWidget):
             self.labels.append(label)
             self.addItem(label)
 
-    def __update_grid(self, value):
-        for i in range(DEFAULT_CIRCLES_NUM):
-            rad = (i + 1) * value / DEFAULT_CIRCLES_NUM
-            self.circles[i].setRect(-rad, -rad, rad*2, rad*2)
-
-        self.setRange(QtCore.QRectF(-rad, rad, 2*rad, -2*rad))
-
-    def __update_labels(self, value):
-        self.labels[0].setText("{}".format(value / 2))
-        self.labels[0].setPos(0, value / 2)
-        self.labels[1].setText("{}".format(value))
-        self.labels[1].setPos(0, value)
-
-    def add_phasor(self, name, am=0, ph=0, color=(255, 255, 255), width=1):
-        """Add phasor to the diagram."""
-
-        # add coordinates
-        self.coordinates[name] = {
-            'end': cmath.rect(am, ph),
-        }
-
-        # add items to be painted
-        items = {
-            'line': self.plot(),
-            'point': self.plot(pen=None, symbolBrush=color,
-                               symbolSize=width+5, symbolPen=None,
-                               name=name),
-        }
-        items['line'].setPen(pg.mkPen(color, width=width))
-        self.items[name] = items
-
-        self.__update()
-
-    def remove_phasors(self):
-        """Remove phasors and legend."""
-        for key in self.items:
-            self.removeItem(self.items[key]['point'])
-            self.removeItem(self.items[key]['line'])
-
-        self.coordinates = {}
-
-        # remove legend
-        if self.legend is not None:
-            self.legend.scene().removeItem(self.legend)
-        self.legend = None
-
-    def update_phasor(self, name, am, ph):
-        """Change phasor value."""
-        self.coordinates[name]['end'] = cmath.rect(am, ph)
-        self.__update()
-
-    def __update(self):
-        for key in self.coordinates:
-            data = self.coordinates[key]
-            x = data['end'].real
-            y = data['end'].imag
-
-            items = self.items[key]
-            items['line'].setData([0, x], [0, y])
-            items['point'].setData([x], [y])
-
-    def show_legend(self):
-        """Show legend."""
-        self.legend = self.plotItem.addLegend()
-        for key in self.items:
-            self.plotItem.legend.addItem(
-                self.items[key]['line'], key)
+    def __update_labels(self):
+        self.labels[0].setText("{}".format(self.__range / 2))
+        self.labels[0].setPos(0, self.__range / 2)
+        self.labels[1].setText("{}".format(self.__range))
+        self.labels[1].setPos(0, self.__range)

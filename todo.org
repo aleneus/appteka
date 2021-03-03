@@ -162,10 +162,12 @@
 ** DONE feat: distrib: add get_minor
 * 0.11.1
 ** DONE docs: license: update years
-* 0.11.2
+* 0.12.0
 ** DONE depl: pyqtgraph: use Qt from pyqtgraph (free from Qt version)
 ** DONE ref: PhasorDiagram.phasors: split data and graphic items
-** TODO feat: pyqtgraph: phasor: arrows
+** DONE feat: pyqtgraph: phasor: selecting the type of end (circle, arrow)
+** TODO test: removing phasors with arrows
+** TODO ref: pyqtgraph: phasor: processing of end type
 * later
 ** TODO dist: add versions for the requirements
 ** TODO dist: reqs: update pyqtgraph version

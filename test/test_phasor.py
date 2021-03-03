@@ -1,4 +1,5 @@
 import unittest
+import math
 from PyQt5 import QtCore
 from appteka.pyqt import testing
 from appteka.pyqtgraph import phasor
@@ -64,9 +65,41 @@ class TestPhasor(unittest.TestCase):
             "There is a red phasor in first quadrant",
         ])
 
+    def test_phasor_end_circle(self):
+        app = testing.TestApp(self)
+        color = (255, 0, 0)
+        d = phasor.PhasorDiagram()
+        d.set_range(100)
+        d.add_phasor('ph-1', 80, 0 + math.pi/10, color)
+        d.add_phasor('ph-2', 80, math.pi/2 + math.pi/10, color)
+        d.add_phasor('ph-3', 80, math.pi + math.pi/10, color)
+        d.add_phasor('ph-4', 80, 3 * math.pi / 2 + math.pi/10, color)
+        app(d, ["Ends of the phasors are circles"])
+
+    def test_phasor_end_arrow(self):
+        app = testing.TestApp(self)
+        color = (0, 255, 0)
+        d = phasor.PhasorDiagram(end='arrow')
+        d.set_range(100)
+        d.add_phasor('ph-1', 80, 0 + math.pi/10, color)
+        d.add_phasor('ph-2', 80, math.pi/2 + math.pi/10, color)
+        d.add_phasor('ph-3', 80, math.pi + math.pi/10, color)
+        d.add_phasor('ph-4', 80, 3 * math.pi / 2 + math.pi/10, color)
+        app(d, ["Ends of the phasors are arrows"])
+
+    def test_phasor_end_unknown(self):
+        testing.TestApp(self)
+        raised = False
+        try:
+            phasor.PhasorDiagram(end='wrong')
+        except ValueError:
+            raised = True
+
+        self.assertTrue(raised)
+
     def test_three_phasors(self):
         app = testing.TestApp(self)
-        d = phasor.PhasorDiagram()
+        d = phasor.PhasorDiagram(end='arrow')
         d.set_range(100)
         d.add_phasor('ph-1', 80, 0, (255, 0, 0))
         d.add_phasor('ph-2', 80, 2 * 3.1415 / 3, (0, 255, 0))
@@ -74,7 +107,7 @@ class TestPhasor(unittest.TestCase):
 
         app(d, [
             "There are 3 phasors: red, green and blue",
-            "About 120 degrees between every two phasors",
+            "About 120 degrees between phasors",
         ])
 
     def test_three_phasors_rotated(self):
@@ -91,7 +124,7 @@ class TestPhasor(unittest.TestCase):
 
         app(d, [
             "There are 3 phasors: red, green and blue",
-            "About 120 degrees between every two phasors",
+            "About 120 degrees between phasors",
             "Red phasor has angle about 1 radian",
         ])
 
@@ -150,7 +183,7 @@ class TestPhasor_Animation(unittest.TestCase):
     def test_three_phasors_animation(self):
         app = testing.TestApp(self)
 
-        d = phasor.PhasorDiagram()
+        d = phasor.PhasorDiagram(end='arrow')
         d.add_phasor('ph-1', color=(255, 0, 0))
         d.add_phasor('ph-2', color=(0, 255, 0))
         d.add_phasor('ph-3', color=(0, 0, 255))
