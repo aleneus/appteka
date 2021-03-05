@@ -172,6 +172,8 @@
 *** DONE feat: codetextedit.py: remove
 *** DONE feat: MultiWaveform.add_plot(): main arg: remove
 ** DONE docs: update history
+* 0.12.1
+** DONE opt: phasor: arrow
 * later
 ** TODO ref: pyqtgraph: phasor
 ** TODO dist: add versions for the requirements

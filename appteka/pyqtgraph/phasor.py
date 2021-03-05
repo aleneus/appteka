@@ -17,15 +17,15 @@
 
 """Implementation of the phasor diagram."""
 
-import math
+from math import degrees
 import cmath
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore
 
+
 GRID_DEFAULT_CIRCLES_NUM = 6
 
-ARROW_SHARPENING_ANGLE = math.pi / 18
-ARROW_SIZE_PX = 10
+ARROW_SIZE_PX = 5
 
 
 class PhasorDiagram(pg.PlotWidget):
@@ -83,16 +83,22 @@ class PhasorDiagram(pg.PlotWidget):
             items = {
                 'line': self.plot(pen=pg.mkPen(color, width=width)),
                 'point': self.plot(pen=None, symbolBrush=color,
-                                   symbolSize=width+5, symbolPen=None,
+                                   symbolSize=width+3, symbolPen=None,
                                    name=name),
             }
 
         if self.__end == 'arrow':
             items = {
                 'line': self.plot(pen=pg.mkPen(color, width=width)),
-                'arr_r': self.plot(pen=pg.mkPen(color, width=width)),
-                'arr_l': self.plot(pen=pg.mkPen(color, width=width)),
+                'arr': pg.ArrowItem(
+                    tailLen=0,
+                    tailWidth=1,
+                    pen=pg.mkPen(color, width=width),
+                    headLen=ARROW_SIZE_PX,
+                    brush=None,
+                ),
             }
+            self.addItem(items['arr'])
 
         self.items[name] = items
 
@@ -127,8 +133,6 @@ class PhasorDiagram(pg.PlotWidget):
                 self.items[key]['line'], key)
 
     def __update(self):
-        arr_size = ARROW_SIZE_PX * 2 * self.__range / self.height()
-
         for key in self.phasors:
             phasor = self.phasors[key]
             compl = cmath.rect(*phasor)
@@ -137,22 +141,15 @@ class PhasorDiagram(pg.PlotWidget):
 
             items = self.items[key]
 
-            if self.__end == 'circle':
-                items['line'].setData([0, x], [0, y])
-                items['point'].setData([x], [y])
+            items['line'].setData([0, x], [0, y])
 
             if self.__end == 'arrow':
-                items['line'].setData([0, x], [0, y])
+                arr = items['arr']
+                arr.setStyle(angle=180 - degrees(phasor[1]))
+                arr.setPos(x, y)
 
-                ang_l = phasor[1] + math.pi - ARROW_SHARPENING_ANGLE
-                arr_xl = arr_size * math.cos(ang_l) + x
-                arr_yl = arr_size * math.sin(ang_l) + y
-                items['arr_l'].setData([arr_xl, x], [arr_yl, y])
-
-                ang_r = phasor[1] + math.pi + ARROW_SHARPENING_ANGLE
-                arr_xr = arr_size * math.cos(ang_r) + x
-                arr_yr = arr_size * math.sin(ang_r) + y
-                items['arr_r'].setData([arr_xr, x], [arr_yr, y])
+            elif self.__end == 'circle':
+                items['point'].setData([x], [y])
 
     def __build_grid(self):
         self.circles = []
