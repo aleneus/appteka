@@ -75,40 +75,42 @@ class PhasorDiagram(pg.PlotWidget):
         self.__update_grid()
         self.__update_labels()
 
-    def add_phasor(self, name, amp=0, phi=0, color=(255, 255, 255), width=1):
+    def add_phasor(self, key, amp=0, phi=0,
+                   color=(255, 255, 255), width=1, name=None):
+
         """Add phasor to the diagram."""
 
-        # add items to be painted
+        items = {
+            'name': name,
+            'line': self.plot(pen=pg.mkPen(color, width=width)),
+        }
+
         if self.__end == 'circle':
-            items = {
-                'line': self.plot(pen=pg.mkPen(color, width=width)),
-                'point': self.plot(pen=None, symbolBrush=color,
-                                   symbolSize=width+3, symbolPen=None,
-                                   name=name),
-            }
+            items['point'] = self.plot(
+                pen=None,
+                symbolBrush=color,
+                symbolSize=width+3,
+                symbolPen=None,
+            )
 
         if self.__end == 'arrow':
-            items = {
-                'line': self.plot(pen=pg.mkPen(color, width=width)),
-                'arr': pg.ArrowItem(
-                    tailLen=0,
-                    tailWidth=1,
-                    pen=pg.mkPen(color, width=width),
-                    headLen=ARROW_SIZE_PX,
-                    brush=None,
-                ),
-            }
+            items['arr'] = pg.ArrowItem(
+                tailLen=0,
+                tailWidth=1,
+                pen=pg.mkPen(color, width=width),
+                headLen=ARROW_SIZE_PX,
+                brush=None,
+            )
             self.addItem(items['arr'])
 
-        self.items[name] = items
+        self.items[key] = items
 
-        # add coordinates
-        self.update_phasor(name, amp, phi)
+        self.update_phasor(key, amp, phi)
 
-    def update_phasor(self, name, amp, phi):
+    def update_phasor(self, key, amp, phi):
         """Change phasor value."""
 
-        self.phasors[name] = (amp, phi)
+        self.phasors[key] = (amp, phi)
         self.__update()
 
     def remove_phasors(self):
@@ -129,8 +131,13 @@ class PhasorDiagram(pg.PlotWidget):
 
         self.legend = self.plotItem.addLegend()
         for key in self.items:
-            self.plotItem.legend.addItem(
-                self.items[key]['line'], key)
+            name = self.items[key]['name']
+            if name:
+                self.plotItem.legend.addItem(
+                    self.items[key]['line'], name)
+            else:
+                self.plotItem.legend.addItem(
+                    self.items[key]['line'], key)
 
     def __update(self):
         for key in self.phasors:

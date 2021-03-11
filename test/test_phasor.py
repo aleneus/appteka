@@ -147,20 +147,6 @@ class TestPhasor(unittest.TestCase):
 
         app(d, ["Grid corresponds to phasor"])
 
-    def test_legend(self):
-        app = testing.TestApp(self)
-
-        d = phasor.PhasorDiagram()
-        d.add_phasor('ph-1', 80, 0, (255, 0, 0))
-        d.add_phasor('ph-2', 80, 2 * 3.1415 / 3, (0, 255, 0))
-        d.add_phasor('ph-3', 80, -2 * 3.1415 / 3, (0, 0, 255))
-        d.show_legend()
-        d.set_range(80)
-
-        app(d, [
-            "Legend is correct",
-        ])
-
     def test_width_of_phasors(self):
         app = testing.TestApp(self)
 
@@ -215,3 +201,32 @@ class TestPhasor_Animation(unittest.TestCase):
             "Phasors smoothly rotating",
             "Amplitude of red phasor grows",
         ])
+
+
+class TestPhasor_legend(unittest.TestCase):
+    def test_legend(self):
+        app = testing.TestApp(self)
+
+        d = phasor.PhasorDiagram()
+        d.add_phasor('ph-1', 80, 0, (255, 0, 0), width=3)
+        d.add_phasor('ph-2', 80, 2 * 3.1415 / 3, (0, 255, 0))
+        d.add_phasor('ph-3', 80, -2 * 3.1415 / 3, (0, 0, 255))
+        d.show_legend()
+        d.set_range(80)
+
+        app(d, [
+            "Legend is correct",
+            "Lines in legend have different widths",
+        ])
+
+    def test_legend_prefer_names(self):
+        app = testing.TestApp(self)
+
+        d = phasor.PhasorDiagram()
+        d.add_phasor(0, amp=80, phi=0, color=(255, 0, 0), name="Ua")
+        d.add_phasor(1, amp=80, phi=2*3.14/3, color=(0, 255, 0), name="Ub")
+        d.add_phasor(2, amp=80, phi=-2*3.14/3, color=(0, 0, 255), name="Uc")
+        d.show_legend()
+        d.set_range(80)
+
+        app(d, ["Legend: Ua, Ub, Uc"])
