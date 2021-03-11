@@ -215,7 +215,7 @@ class TestPhasor_legend(unittest.TestCase):
         d.set_range(80)
 
         app(d, [
-            "Legend is correct",
+            "Legend ok",
             "Lines in legend have different widths",
         ])
 
@@ -230,3 +230,38 @@ class TestPhasor_legend(unittest.TestCase):
         d.set_range(80)
 
         app(d, ["Legend: Ua, Ub, Uc"])
+
+    def test_show_legend_twice(self):
+        app = testing.TestApp(self)
+
+        d = phasor.PhasorDiagram()
+        d.set_range(1)
+        d.add_phasor(0, 1, 0)
+        d.show_legend()
+        d.show_legend()
+
+        app(d, ["Legend ok"])
+
+
+class TestPhasor_Clearing(unittest.TestCase):
+    def test_clear_empty(self):
+        app = testing.TestApp(self)
+        d = phasor.PhasorDiagram()
+        d.remove_phasors()
+        app(d, ["Grid ok"])
+
+    def test_clear_and_show_legend(self):
+        app = testing.TestApp(self)
+
+        d = phasor.PhasorDiagram()
+
+        d.set_range(80)
+        d.add_phasor(0, amp=80, phi=0, color=(255, 0, 0), name="Ua")
+        d.add_phasor(1, amp=80, phi=0, color=(0, 255, 0), name="Ub")
+        d.show_legend()
+        d.remove_phasors()
+
+        d.add_phasor(0, amp=80, phi=0, name="Ua")
+        d.show_legend()
+
+        app(d, ["Legend is ok"])

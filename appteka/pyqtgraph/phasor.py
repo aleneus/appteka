@@ -20,11 +20,14 @@
 from math import degrees
 import cmath
 import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore
+from pyqtgraph.Qt import QtCore, QtWidgets
 
 
-GRID_DEFAULT_CIRCLES_NUM = 6
+DEFAULT_WIDGET_SIZE = 500
 
+CIRCLES_NUM = 6
+DEFAULT_COLOR = (255, 255, 255)
+DEFAULT_WIDTH = 1
 ARROW_SIZE_PX = 5
 
 
@@ -40,7 +43,8 @@ class PhasorDiagram(pg.PlotWidget):
     end: str
         Can be 'circle' or 'arrow'
     """
-    def __init__(self, parent=None, size=500, end='circle'):
+
+    def __init__(self, parent=None, size=DEFAULT_WIDGET_SIZE, end='arrow'):
         super().__init__(parent)
         self.setAspectLocked(True)
         self.addLine(x=0, pen=0.2)
@@ -48,7 +52,13 @@ class PhasorDiagram(pg.PlotWidget):
         self.showAxis('bottom', False)
         self.showAxis('left', False)
 
-        self.setFixedSize(size, size)
+        policy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred,
+            QtWidgets.QSizePolicy.Preferred,
+        )
+        policy.setHeightForWidth(True)
+        self.setSizePolicy(policy)
+        self.__size = size
 
         self.__build_grid()
         self.__build_labels()
@@ -60,10 +70,10 @@ class PhasorDiagram(pg.PlotWidget):
         self.plotItem.setMenuEnabled(False)
         self.hideButtons()
 
-        self.legend = None
-
-        self.phasors = {}
-        self.items = {}
+        self.__legend = None
+        self.__phasors = {}
+        self.__items = {}
+        self.__names = {}
 
         if end not in ['circle', 'arrow']:
             raise ValueError('Unknown end value: {}'.format(end))
@@ -76,12 +86,12 @@ class PhasorDiagram(pg.PlotWidget):
         self.__update_labels()
 
     def add_phasor(self, key, amp=0, phi=0,
-                   color=(255, 255, 255), width=1, name=None):
+                   color=DEFAULT_COLOR, width=DEFAULT_WIDTH,
+                   name=None):
 
         """Add phasor to the diagram."""
 
         items = {
-            'name': name,
             'line': self.plot(pen=pg.mkPen(color, width=width)),
         }
 
@@ -103,50 +113,58 @@ class PhasorDiagram(pg.PlotWidget):
             )
             self.addItem(items['arr'])
 
-        self.items[key] = items
+        self.__items[key] = items
+        self.__names[key] = name
 
         self.update_phasor(key, amp, phi)
 
     def update_phasor(self, key, amp, phi):
         """Change phasor value."""
 
-        self.phasors[key] = (amp, phi)
+        self.__phasors[key] = (amp, phi)
         self.__update()
 
     def remove_phasors(self):
         """Remove phasors and legend."""
 
-        for key in self.items:
-            for subkey in self.items[key]:
-                self.removeItem(self.items[key][subkey])
+        for key in self.__items:
+            for subkey in self.__items[key]:
+                self.removeItem(self.__items[key][subkey])
 
-        self.phasors = {}
+        self.__items = {}
+        self.__names = {}
+        self.__phasors = {}
 
-        if self.legend is not None:
-            self.legend.scene().removeItem(self.legend)
-        self.legend = None
+        if self.__legend is not None:
+            self.__legend.clear()
+            self.removeItem(self.__legend)
+
+        self.__legend = None
 
     def show_legend(self):
         """Show legend."""
 
-        self.legend = self.plotItem.addLegend()
-        for key in self.items:
-            name = self.items[key]['name']
+        if self.__legend:
+            return
+
+        self.__legend = self.plotItem.addLegend()
+        for key in self.__items:
+            name = self.__names[key]
             if name:
                 self.plotItem.legend.addItem(
-                    self.items[key]['line'], name)
+                    self.__items[key]['line'], name)
             else:
                 self.plotItem.legend.addItem(
-                    self.items[key]['line'], key)
+                    self.__items[key]['line'], key)
 
     def __update(self):
-        for key in self.phasors:
-            phasor = self.phasors[key]
+        for key in self.__phasors:
+            phasor = self.__phasors[key]
             compl = cmath.rect(*phasor)
             x = compl.real
             y = compl.imag
 
-            items = self.items[key]
+            items = self.__items[key]
 
             items['line'].setData([0, x], [0, y])
 
@@ -160,15 +178,15 @@ class PhasorDiagram(pg.PlotWidget):
 
     def __build_grid(self):
         self.circles = []
-        for _ in range(GRID_DEFAULT_CIRCLES_NUM):
+        for _ in range(CIRCLES_NUM):
             circle = pg.QtGui.QGraphicsEllipseItem()
             circle.setPen(pg.mkPen(0.2))
             self.circles.append(circle)
             self.addItem(circle)
 
     def __update_grid(self):
-        for i in range(GRID_DEFAULT_CIRCLES_NUM):
-            rad = (i + 1) * self.__range / GRID_DEFAULT_CIRCLES_NUM
+        for i in range(CIRCLES_NUM):
+            rad = (i + 1) * self.__range / CIRCLES_NUM
             self.circles[i].setRect(-rad, -rad, rad*2, rad*2)
 
         self.setRange(QtCore.QRectF(-rad, rad, 2*rad, -2*rad))
@@ -185,3 +203,11 @@ class PhasorDiagram(pg.PlotWidget):
         self.labels[0].setPos(0, self.__range / 2)
         self.labels[1].setText("{}".format(self.__range))
         self.labels[1].setPos(0, self.__range)
+
+    def sizeHint(self):
+        # pylint: disable=invalid-name,missing-docstring
+        return QtCore.QSize(self.__size, self.__size)
+
+    def heightForWidth(self, width):
+        # pylint: disable=invalid-name,no-self-use,missing-docstring
+        return width

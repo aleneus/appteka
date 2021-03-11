@@ -176,6 +176,8 @@
 ** DONE opt: phasor: arrow
 * 0.12.2
 ** DONE feat: phasor diagram: key and name
+* 0.12.3
+** DONE test: phasor diagram: clearing and legend
 * later
 ** TODO ref: pyqtgraph: phasor
 ** TODO dist: add versions for the requirements

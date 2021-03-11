@@ -47,6 +47,8 @@ class CodeTextEdit(QtWidgets.QPlainTextEdit):
         self.document().setPlainText(text)
 
     def lineNumberAreaPaintEvent(self, event):
+        # pylint: disable=invalid-name,missing-docstring
+
         painter = QtGui.QPainter(self.lineNumberArea)
         painter.fillRect(event.rect(), Qt.lightGray)
 
@@ -80,6 +82,8 @@ class CodeTextEdit(QtWidgets.QPlainTextEdit):
         return 3 + self.fontMetrics().horizontalAdvance('9') * digits
 
     def resizeEvent(self, e):
+        # pylint: disable=invalid-name,missing-docstring
+
         super().resizeEvent(e)
 
         rect = self.contentsRect()
@@ -122,7 +126,9 @@ class LineNumberArea(QtWidgets.QWidget):
         self.code_editor = editor
 
     def sizeHint(self):
+        # pylint: disable=invalid-name,missing-docstring
         return QSize(self.code_editor.lineNumberAreaWidth(), 0)
 
     def paintEvent(self, event):
+        # pylint: disable=invalid-name,missing-docstring
         self.code_editor.lineNumberAreaPaintEvent(event)
