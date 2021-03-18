@@ -68,7 +68,7 @@ class TestPhasor(unittest.TestCase):
     def test_phasor_end_circle(self):
         app = testing.TestApp(self)
         color = (255, 0, 0)
-        d = phasor.PhasorDiagram()
+        d = phasor.PhasorDiagram(end='circle')
         d.set_range(100)
         d.add_phasor('ph-1', 80, 0 + math.pi/10, color)
         d.add_phasor('ph-2', 80, math.pi/2 + math.pi/10, color)
@@ -265,3 +265,25 @@ class TestPhasor_Clearing(unittest.TestCase):
         d.show_legend()
 
         app(d, ["Legend is ok"])
+
+
+class TestPhasor_Visibility(unittest.TestCase):
+    def test_set_invisible(self):
+        app = testing.TestApp(self)
+
+        d = phasor.PhasorDiagram()
+        d.set_range(2)
+        d.add_phasor(0, 1, 0, color=(255, 0, 0))
+        d.add_phasor(1, 2, 1, color=(0, 255, 0))
+        d.add_phasor(2, 2, 1, color=(0, 0, 255))
+        d.show_legend()
+
+        d.set_phasor_visible(1, False)
+        d.set_phasor_visible(2, False)
+        d.set_phasor_visible(2, True)
+        d.set_phasor_visible(3, False)
+
+        app(d, [
+            "2 phasors in diagram",
+            "3 items in legend",
+        ])

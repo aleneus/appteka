@@ -118,9 +118,16 @@ class PhasorDiagram(pg.PlotWidget):
 
         self.update_phasor(key, amp, phi)
 
+    def set_phasor_visible(self, key, value=True):
+        """Hide or show phasor."""
+        if key not in self.__items:
+            return
+
+        for item in self.__items[key]:
+            self.__items[key][item].setVisible(value)
+
     def update_phasor(self, key, amp, phi):
         """Change phasor value."""
-
         self.__phasors[key] = (amp, phi)
         self.__update()
 
