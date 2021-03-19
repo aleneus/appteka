@@ -182,7 +182,7 @@
 ** DONE feat: control the visibility of phasors
 ** DONE feat: phasor diagram: deprecate size arg
 ** DONE feat: phasor diagram: deprecate end arg
-** TODO docs: update history
+** DONE docs: update history
 * later
 ** TODO dist: add versions for the requirements
 ** TODO dist: reqs: update pyqtgraph version

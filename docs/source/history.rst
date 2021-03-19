@@ -1,6 +1,12 @@
 Releases
 ========
 
+0.13
+----
+
+* The phasor can be made invisible.
+* Argument 'end' in phasor diagram was marked as deprecated cause 'circle' is very slow. It is better to add more options for customizing the style of individual phasors.
+
 0.12
 ----
 
