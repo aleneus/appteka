@@ -5,7 +5,7 @@ from appteka.pyqt import testing
 from appteka.pyqtgraph import phasor
 
 
-class TestPhasor(unittest.TestCase):
+class TestPhasorDiagram(unittest.TestCase):
     def test_just_visible(self):
         app = testing.TestApp(self)
         app(phasor.PhasorDiagram(), [
@@ -167,7 +167,7 @@ class TestPhasor(unittest.TestCase):
         ])
 
 
-class TestPhasor_Animation(unittest.TestCase):
+class TestPhasorDiagram_Animation(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.counter = 0
@@ -203,7 +203,7 @@ class TestPhasor_Animation(unittest.TestCase):
         ])
 
 
-class TestPhasor_legend(unittest.TestCase):
+class TestPhasorDiagram_Legend(unittest.TestCase):
     def test_legend(self):
         app = testing.TestApp(self)
 
@@ -243,7 +243,7 @@ class TestPhasor_legend(unittest.TestCase):
         app(d, ["Legend ok"])
 
 
-class TestPhasor_Clearing(unittest.TestCase):
+class TestPhasorDiagram_Clearing(unittest.TestCase):
     def test_clear_empty(self):
         app = testing.TestApp(self)
         d = phasor.PhasorDiagram()
@@ -267,7 +267,7 @@ class TestPhasor_Clearing(unittest.TestCase):
         app(d, ["Legend is ok"])
 
 
-class TestPhasor_Visibility(unittest.TestCase):
+class TestPhasorDiagram_Visibility(unittest.TestCase):
     def test_set_invisible(self):
         app = testing.TestApp(self)
 
@@ -287,3 +287,10 @@ class TestPhasor_Visibility(unittest.TestCase):
             "2 phasors in diagram",
             "3 items in legend",
         ])
+
+
+class TestPhasorDiagram_Deprecation(unittest.TestCase):
+    def test_size_arg(self):
+        testing.TestApp(self)
+        with self.assertWarns(FutureWarning):
+            phasor.PhasorDiagram(size=100)

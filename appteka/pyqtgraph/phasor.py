@@ -18,12 +18,13 @@
 """Implementation of the phasor diagram."""
 
 from math import degrees
+from warnings import warn
 import cmath
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore, QtWidgets
 
 
-DEFAULT_WIDGET_SIZE = 500
+DEFAULT_WIDGET_SIZE = QtCore.QSize(500, 500)
 
 CIRCLES_NUM = 6
 DEFAULT_COLOR = (255, 255, 255)
@@ -44,8 +45,12 @@ class PhasorDiagram(pg.PlotWidget):
         Can be 'circle' or 'arrow'
     """
 
-    def __init__(self, parent=None, size=DEFAULT_WIDGET_SIZE, end='arrow'):
+    def __init__(self, parent=None, size=None, end='arrow'):
         super().__init__(parent)
+
+        if size is not None:
+            warn("size arg is deprecated and ignored", FutureWarning)
+
         self.setAspectLocked(True)
         self.addLine(x=0, pen=0.2)
         self.addLine(y=0, pen=0.2)
@@ -58,7 +63,6 @@ class PhasorDiagram(pg.PlotWidget):
         )
         policy.setHeightForWidth(True)
         self.setSizePolicy(policy)
-        self.__size = size
 
         self.__build_grid()
         self.__build_labels()
@@ -212,8 +216,8 @@ class PhasorDiagram(pg.PlotWidget):
         self.labels[1].setPos(0, self.__range)
 
     def sizeHint(self):
-        # pylint: disable=invalid-name,missing-docstring
-        return QtCore.QSize(self.__size, self.__size)
+        # pylint: disable=invalid-name,no-self-use,missing-docstring
+        return DEFAULT_WIDGET_SIZE
 
     def heightForWidth(self, width):
         # pylint: disable=invalid-name,no-self-use,missing-docstring

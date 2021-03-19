@@ -180,6 +180,7 @@
 ** DONE test: phasor diagram: clearing and legend
 * 0.13.0
 ** DONE feat: control the visibility of phasors
+** DONE feat: phasor diagram: deprecate size arg
 ** TODO feat: phasor diagram: remove circle end type
 * later
 ** TODO dist: add versions for the requirements
