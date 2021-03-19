@@ -29,7 +29,6 @@ DEFAULT_WIDGET_SIZE = QtCore.QSize(500, 500)
 CIRCLES_NUM = 6
 DEFAULT_COLOR = (255, 255, 255)
 DEFAULT_WIDTH = 1
-ARROW_SIZE_PX = 5
 
 
 class PhasorDiagram(pg.PlotWidget):
@@ -39,17 +38,16 @@ class PhasorDiagram(pg.PlotWidget):
     ----------
     parent: object
         Parent object
-    size: int
-        Size of the widget
-    end: str
-        Can be 'circle' or 'arrow'
     """
 
-    def __init__(self, parent=None, size=None, end='arrow'):
+    def __init__(self, parent=None, size=None, end=None):
         super().__init__(parent)
 
         if size is not None:
             warn("size arg is deprecated and ignored", FutureWarning)
+
+        if end is not None:
+            warn("end arg is deprecated and ignored", FutureWarning)
 
         self.setAspectLocked(True)
         self.addLine(x=0, pen=0.2)
@@ -79,10 +77,6 @@ class PhasorDiagram(pg.PlotWidget):
         self.__items = {}
         self.__names = {}
 
-        if end not in ['circle', 'arrow']:
-            raise ValueError('Unknown end value: {}'.format(end))
-        self.__end = end
-
     def set_range(self, value):
         """Set range of diagram."""
         self.__range = value
@@ -95,29 +89,20 @@ class PhasorDiagram(pg.PlotWidget):
 
         """Add phasor to the diagram."""
 
-        items = {
-            'line': self.plot(pen=pg.mkPen(color, width=width)),
-        }
+        line = self.plot(
+            pen=pg.mkPen(color, width=width),
+        )
 
-        if self.__end == 'circle':
-            items['point'] = self.plot(
-                pen=None,
-                symbolBrush=color,
-                symbolSize=width+3,
-                symbolPen=None,
-            )
+        arr = pg.ArrowItem(
+            tailLen=0,
+            tailWidth=1,
+            pen=pg.mkPen(color, width=width),
+            headLen=width+4,
+            brush=None,
+        )
+        self.addItem(arr)
 
-        if self.__end == 'arrow':
-            items['arr'] = pg.ArrowItem(
-                tailLen=0,
-                tailWidth=1,
-                pen=pg.mkPen(color, width=width),
-                headLen=ARROW_SIZE_PX,
-                brush=None,
-            )
-            self.addItem(items['arr'])
-
-        self.__items[key] = items
+        self.__items[key] = {'line': line, 'arr': arr}
         self.__names[key] = name
 
         self.update_phasor(key, amp, phi)
@@ -179,13 +164,9 @@ class PhasorDiagram(pg.PlotWidget):
 
             items['line'].setData([0, x], [0, y])
 
-            if self.__end == 'arrow':
-                arr = items['arr']
-                arr.setStyle(angle=180 - degrees(phasor[1]))
-                arr.setPos(x, y)
-
-            elif self.__end == 'circle':
-                items['point'].setData([x], [y])
+            arr = items['arr']
+            arr.setStyle(angle=180 - degrees(phasor[1]))
+            arr.setPos(x, y)
 
     def __build_grid(self):
         self.circles = []

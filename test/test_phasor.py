@@ -1,47 +1,16 @@
 import unittest
-import math
 from PyQt5 import QtCore
 from appteka.pyqt import testing
 from appteka.pyqtgraph import phasor
 
 
 class TestPhasorDiagram(unittest.TestCase):
-    def test_just_visible(self):
-        app = testing.TestApp(self)
-        app(phasor.PhasorDiagram(), [
-            "Widget seems to be OK",
-        ])
-
-    def test_range_is_two(self):
-        app = testing.TestApp(self)
-        d = phasor.PhasorDiagram()
-        d.set_range(2)
-
-        app(d, [
-            "Grid is OK",
-            "The max circle in grid has radius of 2",
-        ])
-
-    def test_change_range(self):
-        app = testing.TestApp(self)
-        d = phasor.PhasorDiagram()
-        d.set_range(2)
-        d.set_range(4)
-        app(d, [
-            "Grid is OK",
-            "The max circle in grid has radius of 4",
-        ])
-
     def test_add_phasor(self):
         app = testing.TestApp(self)
         d = phasor.PhasorDiagram()
         d.set_range(100)
         d.add_phasor('ph-1', 80, 1)
-
-        app(d, [
-            "There is a phasor in first quadrant",
-            "The color of phasor is white",
-        ])
+        app(d, ["White phasor in first quadrant"])
 
     def test_update_phasor(self):
         app = testing.TestApp(self)
@@ -49,61 +18,14 @@ class TestPhasorDiagram(unittest.TestCase):
         d.set_range(100)
         d.add_phasor('ph-1', 80, 1)
         d.update_phasor('ph-1', 80, 2)
-
-        app(d, [
-            "There is a phasor in second quadrant",
-            "Phasor in single",
-        ])
+        app(d, ["Phasor in second quadrant"])
 
     def test_phasor_color(self):
         app = testing.TestApp(self)
         d = phasor.PhasorDiagram()
         d.set_range(100)
         d.add_phasor('ph-1', 80, 1, (255, 0, 0))
-
-        app(d, [
-            "There is a red phasor in first quadrant",
-        ])
-
-    def test_phasor_end_circle(self):
-        app = testing.TestApp(self)
-        color = (255, 0, 0)
-        d = phasor.PhasorDiagram(end='circle')
-        d.set_range(100)
-        d.add_phasor('ph-1', 80, 0 + math.pi/10, color)
-        d.add_phasor('ph-2', 80, math.pi/2 + math.pi/10, color)
-        d.add_phasor('ph-3', 80, math.pi + math.pi/10, color)
-        d.add_phasor('ph-4', 80, 3 * math.pi / 2 + math.pi/10, color)
-        app(d, ["Ends of the phasors are circles"])
-
-    def test_phasor_end_arrow(self):
-        app = testing.TestApp(self)
-        color = (0, 255, 0)
-        d = phasor.PhasorDiagram(end='arrow')
-        d.set_range(100)
-        d.add_phasor('ph-1', 80, 0 + math.pi/10, color)
-        d.add_phasor('ph-2', 80, math.pi/2 + math.pi/10, color)
-        d.add_phasor('ph-3', 80, math.pi + math.pi/10, color)
-        d.add_phasor('ph-4', 80, 3 * math.pi / 2 + math.pi/10, color)
-        app(d, ["Ends of the phasors are arrows"])
-
-    def test_phasor_end_unknown(self):
-        testing.TestApp(self)
-        raised = False
-        try:
-            phasor.PhasorDiagram(end='wrong')
-        except ValueError:
-            raised = True
-
-        self.assertTrue(raised)
-
-    def test_phasor_end_arrow_clear(self):
-        app = testing.TestApp(self)
-        d = phasor.PhasorDiagram(end='arrow')
-        d.set_range(100)
-        d.add_phasor('ph-1', 80, 0, (0, 255, 0))
-        d.remove_phasors()
-        app(d, ["Only grid"])
+        app(d, ["Red phasor in first quadrant"])
 
     def test_three_phasors(self):
         app = testing.TestApp(self)
@@ -114,7 +36,7 @@ class TestPhasorDiagram(unittest.TestCase):
         d.add_phasor('ph-3', 80, -2 * 3.1415 / 3, (0, 0, 255))
 
         app(d, [
-            "There are 3 phasors: red, green and blue",
+            "3 phasors: red, green and blue",
             "About 120 degrees between phasors",
         ])
 
@@ -131,21 +53,10 @@ class TestPhasorDiagram(unittest.TestCase):
         d.update_phasor('ph-3', 80, 1 - 2 * 3.1415 / 3)
 
         app(d, [
-            "There are 3 phasors: red, green and blue",
+            "3 phasors: red, green and blue",
             "About 120 degrees between phasors",
             "Red phasor has angle about 1 radian",
         ])
-
-    def test_range_to_phasor(self):
-        app = testing.TestApp(self)
-
-        d = phasor.PhasorDiagram()
-        d.add_phasor('ph-1', color=(255, 255, 0))
-        d.update_phasor('ph-1', 1, 1)
-        d.update_phasor('ph-1', 100, 1)
-        d.set_range(100)
-
-        app(d, ["Grid corresponds to phasor"])
 
     def test_width_of_phasors(self):
         app = testing.TestApp(self)
@@ -162,9 +73,31 @@ class TestPhasorDiagram(unittest.TestCase):
         d.set_range(100)
 
         # Then widths of phasors are differ
-        app(d, [
-            "widths of phasors are differ",
-        ])
+        app(d, ["Widths of phasors are differ"])
+
+
+class TestPhasorDiagram_Range(unittest.TestCase):
+    def test_range_is_two(self):
+        app = testing.TestApp(self)
+        d = phasor.PhasorDiagram()
+        d.set_range(2)
+        app(d, ["Range is 2"])
+
+    def test_change_range(self):
+        app = testing.TestApp(self)
+        d = phasor.PhasorDiagram()
+        d.set_range(2)
+        d.set_range(4)
+        app(d, ["Range is 4"])
+
+    def test_range_to_phasor(self):
+        app = testing.TestApp(self)
+        d = phasor.PhasorDiagram()
+        d.add_phasor('ph-1', color=(255, 255, 0))
+        d.update_phasor('ph-1', 1, 1)
+        d.update_phasor('ph-1', 100, 1)
+        d.set_range(100)
+        app(d, ["Grid corresponds to phasor"])
 
 
 class TestPhasorDiagram_Animation(unittest.TestCase):
@@ -215,7 +148,7 @@ class TestPhasorDiagram_Legend(unittest.TestCase):
         d.set_range(80)
 
         app(d, [
-            "Legend ok",
+            "Legend OK",
             "Lines in legend have different widths",
         ])
 
@@ -240,7 +173,7 @@ class TestPhasorDiagram_Legend(unittest.TestCase):
         d.show_legend()
         d.show_legend()
 
-        app(d, ["Legend ok"])
+        app(d, ["Legend OK"])
 
 
 class TestPhasorDiagram_Clearing(unittest.TestCase):
@@ -248,7 +181,7 @@ class TestPhasorDiagram_Clearing(unittest.TestCase):
         app = testing.TestApp(self)
         d = phasor.PhasorDiagram()
         d.remove_phasors()
-        app(d, ["Grid ok"])
+        app(d, ["Grid OK"])
 
     def test_clear_and_show_legend(self):
         app = testing.TestApp(self)
@@ -264,7 +197,7 @@ class TestPhasorDiagram_Clearing(unittest.TestCase):
         d.add_phasor(0, amp=80, phi=0, name="Ua")
         d.show_legend()
 
-        app(d, ["Legend is ok"])
+        app(d, ["Legend OK"])
 
 
 class TestPhasorDiagram_Visibility(unittest.TestCase):
@@ -294,3 +227,8 @@ class TestPhasorDiagram_Deprecation(unittest.TestCase):
         testing.TestApp(self)
         with self.assertWarns(FutureWarning):
             phasor.PhasorDiagram(size=100)
+
+    def test_end_arg(self):
+        testing.TestApp(self)
+        with self.assertWarns(FutureWarning):
+            phasor.PhasorDiagram(end='arrow')
