@@ -1,7 +1,11 @@
 import unittest
 from PyQt5 import QtCore
+from pyqtgraph import setConfigOption
+
 from appteka.pyqt import testing
 from appteka.pyqtgraph import phasor
+
+setConfigOption("antialias", True)
 
 
 class TestPhasorDiagram(unittest.TestCase):

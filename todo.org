@@ -183,6 +183,11 @@
 ** DONE feat: phasor diagram: deprecate size arg
 ** DONE feat: phasor diagram: deprecate end arg
 ** DONE docs: update history
+* 0.14.0
+** DONE feat: phasor: add style of line
+** TODO test: phasor: cover linestyles
+** TODO docs: add_phasor: details
+** TODO docs: update release notes
 * later
 ** TODO dist: add versions for the requirements
 ** TODO dist: reqs: update pyqtgraph version

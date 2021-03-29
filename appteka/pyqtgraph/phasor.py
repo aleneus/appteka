@@ -85,12 +85,13 @@ class PhasorDiagram(pg.PlotWidget):
 
     def add_phasor(self, key, amp=0, phi=0,
                    color=DEFAULT_COLOR, width=DEFAULT_WIDTH,
-                   name=None):
+                   name=None, linestyle='solid'):
 
         """Add phasor to the diagram."""
 
+        dash = _linestyle_to_dash(linestyle)
         line = self.plot(
-            pen=pg.mkPen(color, width=width),
+            pen=pg.mkPen(color, width=width, dash=dash),
         )
 
         arr = pg.ArrowItem(
@@ -203,3 +204,16 @@ class PhasorDiagram(pg.PlotWidget):
     def heightForWidth(self, width):
         # pylint: disable=invalid-name,no-self-use,missing-docstring
         return width
+
+
+def _linestyle_to_dash(style):
+    if style == 'solid':
+        return None
+
+    if style == 'dashed':
+        return [5, 2]
+
+    if style == 'dotted':
+        return [1, 1]
+
+    raise ValueError("Unknown style")
