@@ -4,11 +4,11 @@ pyqtgraph
 Waveforms
 ---------
 
-.. automodule:: appteka.pyqtgraph.phasor
+.. automodule:: appteka.pyqtgraph.waveform
    :members:
 
 Phasor diagram
 --------------
 
-.. automodule:: appteka.pyqtgraph.waveform
+.. automodule:: appteka.pyqtgraph.phasor
    :members:

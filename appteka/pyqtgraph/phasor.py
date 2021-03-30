@@ -29,6 +29,7 @@ DEFAULT_WIDGET_SIZE = QtCore.QSize(500, 500)
 CIRCLES_NUM = 6
 DEFAULT_COLOR = (255, 255, 255)
 DEFAULT_WIDTH = 1
+DEFAULT_LINESTYLE = 'solid'
 
 
 class PhasorDiagram(pg.PlotWidget):
@@ -83,11 +84,42 @@ class PhasorDiagram(pg.PlotWidget):
         self.__update_grid()
         self.__update_labels()
 
-    def add_phasor(self, key, amp=0, phi=0,
-                   color=DEFAULT_COLOR, width=DEFAULT_WIDTH,
-                   name=None, linestyle='solid'):
+    def add_phasor(self, key, amp=0, phi=0, name=None, **kwargs):
+        """Create new phasor and add it to the diagram.
 
-        """Add phasor to the diagram."""
+        Parameters
+        ----------
+        key: object
+            Key for accessing the phasor.
+        amp: float
+            Amplitude.
+        phi: float
+            Phase in radians.
+        name: str
+            Name for legend.
+
+        Other Parameters
+        ----------------
+        color: tuple
+            Color. Default is (255, 255, 255).
+        width: tuple
+            Width of line and arrow. Default is 1.
+        linestyle: str
+            Style of line. Can be 'solid', 'dashed' or
+            'dotted'. Default is 'solid'.
+        """
+
+        color = kwargs.get('color')
+        if not color:
+            color = DEFAULT_COLOR
+
+        width = kwargs.get('width')
+        if not width:
+            width = DEFAULT_WIDTH
+
+        linestyle = kwargs.get('linestyle')
+        if not linestyle:
+            linestyle = DEFAULT_LINESTYLE
 
         dash = _linestyle_to_dash(linestyle)
         line = self.plot(

@@ -13,31 +13,31 @@ class TestPhasorDiagram(unittest.TestCase):
         app = testing.TestApp(self)
         d = phasor.PhasorDiagram()
         d.set_range(100)
-        d.add_phasor('ph-1', 80, 1)
+        d.add_phasor('ph-1', amp=80, phi=1)
         app(d, ["White phasor in first quadrant"])
 
     def test_update_phasor(self):
         app = testing.TestApp(self)
         d = phasor.PhasorDiagram()
         d.set_range(100)
-        d.add_phasor('ph-1', 80, 1)
+        d.add_phasor('ph-1', amp=80, phi=1)
         d.update_phasor('ph-1', 80, 2)
-        app(d, ["Phasor in second quadrant"])
+        app(d, ["White phasor in second quadrant"])
 
-    def test_phasor_color(self):
+    def test_color(self):
         app = testing.TestApp(self)
         d = phasor.PhasorDiagram()
         d.set_range(100)
-        d.add_phasor('ph-1', 80, 1, (255, 0, 0))
+        d.add_phasor('ph-1', amp=80, phi=1, color=(255, 0, 0))
         app(d, ["Red phasor in first quadrant"])
 
     def test_three_phasors(self):
         app = testing.TestApp(self)
-        d = phasor.PhasorDiagram(end='arrow')
+        d = phasor.PhasorDiagram()
         d.set_range(100)
-        d.add_phasor('ph-1', 80, 0, (255, 0, 0))
-        d.add_phasor('ph-2', 80, 2 * 3.1415 / 3, (0, 255, 0))
-        d.add_phasor('ph-3', 80, -2 * 3.1415 / 3, (0, 0, 255))
+        d.add_phasor('ph-1', amp=80, phi=0, color=(255, 0, 0))
+        d.add_phasor('ph-2', amp=80, phi=2 * 3.1415 / 3, color=(0, 255, 0))
+        d.add_phasor('ph-3', amp=80, phi=-2 * 3.1415 / 3, color=(0, 0, 255))
 
         app(d, [
             "3 phasors: red, green and blue",
@@ -49,12 +49,12 @@ class TestPhasorDiagram(unittest.TestCase):
 
         d = phasor.PhasorDiagram()
         d.set_range(100)
-        d.add_phasor('ph-1', 80, 0, (255, 0, 0))
-        d.add_phasor('ph-2', 80, 2 * 3.1415 / 3, (0, 255, 0))
-        d.add_phasor('ph-3', 80, -2 * 3.1415 / 3, (0, 0, 255))
+        d.add_phasor('ph-1', amp=80, phi=0, color=(255, 0, 0))
+        d.add_phasor('ph-2', amp=80, phi=2*3.14 / 3, color=(0, 255, 0))
+        d.add_phasor('ph-3', amp=80, phi=-2*3.14 / 3, color=(0, 0, 255))
         d.update_phasor('ph-1', 80, 1)
-        d.update_phasor('ph-2', 80, 1 + 2 * 3.1415 / 3)
-        d.update_phasor('ph-3', 80, 1 - 2 * 3.1415 / 3)
+        d.update_phasor('ph-2', 80, 1 + 2*3.14 / 3)
+        d.update_phasor('ph-3', 80, 1 - 2*3.14 / 3)
 
         app(d, [
             "3 phasors: red, green and blue",
@@ -62,7 +62,7 @@ class TestPhasorDiagram(unittest.TestCase):
             "Red phasor has angle about 1 radian",
         ])
 
-    def test_width_of_phasors(self):
+    def test_width(self):
         app = testing.TestApp(self)
 
         # Given phasor diagram
@@ -112,7 +112,7 @@ class TestPhasorDiagram_Animation(unittest.TestCase):
     def test_three_phasors_animation(self):
         app = testing.TestApp(self)
 
-        d = phasor.PhasorDiagram(end='arrow')
+        d = phasor.PhasorDiagram()
         d.add_phasor('ph-1', color=(255, 0, 0))
         d.add_phasor('ph-2', color=(0, 255, 0))
         d.add_phasor('ph-3', color=(0, 0, 255))
@@ -145,9 +145,9 @@ class TestPhasorDiagram_Legend(unittest.TestCase):
         app = testing.TestApp(self)
 
         d = phasor.PhasorDiagram()
-        d.add_phasor('ph-1', 80, 0, (255, 0, 0), width=3)
-        d.add_phasor('ph-2', 80, 2 * 3.1415 / 3, (0, 255, 0))
-        d.add_phasor('ph-3', 80, -2 * 3.1415 / 3, (0, 0, 255))
+        d.add_phasor('ph-1', amp=80, phi=0, color=(255, 0, 0), width=3)
+        d.add_phasor('ph-2', amp=80, phi=2*3.14/3, color=(0, 255, 0))
+        d.add_phasor('ph-3', amp=80, phi=-2*3.14/3, color=(0, 0, 255))
         d.show_legend()
         d.set_range(80)
 
@@ -173,7 +173,7 @@ class TestPhasorDiagram_Legend(unittest.TestCase):
 
         d = phasor.PhasorDiagram()
         d.set_range(1)
-        d.add_phasor(0, 1, 0)
+        d.add_phasor(0, amp=1, phi=0)
         d.show_legend()
         d.show_legend()
 
@@ -201,7 +201,7 @@ class TestPhasorDiagram_Clearing(unittest.TestCase):
         d.add_phasor(0, amp=80, phi=0, name="Ua")
         d.show_legend()
 
-        app(d, ["Legend OK"])
+        app(d, ["Legend: Ua"])
 
 
 class TestPhasorDiagram_Visibility(unittest.TestCase):
@@ -210,9 +210,9 @@ class TestPhasorDiagram_Visibility(unittest.TestCase):
 
         d = phasor.PhasorDiagram()
         d.set_range(2)
-        d.add_phasor(0, 1, 0, color=(255, 0, 0))
-        d.add_phasor(1, 2, 1, color=(0, 255, 0))
-        d.add_phasor(2, 2, 1, color=(0, 0, 255))
+        d.add_phasor(0, amp=1, phi=0, color=(255, 0, 0))
+        d.add_phasor(1, amp=2, phi=1, color=(0, 255, 0))
+        d.add_phasor(2, amp=2, phi=1, color=(0, 0, 255))
         d.show_legend()
 
         d.set_phasor_visible(1, False)

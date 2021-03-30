@@ -185,8 +185,8 @@
 ** DONE docs: update history
 * 0.14.0
 ** DONE feat: phasor: add style of line
+** DONE docs: add_phasor: details
 ** TODO test: phasor: cover linestyles
-** TODO docs: add_phasor: details
 ** TODO docs: update release notes
 * later
 ** TODO dist: add versions for the requirements
@@ -201,6 +201,7 @@
 ** TODO docs: add demo for test_sqlite_schema
 ** TODO feat: configuration: tools for adding of unexisting parameters and sections
 ** TODO feat: find something more convenient than conf.setting[key]
+** TODO feat: phasor: generate unique style for evenry next phasor
 * depr
 ** TODO depr: phasor diagram: remove size arg
    SCHEDULED: <2021-08-06 Пт>
