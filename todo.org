@@ -190,8 +190,8 @@
 ** DONE docs: update release notes
 * 0.14.1
 ** DONE feat: phasor: dash depends from width
-** TODO ref: check if key duplicated
 * later
+** TODO ref: check if key duplicated
 ** TODO dist: add versions for the requirements
 ** TODO dist: reqs: update pyqtgraph version
 ** TODO ref: widget testing: extract asker
