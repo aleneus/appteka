@@ -226,6 +226,23 @@ class TestPhasorDiagram_Visibility(unittest.TestCase):
         ])
 
 
+class TestPhasorDiagram_Linestyle(unittest.TestCase):
+    def test_all_styles(self):
+        app = testing.TestApp(self)
+
+        d = phasor.PhasorDiagram()
+        d.add_phasor('ph-1', amp=1, phi=0, linestyle='solid')
+        d.add_phasor('ph-2', amp=1, phi=2, linestyle='dashed')
+        d.add_phasor('ph-3', amp=1, phi=4, linestyle='dotted')
+        d.set_range(1)
+        d.show_legend()
+
+        app(d, [
+            "Phasors of different styles",
+            "Legend OK",
+        ])
+
+
 class TestPhasorDiagram_Deprecation(unittest.TestCase):
     def test_size_arg(self):
         testing.TestApp(self)

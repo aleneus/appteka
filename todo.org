@@ -186,7 +186,7 @@
 * 0.14.0
 ** DONE feat: phasor: add style of line
 ** DONE docs: add_phasor: details
-** TODO test: phasor: cover linestyles
+** DONE test: phasor: cover linestyles
 ** TODO docs: update release notes
 * later
 ** TODO dist: add versions for the requirements
