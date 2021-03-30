@@ -1,4 +1,5 @@
 import unittest
+import random
 from PyQt5 import QtCore
 from pyqtgraph import setConfigOption
 
@@ -113,19 +114,18 @@ class TestPhasorDiagram_Animation(unittest.TestCase):
         app = testing.TestApp(self)
 
         d = phasor.PhasorDiagram()
-        d.add_phasor('ph-1', color=(255, 0, 0))
-        d.add_phasor('ph-2', color=(0, 255, 0))
+        d.add_phasor('ph-1', color=(255, 0, 0), linestyle='dashed')
+        d.add_phasor('ph-2', color=(0, 255, 0), linestyle='dotted')
         d.add_phasor('ph-3', color=(0, 0, 255))
         d.show_legend()
 
         def rotate():
-            a = 2 * 3.1415 / 3
-            sh = self.counter / 200
-            ash = self.counter / 10
-            d.update_phasor('ph-1', ash + 10, sh)
-            d.update_phasor('ph-2', 10, sh + a)
-            d.update_phasor('ph-3', 10, sh - a)
-            d.set_range(ash + 10)
+            delta_ph = self.counter / 200
+            delta_am = self.counter / 10
+            d.update_phasor('ph-1', 10 + delta_am, 0 + delta_ph)
+            d.update_phasor('ph-2', 10, 2 + delta_ph)
+            d.update_phasor('ph-3', 10, 4 + delta_ph)
+            d.set_range(10 + delta_am)
             self.counter = self.counter + 1
 
         timer = QtCore.QTimer()
@@ -267,6 +267,37 @@ class TestPhasorDiagram_Linestyle(unittest.TestCase):
         d.show_legend()
 
         app(d, ["Styles are the same in groups"])
+
+
+class TestPhasorDiagram_Smoke(unittest.TestCase):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def test_fast_update_data_and_range(self):
+        app = testing.TestApp(self)
+
+        d = phasor.PhasorDiagram()
+        d.add_phasor('ph-1', linestyle='dashed')
+        d.add_phasor('ph-2', linestyle='dotted')
+        d.add_phasor('ph-3')
+        d.show_legend()
+
+        def rotate():
+            x = random.normalvariate(3, 1)
+            if x < 0:
+                x = 0
+            d.update_phasor('ph-1', x, x+1)
+            d.update_phasor('ph-2', x, x+2)
+            d.update_phasor('ph-3', x, x+3)
+            d.set_range(x)
+
+        timer = QtCore.QTimer()
+        timer.setInterval(10)
+        timer.timeout.connect(rotate)
+        self.counter = 0
+        timer.start()
+
+        app(d, ["No smoke"])
 
 
 class TestPhasorDiagram_Deprecation(unittest.TestCase):

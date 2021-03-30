@@ -190,6 +190,9 @@
 ** DONE docs: update release notes
 * 0.14.1
 ** DONE feat: phasor: dash depends from width
+* 0.14.2
+** DONE test: phasor: smoke test
+** TODO depl: require pyqtgraph-0.12
 * later
 ** TODO ref: check if key duplicated
 ** TODO dist: add versions for the requirements

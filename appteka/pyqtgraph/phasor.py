@@ -185,6 +185,8 @@ class PhasorDiagram(pg.PlotWidget):
             else:
                 self.plotItem.legend.addItem(
                     self.__items[key]['line'], key)
+            cols = 1 + (len(self.__items) - 1) // 10
+            self.plotItem.legend.setColumnCount(cols)
 
     def __update(self):
         for key in self.__phasors:
