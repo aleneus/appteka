@@ -1,6 +1,11 @@
 Releases
 ========
 
+0.14
+----
+
+* Styles of phasors have been added: 'solid', 'dashed', and 'dotted'.
+
 0.13
 ----
 
