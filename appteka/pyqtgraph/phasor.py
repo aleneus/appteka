@@ -121,7 +121,7 @@ class PhasorDiagram(pg.PlotWidget):
         if not linestyle:
             linestyle = DEFAULT_LINESTYLE
 
-        dash = _linestyle_to_dash(linestyle)
+        dash = _linestyle_to_dash(linestyle, width)
         line = self.plot(
             pen=pg.mkPen(color, width=width, dash=dash),
         )
@@ -238,14 +238,14 @@ class PhasorDiagram(pg.PlotWidget):
         return width
 
 
-def _linestyle_to_dash(style):
+def _linestyle_to_dash(style, width):
     if style == 'solid':
         return None
 
     if style == 'dashed':
-        return [5, 2]
+        return (4, width)
 
     if style == 'dotted':
-        return [1, 1]
+        return (1, width)
 
     raise ValueError("Unknown style")

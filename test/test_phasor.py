@@ -231,16 +231,42 @@ class TestPhasorDiagram_Linestyle(unittest.TestCase):
         app = testing.TestApp(self)
 
         d = phasor.PhasorDiagram()
-        d.add_phasor('ph-1', amp=1, phi=0, linestyle='solid')
-        d.add_phasor('ph-2', amp=1, phi=2, linestyle='dashed')
-        d.add_phasor('ph-3', amp=1, phi=4, linestyle='dotted')
-        d.set_range(1)
+        d.add_phasor(0, amp=1, phi=0.0, linestyle='solid')
+        d.add_phasor(1, amp=1, phi=0.5, linestyle='dashed')
+        d.add_phasor(2, amp=1, phi=1.0, linestyle='dotted')
+
+        d.add_phasor(3, amp=1, phi=1.5, linestyle='solid', width=2)
+        d.add_phasor(4, amp=1, phi=2.0, linestyle='dashed', width=2)
+        d.add_phasor(5, amp=1, phi=2.5, linestyle='dotted', width=2)
+
+        d.add_phasor(6, amp=2, phi=3.0, linestyle='solid', width=3)
+        d.add_phasor(7, amp=2, phi=3.5, linestyle='dashed', width=3)
+        d.add_phasor(8, amp=2, phi=4.0, linestyle='dotted', width=3)
+        d.set_range(2)
         d.show_legend()
 
         app(d, [
             "Phasors of different styles",
             "Legend OK",
         ])
+
+    def test_scale_dashed(self):
+        app = testing.TestApp(self)
+
+        d = phasor.PhasorDiagram()
+        d.add_phasor(1, amp=1, phi=0.1, linestyle='dashed', width=2)
+        d.add_phasor(2, amp=2, phi=0.2, linestyle='dashed', width=2)
+        d.add_phasor(3, amp=4, phi=0.3, linestyle='dashed', width=2)
+        d.add_phasor(4, amp=1, phi=2.1, linestyle='dotted', width=2)
+        d.add_phasor(5, amp=2, phi=2.2, linestyle='dotted', width=2)
+        d.add_phasor(6, amp=4, phi=2.3, linestyle='dotted', width=2)
+        d.add_phasor(7, amp=5, phi=4.1, linestyle='dashed', width=4)
+        d.add_phasor(8, amp=6, phi=4.2, linestyle='dashed', width=4)
+        d.add_phasor(9, amp=7, phi=4.3, linestyle='dashed', width=4)
+        d.set_range(7)
+        d.show_legend()
+
+        app(d, ["Styles are the same in groups"])
 
 
 class TestPhasorDiagram_Deprecation(unittest.TestCase):

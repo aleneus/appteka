@@ -188,6 +188,9 @@
 ** DONE docs: add_phasor: details
 ** DONE test: phasor: cover linestyles
 ** DONE docs: update release notes
+* 0.14.1
+** DONE feat: phasor: dash depends from width
+** TODO ref: check if key duplicated
 * later
 ** TODO dist: add versions for the requirements
 ** TODO dist: reqs: update pyqtgraph version
