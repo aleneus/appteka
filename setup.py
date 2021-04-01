@@ -15,8 +15,8 @@
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from setuptools import setup
 import os
+from setuptools import setup
 from appteka import __version__
 
 
@@ -37,7 +37,7 @@ setup(
     packages=['appteka', 'appteka.pyqt', 'appteka.pyqtgraph'],
     install_requires=[
         'PyQt5>=5.15',
-        'pyqtgraph>=0.11',
+        'pyqtgraph>=0.12',
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
