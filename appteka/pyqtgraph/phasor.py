@@ -27,6 +27,7 @@ from pyqtgraph.Qt import QtCore, QtWidgets
 DEFAULT_WIDGET_SIZE = QtCore.QSize(500, 500)
 
 CIRCLES_NUM = 6
+LABELS_NUM = 2
 DEFAULT_COLOR = (255, 255, 255)
 DEFAULT_WIDTH = 1
 DEFAULT_LINESTYLE = 'solid'
@@ -63,8 +64,8 @@ class PhasorDiagram(pg.PlotWidget):
         policy.setHeightForWidth(True)
         self.setSizePolicy(policy)
 
-        self.__build_grid()
-        self.__build_labels()
+        self.__init_grid()
+        self.__init_labels()
 
         self.set_range(1)
 
@@ -138,6 +139,9 @@ class PhasorDiagram(pg.PlotWidget):
         self.__items[key] = {'line': line, 'arr': arr}
         self.__names[key] = name
 
+        for label in self.__labels:
+            self.__to_front(label)
+
         self.update_phasor(key, amp, phi)
 
     def set_phasor_visible(self, key, value=True):
@@ -203,7 +207,7 @@ class PhasorDiagram(pg.PlotWidget):
             arr.setStyle(angle=180 - degrees(phasor[1]))
             arr.setPos(x, y)
 
-    def __build_grid(self):
+    def __init_grid(self):
         self.circles = []
         for _ in range(CIRCLES_NUM):
             circle = pg.QtGui.QGraphicsEllipseItem()
@@ -218,18 +222,21 @@ class PhasorDiagram(pg.PlotWidget):
 
         self.setRange(QtCore.QRectF(-rad, rad, 2*rad, -2*rad))
 
-    def __build_labels(self):
-        self.labels = []
-        for _ in range(2):
+    def __init_labels(self):
+        self.__labels = []
+        for _ in range(LABELS_NUM):
             label = pg.TextItem()
-            self.labels.append(label)
+            self.__labels.append(label)
             self.addItem(label)
 
     def __update_labels(self):
-        self.labels[0].setText("{}".format(self.__range / 2))
-        self.labels[0].setPos(0, self.__range / 2)
-        self.labels[1].setText("{}".format(self.__range))
-        self.labels[1].setPos(0, self.__range)
+        for i in range(LABELS_NUM):
+            self.__labels[i].setText("{}".format(self.__range / LABELS_NUM))
+            self.__labels[i].setPos(0, (i + 1) * self.__range / LABELS_NUM)
+
+    def __to_front(self, item):
+        self.removeItem(item)
+        self.addItem(item)
 
     def sizeHint(self):
         # pylint: disable=invalid-name,no-self-use,missing-docstring

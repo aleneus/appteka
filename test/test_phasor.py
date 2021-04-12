@@ -29,7 +29,7 @@ class TestPhasorDiagram(unittest.TestCase):
         app = testing.TestApp(self)
         d = phasor.PhasorDiagram()
         d.set_range(100)
-        d.add_phasor('ph-1', amp=80, phi=1, color=(255, 0, 0))
+        d.add_phasor('ph-1', amp=80, phi=3/2, color=(255, 0, 0))
         app(d, ["Red phasor in first quadrant"])
 
     def test_three_phasors(self):
