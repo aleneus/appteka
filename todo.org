@@ -195,7 +195,13 @@
 ** DONE depl: require pyqtgraph-0.12
 * 0.15.0
 ** DONE feat: phasor: print numbers under arrows
-** TODO feat: add optional text field (for frequency)
+** TODO feat: phasor diagram for U and I [1/4]
+*** DONE feat: draft
+*** TODO feat: phasor_ui: clear
+*** TODO feat: phasor_ui: visibility
+*** TODO test: cover
+*** TODO ref: base class for phasor diagrams
+** TODO feat: add text field (for frequency)
 * later
 ** TODO ref: check if key duplicated
 ** TODO dist: add versions for the requirements

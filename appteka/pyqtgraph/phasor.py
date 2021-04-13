@@ -64,20 +64,20 @@ class PhasorDiagram(pg.PlotWidget):
         policy.setHeightForWidth(True)
         self.setSizePolicy(policy)
 
-        self.__init_grid()
-        self.__init_labels()
-
-        self.set_range(1)
-
         self.setMouseEnabled(x=False, y=False)
         self.disableAutoRange()
         self.plotItem.setMenuEnabled(False)
         self.hideButtons()
 
+        self.__init_grid()
+        self.__init_labels()
+
         self.__legend = None
         self.__phasors = {}
         self.__items = {}
         self.__names = {}
+
+        self.set_range(1)
 
     def set_range(self, value):
         """Set range of diagram."""
@@ -208,19 +208,20 @@ class PhasorDiagram(pg.PlotWidget):
             arr.setPos(x, y)
 
     def __init_grid(self):
-        self.circles = []
+        self.__circles = []
         for _ in range(CIRCLES_NUM):
             circle = pg.QtGui.QGraphicsEllipseItem()
             circle.setPen(pg.mkPen(0.2))
-            self.circles.append(circle)
+            self.__circles.append(circle)
             self.addItem(circle)
 
     def __update_grid(self):
         for i in range(CIRCLES_NUM):
             rad = (i + 1) * self.__range / CIRCLES_NUM
-            self.circles[i].setRect(-rad, -rad, rad*2, rad*2)
+            self.__circles[i].setRect(-rad, -rad, rad*2, rad*2)
 
-        self.setRange(QtCore.QRectF(-rad, rad, 2*rad, -2*rad))
+        self.setRange(QtCore.QRectF(-self.__range, self.__range,
+                                    2*self.__range, -2*self.__range))
 
     def __init_labels(self):
         self.__labels = []
