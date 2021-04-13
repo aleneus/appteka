@@ -18,6 +18,7 @@ class TestPhasorDiagramUI(unittest.TestCase):
         d.add_i(3, 'i0', color=(255, 255, 0), width=2)
         d.add_i(4, 'i0', color=(255, 0, 0), width=2)
         d.add_i(5, 'i0', color=(0, 255, 0), width=2)
+        d.add_legend()
 
         d.update_data(0, 220, 0)
         d.update_data(1, 225, 2)
@@ -28,6 +29,7 @@ class TestPhasorDiagramUI(unittest.TestCase):
 
         app(d, [
             "Grid OK",
+            "Legend OK",
             "3 U phasors",
             "3 I phasors",
         ])
@@ -72,9 +74,4 @@ class TestPhasorDiagramUI(unittest.TestCase):
             d.add_u(0, 'u0')
 
     # TODO test: add_i: repeat key
-    # TODO test: show legend
     # TODO test: update_data: unexisting key
-    # TODO test: set small amplitude after big one
-    # TODO test: only u
-    # TODO test: only i
-    # TODO test: min_range

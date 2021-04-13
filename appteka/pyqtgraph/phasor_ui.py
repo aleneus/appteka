@@ -58,8 +58,9 @@ class PhasorDiagramUI(pg.PlotWidget):
         self.__min_range = min_range
 
         self.__phasors = {}
-        self.__items = {}
         self.__names = {}
+        self.__items = {}
+        self.__legend = None
 
         self.__to_quant = {}
         self.__amps = {'u': {}, 'i': {}}
@@ -77,6 +78,48 @@ class PhasorDiagramUI(pg.PlotWidget):
         """Add new I phasor to the diagram."""
         self.__add_phasor(key, name, **kwargs)
         self.__to_quant[key] = 'i'
+
+    def add_legend(self):
+        """Add legend."""
+        if self.__legend:
+            return
+
+        self.__legend = self.plotItem.addLegend()
+        for key in self.__items:
+            name = self.__names[key]
+            if name:
+                self.plotItem.legend.addItem(
+                    self.__items[key]['line'], name)
+            else:
+                self.plotItem.legend.addItem(
+                    self.__items[key]['line'], key)
+
+            cols = 1 + (len(self.__items) - 1) // 10
+            self.plotItem.legend.setColumnCount(cols)
+
+    def update_data(self, key, amp, phi):
+        """Change phasor value."""
+        self.__phasors[key] = (amp, phi)
+        self.__update()
+        self.update_range(key, amp)
+
+    def update_range(self, key, amp):
+        """Update range."""
+
+        quant = self.__to_quant[key]
+
+        self.__amps[quant][key] = amp
+        if amp > self.__range[quant]:
+            self.__range[quant] = amp
+        else:
+            self.__range[quant] = max(self.__amps[quant].values())
+
+        if self.__range[quant] < self.__min_range:
+            self.__range[quant] = self.__min_range
+
+        self.setRange(QtCore.QRectF(*self.__u_rect()))
+        self.__update_grid()
+        self.__update_labels()
 
     def __add_phasor(self, key, name=None, **kwargs):
         if key in self.__items:
@@ -106,12 +149,6 @@ class PhasorDiagramUI(pg.PlotWidget):
         self.__to_front(self.__label['u'])
         self.__to_front(self.__label['i'])
 
-    def update_data(self, key, amp, phi):
-        """Change phasor value."""
-        self.__phasors[key] = (amp, phi)
-        self.__update()
-        self.update_range(key, amp)
-
     def __update(self):
         for key in self.__phasors:
             phasor = self.__phasors[key]
@@ -133,37 +170,17 @@ class PhasorDiagramUI(pg.PlotWidget):
             items['arr'].setStyle(angle=180 - degrees(phasor[1]))
             items['arr'].setPos(x, y)
 
-    def update_range(self, key, amp):
-        """Update range."""
-
-        quant = self.__to_quant[key]
-
-        self.__amps[quant][key] = amp
-        if amp > self.__range[quant]:
-            self.__range[quant] = amp
-        else:
-            self.__range[quant] = max(self.__amps[quant].values())
-
-        if self.__range[quant] < self.__min_range:
-            self.__range[quant] = self.__min_range
-
-        self.setRange(QtCore.QRectF(*self.__u_rect()))
-        self.__update_grid()
-        self.__update_labels()
-
     def __init_grid(self):
-        self.__circle_u = pg.QtGui.QGraphicsEllipseItem()
-        self.__circle_u.setPen(pg.mkPen(0.2))
-        self.addItem(self.__circle_u)
-
-        self.__circle_i = pg.QtGui.QGraphicsEllipseItem()
-        self.__circle_i.setPen(pg.mkPen(0.2))
-        self.addItem(self.__circle_i)
+        self.__circles = {}
+        for quant in ['u', 'i']:
+            self.__circles[quant] = pg.QtGui.QGraphicsEllipseItem()
+            self.__circles[quant].setPen(pg.mkPen(0.2))
+            self.addItem(self.__circles[quant])
 
     def __update_grid(self):
-        self.__circle_u.setRect(*self.__u_rect())
+        self.__circles['u'].setRect(*self.__u_rect())
         rad = self.__i_radius()
-        self.__circle_i.setRect(-rad, -rad, 2*rad, 2*rad)
+        self.__circles['i'].setRect(-rad, -rad, 2*rad, 2*rad)
 
     def __u_rect(self):
         return (
@@ -177,7 +194,7 @@ class PhasorDiagramUI(pg.PlotWidget):
         self.__label = {}
         for quant in ['u', 'i']:
             self.__label[quant] = pg.TextItem()
-            self.addItem(self.__label['u'])
+            self.addItem(self.__label[quant])
 
     def __update_labels(self):
         for quant in ['u', 'i']:
