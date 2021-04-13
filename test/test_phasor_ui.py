@@ -79,20 +79,60 @@ class TestPhasorDiagramUI(unittest.TestCase):
         d.add_u(0, 'u0', color=(255, 255, 0), width=1)
         d.add_u(1, 'u1', color=(255, 0, 0), width=1)
         d.add_u(2, 'u2', color=(0, 255, 0), width=1)
-        d.set_visible(1, False)
-        d.set_visible(2, False)
-        d.set_visible(2, True)
+        d.add_legend()
 
         d.update_data(0, 220, 0)
         d.update_data(1, 225, 2)
         d.update_data(2, 230, 4)
 
-        d.add_legend()
+        d.set_visible(1, False)
+        d.set_visible(2, False)
+        d.set_visible(2, True)
 
         app(d, [
             "Legend: u0, u1, u2",
             "2 U phasors",
         ])
 
-    # TODO test: add_i: repeat key
-    # TODO test: update_data: unexisting key
+    def test_remove_phasors(self):
+        app = testing.TestApp(self)
+        d = PhasorDiagramUI()
+        d.add_u(0, 'u0', color=(255, 255, 0), width=1)
+        d.add_u(1, 'u1', color=(255, 0, 0), width=1)
+        d.add_u(2, 'u2', color=(0, 255, 0), width=1)
+        d.add_legend()
+
+        d.update_data(0, 220, 0)
+        d.update_data(1, 225, 2)
+        d.update_data(2, 230, 4)
+
+        d.set_visible(1, False)
+        d.remove_phasors()
+
+        app(d, ["Only grid"])
+
+    def test_remove_phasors_and_add_again(self):
+        app = testing.TestApp(self)
+        d = PhasorDiagramUI()
+        d.add_u(0, 'u0', color=(255, 255, 0), width=1)
+        d.add_u(1, 'u1', color=(255, 0, 0), width=1)
+        d.add_u(2, 'u2', color=(0, 255, 0), width=1)
+        d.add_legend()
+
+        d.update_data(0, 220, 0)
+        d.update_data(1, 225, 2)
+        d.update_data(2, 230, 4)
+
+        d.set_visible(1, False)
+        d.remove_phasors()
+
+        d.add_u(0, 'u0', color=(255, 255, 0), width=1)
+        d.add_u(1, 'u1', color=(255, 0, 0), width=1)
+        d.add_u(2, 'u2', color=(0, 255, 0), width=1)
+        d.add_legend()
+
+        d.update_data(0, 220, 0)
+        d.update_data(1, 225, 2)
+        d.update_data(2, 230, 4)
+
+        app(d, ["No smoke"])

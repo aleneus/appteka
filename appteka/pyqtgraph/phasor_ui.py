@@ -34,7 +34,9 @@ ROUND_TO = 3
 
 
 class PhasorDiagramUI(pg.PlotWidget):
-    def __init__(self, parent=None, min_range=DEFAULT_MIN_RANGE):
+    def __init__(self, parent=None,
+                 auto_range=True, min_range=DEFAULT_MIN_RANGE):
+
         super().__init__(parent)
 
         self.setAspectLocked(True)
@@ -65,6 +67,7 @@ class PhasorDiagramUI(pg.PlotWidget):
         self.__to_quant = {}
         self.__amps = {'u': {}, 'i': {}}
         self.__range = {'u': DEFAULT_MIN_RANGE, 'i': DEFAULT_MIN_RANGE}
+        self.__auto_range = auto_range
 
         self.__init_grid()
         self.__init_labels()
@@ -99,27 +102,30 @@ class PhasorDiagramUI(pg.PlotWidget):
 
     def update_data(self, key, amp, phi):
         """Change phasor value."""
+        quant = self.__to_quant[key]
+        self.__amps[quant][key] = amp
+
         self.__phasors[key] = (amp, phi)
         self.__update()
-        self.update_range(key, amp)
+        if self.__auto_range:
+            self.__update_range_opt(key, amp)
 
-    def update_range(self, key, amp):
-        """Update range."""
+    def remove_phasors(self):
+        """Remove all items."""
 
-        quant = self.__to_quant[key]
+        for key in self.__items:
+            for subkey in self.__items[key]:
+                self.removeItem(self.__items[key][subkey])
 
-        self.__amps[quant][key] = amp
-        if amp > self.__range[quant]:
-            self.__range[quant] = amp
-        else:
-            self.__range[quant] = max(self.__amps[quant].values())
+        self.__items = {}
+        self.__names = {}
+        self.__phasors = {}
 
-        if self.__range[quant] < self.__min_range:
-            self.__range[quant] = self.__min_range
+        if self.__legend is not None:
+            self.__legend.clear()
+            self.removeItem(self.__legend)
 
-        self.setRange(QtCore.QRectF(*self.__u_rect()))
-        self.__update_grid()
-        self.__update_labels()
+        self.__legend = None
 
     def set_visible(self, key, value=True):
         """Hide or show phasor."""
@@ -128,6 +134,11 @@ class PhasorDiagramUI(pg.PlotWidget):
 
         for item in self.__items[key]:
             self.__items[key][item].setVisible(value)
+
+    def update_range(self):
+        """Update range manually."""
+        self.__calc_maximums()
+        self.__apply_range()
 
     def __add_phasor(self, key, name=None, **kwargs):
         if key in self.__items:
@@ -177,6 +188,28 @@ class PhasorDiagramUI(pg.PlotWidget):
             items['line'].setData([0, x], [0, y])
             items['arr'].setStyle(angle=180 - degrees(phasor[1]))
             items['arr'].setPos(x, y)
+
+    def __update_range_opt(self, key, amp):
+        quant = self.__to_quant[key]
+
+        if amp > self.__range[quant]:
+            self.__range[quant] = amp
+        else:
+            self.__calc_maximums()
+
+        self.__apply_range()
+
+    def __calc_maximums(self):
+        for quant in ['u', 'i']:
+            total = 0
+            if self.__amps[quant]:
+                total = max(self.__amps[quant].values())
+            self.__range[quant] = max(total, self.__min_range)
+
+    def __apply_range(self):
+        self.setRange(QtCore.QRectF(*self.__u_rect()))
+        self.__update_grid()
+        self.__update_labels()
 
     def __init_grid(self):
         self.__circles = {}
