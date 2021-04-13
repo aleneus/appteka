@@ -202,6 +202,7 @@
 *** DONE feat: phasor_ui: clear
 *** DONE feat: +update_data()
 *** DONE feat: add text field
+** DONE feat: process zero-length phasor
 ** TODO ref: base class for phasor diagrams
 * later
 ** TODO ref: check if key duplicated

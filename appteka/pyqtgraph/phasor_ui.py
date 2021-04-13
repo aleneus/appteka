@@ -63,6 +63,7 @@ class PhasorDiagramUI(pg.PlotWidget):
         self.__names = {}
         self.__items = {}
         self.__legend = None
+        self.__invisibles = set()
 
         self.__to_quant = {}
         self.__amps = {'u': {}, 'i': {}}
@@ -142,6 +143,7 @@ class PhasorDiagramUI(pg.PlotWidget):
         self.__items = {}
         self.__names = {}
         self.__phasors = {}
+        self.__invisibles = set()
 
         if self.__legend is not None:
             self.__legend.clear()
@@ -149,13 +151,19 @@ class PhasorDiagramUI(pg.PlotWidget):
 
         self.__legend = None
 
-    def set_visible(self, key, value=True):
+    def set_visible(self, key, visible=True):
         """Hide or show phasor."""
         if key not in self.__items:
             return
 
-        for item in self.__items[key]:
-            self.__items[key][item].setVisible(value)
+        self.__items[key]['line'].setVisible(visible)
+        self.__items[key]['arr'].setVisible(visible)
+
+        if not visible:
+            self.__invisibles.add(key)
+        else:
+            if key in self.__invisibles:
+                self.__invisibles.remove(key)
 
     def update_range(self):
         """Update range manually."""
@@ -197,6 +205,9 @@ class PhasorDiagramUI(pg.PlotWidget):
 
     def __update(self):
         for key in self.__phasors:
+            if key in self.__invisibles:
+                continue
+
             phasor = self.__phasors[key]
 
             compl = None
@@ -212,9 +223,14 @@ class PhasorDiagramUI(pg.PlotWidget):
             y = compl.imag
 
             items = self.__items[key]
-            items['line'].setData([0, x], [0, y])
-            items['arr'].setStyle(angle=180 - degrees(phasor[1]))
-            items['arr'].setPos(x, y)
+            if phasor[0] == 0:
+                items['arr'].setVisible(False)
+                items['line'].setData([0], [0])
+            else:
+                items['arr'].setVisible(True)
+                items['line'].setData([0, x], [0, y])
+                items['arr'].setStyle(angle=180 - degrees(phasor[1]))
+                items['arr'].setPos(x, y)
 
     def __update_range_opt(self, key, amp):
         quant = self.__to_quant[key]

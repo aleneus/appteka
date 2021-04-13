@@ -137,7 +137,7 @@ class TestPhasorDiagramUI(unittest.TestCase):
 
         app(d, ["No smoke"])
 
-    def this_test_text(self):
+    def test_text(self):
         app = testing.TestApp(self)
         d = PhasorDiagramUI()
         d.add_u(0, 'u0', color=(255, 255, 0), width=1)
@@ -151,3 +151,10 @@ class TestPhasorDiagramUI(unittest.TestCase):
         d.set_text("50.01")
 
         app(d, ["Text: 50.01"])
+
+    def test_zero_amp(self):
+        app = testing.TestApp(self)
+        d = PhasorDiagramUI()
+        d.add_u(0, 'u0', color=(255, 255, 0), width=1)
+        d.update_data(0, 0, 1)
+        app(d, ["Point in the center"])
