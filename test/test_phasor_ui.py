@@ -136,3 +136,18 @@ class TestPhasorDiagramUI(unittest.TestCase):
         d.update_data(2, 230, 4)
 
         app(d, ["No smoke"])
+
+    def this_test_text(self):
+        app = testing.TestApp(self)
+        d = PhasorDiagramUI()
+        d.add_u(0, 'u0', color=(255, 255, 0), width=1)
+        d.add_u(1, 'u1', color=(255, 0, 0), width=1)
+        d.add_u(2, 'u2', color=(0, 255, 0), width=1)
+
+        d.update_data(0, 220, 0)
+        d.update_data(1, 225, 2)
+        d.update_data(2, 230, 4)
+
+        d.set_text("50.01")
+
+        app(d, ["Text: 50.01"])

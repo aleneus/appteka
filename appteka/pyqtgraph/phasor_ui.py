@@ -20,17 +20,17 @@
 from math import degrees
 import cmath
 import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore, QtWidgets
+from pyqtgraph.Qt import QtCore, QtWidgets, QtGui
 
 
 DEFAULT_WIDGET_SIZE = QtCore.QSize(500, 500)
-
 DEFAULT_COLOR = (255, 255, 255)
 DEFAULT_WIDTH = 1
-
 DEFAULT_MIN_RANGE = 0.001
-I_SCALE = 0.7
+
+I_SCALE = 2/3
 ROUND_TO = 3
+TEXT_FONT_SIZE = 14
 
 
 class PhasorDiagramUI(pg.PlotWidget):
@@ -71,6 +71,28 @@ class PhasorDiagramUI(pg.PlotWidget):
 
         self.__init_grid()
         self.__init_labels()
+        self.__init_text()
+
+    def __init_grid(self):
+        self.__circles = {}
+        for quant in ['u', 'i']:
+            self.__circles[quant] = pg.QtGui.QGraphicsEllipseItem()
+            self.__circles[quant].setPen(pg.mkPen(0.2))
+            self.addItem(self.__circles[quant])
+
+    def __init_labels(self):
+        self.__label = {}
+        for quant in ['u', 'i']:
+            self.__label[quant] = pg.TextItem()
+            self.addItem(self.__label[quant])
+
+    def __init_text(self):
+        self.__text = pg.TextItem()
+        self.__text.setAnchor((1, 0))
+        font = QtGui.QFont()
+        font.setPixelSize(TEXT_FONT_SIZE)
+        self.__text.setFont(font)
+        self.addItem(self.__text)
 
     def add_u(self, key, name=None, **kwargs):
         """Add new U phasor to the diagram."""
@@ -139,6 +161,11 @@ class PhasorDiagramUI(pg.PlotWidget):
         """Update range manually."""
         self.__calc_maximums()
         self.__apply_range()
+
+    def set_text(self, text):
+        """Set text."""
+        self.__text.setText(text)
+        self.__update_text_pos()
 
     def __add_phasor(self, key, name=None, **kwargs):
         if key in self.__items:
@@ -210,13 +237,7 @@ class PhasorDiagramUI(pg.PlotWidget):
         self.setRange(QtCore.QRectF(*self.__u_rect()))
         self.__update_grid()
         self.__update_labels()
-
-    def __init_grid(self):
-        self.__circles = {}
-        for quant in ['u', 'i']:
-            self.__circles[quant] = pg.QtGui.QGraphicsEllipseItem()
-            self.__circles[quant].setPen(pg.mkPen(0.2))
-            self.addItem(self.__circles[quant])
+        self.__update_text_pos()
 
     def __update_grid(self):
         self.__circles['u'].setRect(*self.__u_rect())
@@ -224,18 +245,8 @@ class PhasorDiagramUI(pg.PlotWidget):
         self.__circles['i'].setRect(-rad, -rad, 2*rad, 2*rad)
 
     def __u_rect(self):
-        return (
-            -self.__range['u'],
-            -self.__range['u'],
-            2*self.__range['u'],
-            2*self.__range['u'],
-        )
-
-    def __init_labels(self):
-        self.__label = {}
-        for quant in ['u', 'i']:
-            self.__label[quant] = pg.TextItem()
-            self.addItem(self.__label[quant])
+        u_radius = self.__range['u']
+        return (-u_radius, -u_radius, 2*u_radius, 2*u_radius)
 
     def __update_labels(self):
         for quant in ['u', 'i']:
@@ -244,6 +255,9 @@ class PhasorDiagramUI(pg.PlotWidget):
 
         self.__label['u'].setPos(0, self.__range['u'])
         self.__label['i'].setPos(0, self.__i_radius())
+
+    def __update_text_pos(self):
+        self.__text.setPos(self.__range['u'], self.__range['u'])
 
     def __i_radius(self):
         return I_SCALE * self.__range['u']
