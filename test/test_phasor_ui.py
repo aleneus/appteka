@@ -73,5 +73,26 @@ class TestPhasorDiagramUI(unittest.TestCase):
         with self.assertRaises(ValueError):
             d.add_u(0, 'u0')
 
+    def test_set_visible(self):
+        app = testing.TestApp(self)
+        d = PhasorDiagramUI()
+        d.add_u(0, 'u0', color=(255, 255, 0), width=1)
+        d.add_u(1, 'u1', color=(255, 0, 0), width=1)
+        d.add_u(2, 'u2', color=(0, 255, 0), width=1)
+        d.set_visible(1, False)
+        d.set_visible(2, False)
+        d.set_visible(2, True)
+
+        d.update_data(0, 220, 0)
+        d.update_data(1, 225, 2)
+        d.update_data(2, 230, 4)
+
+        d.add_legend()
+
+        app(d, [
+            "Legend: u0, u1, u2",
+            "2 U phasors",
+        ])
+
     # TODO test: add_i: repeat key
     # TODO test: update_data: unexisting key

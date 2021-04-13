@@ -121,6 +121,14 @@ class PhasorDiagramUI(pg.PlotWidget):
         self.__update_grid()
         self.__update_labels()
 
+    def set_visible(self, key, value=True):
+        """Hide or show phasor."""
+        if key not in self.__items:
+            return
+
+        for item in self.__items[key]:
+            self.__items[key][item].setVisible(value)
+
     def __add_phasor(self, key, name=None, **kwargs):
         if key in self.__items:
             raise ValueError("repeated key: {}".format(key))
