@@ -58,21 +58,22 @@ class PhasorDiagramUI(pg.PlotWidget):
         self.hideButtons()
 
         self.__min_range = min_range
+        self.__auto_range = auto_range
 
+        self.__init_data()
+        self.__init_grid()
+        self.__init_labels()
+        self.__init_text()
+
+    def __init_data(self):
         self.__phasors = {}
         self.__names = {}
         self.__items = {}
         self.__legend = None
         self.__invisibles = set()
-
         self.__to_quant = {}
         self.__amps = {'u': {}, 'i': {}}
         self.__range = {'u': DEFAULT_MIN_RANGE, 'i': DEFAULT_MIN_RANGE}
-        self.__auto_range = auto_range
-
-        self.__init_grid()
-        self.__init_labels()
-        self.__init_text()
 
     def __init_grid(self):
         self.__circles = {}
@@ -135,21 +136,15 @@ class PhasorDiagramUI(pg.PlotWidget):
 
     def remove_phasors(self):
         """Remove all items."""
-
         for key in self.__items:
-            for subkey in self.__items[key]:
-                self.removeItem(self.__items[key][subkey])
-
-        self.__items = {}
-        self.__names = {}
-        self.__phasors = {}
-        self.__invisibles = set()
+            self.removeItem(self.__items[key]['arr'])
+            self.removeItem(self.__items[key]['line'])
 
         if self.__legend is not None:
             self.__legend.clear()
             self.removeItem(self.__legend)
 
-        self.__legend = None
+        self.__init_data()
 
     def set_visible(self, key, visible=True):
         """Hide or show phasor."""

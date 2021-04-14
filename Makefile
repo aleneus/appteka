@@ -24,6 +24,7 @@ cover:
 
 todo:
 	@rgrep "TODO" --include="*py" --include="*md" --include="*rst" --exclude="release-checklist.md" || true
+	@rgrep "def this_test" --include="*py" || true
 
 flake:
 	flake8 $(PACKAGE_FOLDER)

@@ -1,5 +1,4 @@
 import unittest
-from PyQt5 import QtCore
 from pyqtgraph import setConfigOption
 
 from appteka.pyqt import testing
@@ -113,15 +112,16 @@ class TestPhasorDiagramUI(unittest.TestCase):
 
     def test_remove_phasors_and_add_again(self):
         app = testing.TestApp(self)
-        d = PhasorDiagramUI()
+        d = PhasorDiagramUI(auto_range=False)
         d.add_u(0, 'u0', color=(255, 255, 0), width=1)
         d.add_u(1, 'u1', color=(255, 0, 0), width=1)
         d.add_u(2, 'u2', color=(0, 255, 0), width=1)
         d.add_legend()
 
-        d.update_data(0, 220, 0)
-        d.update_data(1, 225, 2)
-        d.update_data(2, 230, 4)
+        d.update_data(0, 10, 0)
+        d.update_data(1, 20, 2)
+        d.update_data(2, 30, 4)
+        d.update_range()
 
         d.set_visible(1, False)
         d.remove_phasors()
@@ -131,11 +131,34 @@ class TestPhasorDiagramUI(unittest.TestCase):
         d.add_u(2, 'u2', color=(0, 255, 0), width=1)
         d.add_legend()
 
-        d.update_data(0, 220, 0)
-        d.update_data(1, 225, 2)
-        d.update_data(2, 230, 4)
+        d.update_data(0, 1, 0)
+        d.update_data(1, 2, 2)
+        d.update_data(2, 3, 4)
+        d.update_range()
 
         app(d, ["No smoke"])
+
+    def test_update_range(self):
+        app = testing.TestApp(self)
+        d = PhasorDiagramUI(auto_range=False)
+
+        d.add_u(0, 'u0', color=(255, 255, 0), width=1)
+        d.update_data(0, 1, 0)
+        d.update_range()
+        d.remove_phasors()
+
+        d.add_u(0, 'u0', color=(255, 255, 0), width=1)
+        d.add_u(1, 'u1', color=(255, 0, 0), width=1)
+        d.update_data(0, 1, 0)
+        d.update_data(1, 2, 2)
+        d.update_range()
+        d.remove_phasors()
+
+        d.add_u(0, 'u0', color=(255, 255, 0), width=1)
+        d.update_data(0, 1, 0)
+        d.update_range()
+
+        app(d, ["Range = 1"])
 
     def test_text(self):
         app = testing.TestApp(self)
@@ -157,4 +180,4 @@ class TestPhasorDiagramUI(unittest.TestCase):
         d = PhasorDiagramUI()
         d.add_u(0, 'u0', color=(255, 255, 0), width=1)
         d.update_data(0, 0, 1)
-        app(d, ["Point in the center"])
+        app(d, ["Only grid"])
