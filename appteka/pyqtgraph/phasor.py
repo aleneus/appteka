@@ -15,41 +15,24 @@
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Implementation of the phasor diagram."""
+"""Phasor diagrams."""
 
 from math import degrees
 from warnings import warn
 import cmath
 import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore, QtWidgets
+from pyqtgraph.Qt import QtCore, QtWidgets, QtGui
 
 
 DEFAULT_WIDGET_SIZE = QtCore.QSize(500, 500)
-
-CIRCLES_NUM = 6
-LABELS_NUM = 2
 DEFAULT_COLOR = (255, 255, 255)
 DEFAULT_WIDTH = 1
-DEFAULT_LINESTYLE = 'solid'
 
 
-class PhasorDiagram(pg.PlotWidget):
-    """Widget for plotting phasor diagram.
-
-    Parameters
-    ----------
-    parent: object
-        Parent object
-    """
-
-    def __init__(self, parent=None, size=None, end=None):
+class BasePhasorDiagram(pg.PlotWidget):
+    """Base class for phasor diagrams."""
+    def __init__(self, parent=None):
         super().__init__(parent)
-
-        if size is not None:
-            warn("size arg is deprecated and ignored", FutureWarning)
-
-        if end is not None:
-            warn("end arg is deprecated and ignored", FutureWarning)
 
         self.setAspectLocked(True)
         self.addLine(x=0, pen=0.2)
@@ -69,15 +52,68 @@ class PhasorDiagram(pg.PlotWidget):
         self.plotItem.setMenuEnabled(False)
         self.hideButtons()
 
+    def _to_front(self, item):
+        self.removeItem(item)
+        self.addItem(item)
+
+    def sizeHint(self):
+        # pylint: disable=invalid-name,no-self-use,missing-docstring
+        return DEFAULT_WIDGET_SIZE
+
+    def heightForWidth(self, width):
+        # pylint: disable=invalid-name,no-self-use,missing-docstring
+        return width
+
+
+DEFAULT_LINESTYLE = 'solid'
+CIRCLES_NUM = 6
+LABELS_NUM = 2
+
+
+class PhasorDiagram(BasePhasorDiagram):
+    """Widget for plotting phasor diagram.
+
+    Parameters
+    ----------
+    parent: object
+        Parent object
+    """
+
+    def __init__(self, parent=None, size=None, end=None):
+        super().__init__(parent)
+
+        if size is not None:
+            warn("size arg is deprecated and ignored", FutureWarning)
+
+        if end is not None:
+            warn("end arg is deprecated and ignored", FutureWarning)
+
+        self.__init_data()
         self.__init_grid()
         self.__init_labels()
 
-        self.__legend = None
-        self.__phasors = {}
-        self.__items = {}
-        self.__names = {}
-
         self.set_range(1)
+
+    def __init_data(self):
+        self.__phasors = {}
+        self.__names = {}
+        self.__items = {}
+        self.__legend = None
+
+    def __init_grid(self):
+        self.__circles = []
+        for _ in range(CIRCLES_NUM):
+            circle = pg.QtGui.QGraphicsEllipseItem()
+            circle.setPen(pg.mkPen(0.2))
+            self.__circles.append(circle)
+            self.addItem(circle)
+
+    def __init_labels(self):
+        self.__labels = []
+        for _ in range(LABELS_NUM):
+            label = pg.TextItem()
+            self.__labels.append(label)
+            self.addItem(label)
 
     def set_range(self, value):
         """Set range of diagram."""
@@ -140,7 +176,7 @@ class PhasorDiagram(pg.PlotWidget):
         self.__names[key] = name
 
         for label in self.__labels:
-            self.__to_front(label)
+            self._to_front(label)
 
         self.update_phasor(key, amp, phi)
 
@@ -164,19 +200,14 @@ class PhasorDiagram(pg.PlotWidget):
             for subkey in self.__items[key]:
                 self.removeItem(self.__items[key][subkey])
 
-        self.__items = {}
-        self.__names = {}
-        self.__phasors = {}
-
         if self.__legend is not None:
             self.__legend.clear()
             self.removeItem(self.__legend)
 
-        self.__legend = None
+        self.__init_data()
 
     def show_legend(self):
         """Show legend."""
-
         if self.__legend:
             return
 
@@ -202,18 +233,9 @@ class PhasorDiagram(pg.PlotWidget):
             items = self.__items[key]
 
             items['line'].setData([0, x], [0, y])
-
             arr = items['arr']
             arr.setStyle(angle=180 - degrees(phasor[1]))
             arr.setPos(x, y)
-
-    def __init_grid(self):
-        self.__circles = []
-        for _ in range(CIRCLES_NUM):
-            circle = pg.QtGui.QGraphicsEllipseItem()
-            circle.setPen(pg.mkPen(0.2))
-            self.__circles.append(circle)
-            self.addItem(circle)
 
     def __update_grid(self):
         for i in range(CIRCLES_NUM):
@@ -223,29 +245,10 @@ class PhasorDiagram(pg.PlotWidget):
         self.setRange(QtCore.QRectF(-self.__range, self.__range,
                                     2*self.__range, -2*self.__range))
 
-    def __init_labels(self):
-        self.__labels = []
-        for _ in range(LABELS_NUM):
-            label = pg.TextItem()
-            self.__labels.append(label)
-            self.addItem(label)
-
     def __update_labels(self):
         for i in range(LABELS_NUM):
             self.__labels[i].setText("{}".format(self.__range / LABELS_NUM))
             self.__labels[i].setPos(0, (i + 1) * self.__range / LABELS_NUM)
-
-    def __to_front(self, item):
-        self.removeItem(item)
-        self.addItem(item)
-
-    def sizeHint(self):
-        # pylint: disable=invalid-name,no-self-use,missing-docstring
-        return DEFAULT_WIDGET_SIZE
-
-    def heightForWidth(self, width):
-        # pylint: disable=invalid-name,no-self-use,missing-docstring
-        return width
 
 
 def _linestyle_to_dash(style, width):
@@ -259,3 +262,234 @@ def _linestyle_to_dash(style, width):
         return (1, width)
 
     raise ValueError("Unknown style")
+
+
+DEFAULT_MIN_RANGE = 0.001
+I_SCALE = 2/3
+ROUND_TO = 3
+TEXT_FONT_SIZE = 14
+
+
+class PhasorDiagramUI(BasePhasorDiagram):
+    """Phasor diagram with two scales: for voltage and current phasors."""
+
+    def __init__(self, parent=None,
+                 auto_range=True, min_range=DEFAULT_MIN_RANGE):
+
+        super().__init__(parent)
+
+        self.__min_range = min_range
+        self.__auto_range = auto_range
+
+        self.__init_data()
+        self.__init_grid()
+        self.__init_labels()
+        self.__init_text()
+
+    def __init_data(self):
+        self.__phasors = {}
+        self.__names = {}
+        self.__items = {}
+        self.__legend = None
+        self.__invisibles = set()
+        self.__to_quant = {}
+        self.__amps = {'u': {}, 'i': {}}
+        self.__range = {'u': DEFAULT_MIN_RANGE, 'i': DEFAULT_MIN_RANGE}
+
+    def __init_grid(self):
+        self.__circles = {}
+        for quant in ['u', 'i']:
+            self.__circles[quant] = pg.QtGui.QGraphicsEllipseItem()
+            self.__circles[quant].setPen(pg.mkPen(0.2))
+            self.addItem(self.__circles[quant])
+
+    def __init_labels(self):
+        self.__label = {}
+        for quant in ['u', 'i']:
+            self.__label[quant] = pg.TextItem()
+            self.addItem(self.__label[quant])
+
+    def __init_text(self):
+        self.__text = pg.TextItem()
+        self.__text.setAnchor((1, 0))
+        font = QtGui.QFont()
+        font.setPixelSize(TEXT_FONT_SIZE)
+        self.__text.setFont(font)
+        self.addItem(self.__text)
+
+    def add_u(self, key, name=None, **kwargs):
+        """Add new U phasor to the diagram."""
+        self.__add_phasor(key, name, **kwargs)
+        self.__to_quant[key] = 'u'
+
+    def add_i(self, key, name=None, **kwargs):
+        """Add new I phasor to the diagram."""
+        self.__add_phasor(key, name, **kwargs)
+        self.__to_quant[key] = 'i'
+
+    def add_legend(self):
+        """Add legend."""
+        if self.__legend:
+            return
+
+        self.__legend = self.plotItem.addLegend()
+        for key in self.__items:
+            name = self.__names[key]
+            if name:
+                self.plotItem.legend.addItem(
+                    self.__items[key]['line'], name)
+            else:
+                self.plotItem.legend.addItem(
+                    self.__items[key]['line'], key)
+
+            cols = 1 + (len(self.__items) - 1) // 10
+            self.plotItem.legend.setColumnCount(cols)
+
+    def update_data(self, key, amp, phi):
+        """Change phasor value."""
+        quant = self.__to_quant[key]
+        self.__amps[quant][key] = amp
+
+        self.__phasors[key] = (amp, phi)
+        self.__update()
+        if self.__auto_range:
+            self.__update_range_opt(key, amp)
+
+    def remove_phasors(self):
+        """Remove all items."""
+        for key in self.__items:
+            self.removeItem(self.__items[key]['arr'])
+            self.removeItem(self.__items[key]['line'])
+
+        if self.__legend is not None:
+            self.__legend.clear()
+            self.removeItem(self.__legend)
+
+        self.__init_data()
+
+    def set_visible(self, key, visible=True):
+        """Hide or show phasor."""
+        if key not in self.__items:
+            return
+
+        self.__items[key]['line'].setVisible(visible)
+        self.__items[key]['arr'].setVisible(visible)
+
+        if not visible:
+            self.__invisibles.add(key)
+        else:
+            if key in self.__invisibles:
+                self.__invisibles.remove(key)
+
+    def update_range(self):
+        """Update range manually."""
+        self.__calc_maximums()
+        self.__apply_range()
+
+    def set_text(self, text):
+        """Set text."""
+        self.__text.setText(text)
+        self.__update_text_pos()
+
+    def __add_phasor(self, key, name=None, **kwargs):
+        if key in self.__items:
+            raise ValueError("repeated key: {}".format(key))
+
+        color = kwargs.get('color')
+        if not color:
+            color = DEFAULT_COLOR
+
+        width = kwargs.get('width')
+        if not width:
+            width = DEFAULT_WIDTH
+
+        line = self.plot(pen=pg.mkPen(color, width=width))
+        arr = pg.ArrowItem(
+            tailLen=0,
+            tailWidth=1,
+            pen=pg.mkPen(color, width=width),
+            headLen=width+4,
+            brush=None
+        )
+        self.addItem(arr)
+
+        self.__items[key] = {'line': line, 'arr': arr}
+        self.__names[key] = name
+
+        self._to_front(self.__label['u'])
+        self._to_front(self.__label['i'])
+
+    def __update(self):
+        for key in self.__phasors:
+            if key in self.__invisibles:
+                continue
+
+            phasor = self.__phasors[key]
+
+            compl = None
+            quant = self.__to_quant[key]
+            if quant == 'i':
+                compl = cmath.rect(
+                    phasor[0] * self.__i_radius() / self.__range['i'],
+                    phasor[1])
+            else:
+                compl = cmath.rect(phasor[0], phasor[1])
+
+            x = compl.real
+            y = compl.imag
+
+            items = self.__items[key]
+            if phasor[0] == 0:
+                items['arr'].setVisible(False)
+                items['line'].setData([0], [0])
+            else:
+                items['arr'].setVisible(True)
+                items['line'].setData([0, x], [0, y])
+                items['arr'].setStyle(angle=180 - degrees(phasor[1]))
+                items['arr'].setPos(x, y)
+
+    def __update_range_opt(self, key, amp):
+        quant = self.__to_quant[key]
+
+        if amp > self.__range[quant]:
+            self.__range[quant] = amp
+        else:
+            self.__calc_maximums()
+
+        self.__apply_range()
+
+    def __calc_maximums(self):
+        for quant in ['u', 'i']:
+            total = 0
+            if self.__amps[quant]:
+                total = max(self.__amps[quant].values())
+            self.__range[quant] = max(total, self.__min_range)
+
+    def __apply_range(self):
+        self.setRange(QtCore.QRectF(*self.__u_rect()))
+        self.__update_grid()
+        self.__update_labels()
+        self.__update_text_pos()
+
+    def __update_grid(self):
+        self.__circles['u'].setRect(*self.__u_rect())
+        rad = self.__i_radius()
+        self.__circles['i'].setRect(-rad, -rad, 2*rad, 2*rad)
+
+    def __u_rect(self):
+        u_radius = self.__range['u']
+        return (-u_radius, -u_radius, 2*u_radius, 2*u_radius)
+
+    def __update_labels(self):
+        for quant in ['u', 'i']:
+            self.__label[quant].setText("{}".format(
+                round(self.__range[quant], ROUND_TO)))
+
+        self.__label['u'].setPos(0, self.__range['u'])
+        self.__label['i'].setPos(0, self.__i_radius())
+
+    def __update_text_pos(self):
+        self.__text.setPos(self.__range['u'], self.__range['u'])
+
+    def __i_radius(self):
+        return I_SCALE * self.__range['u']

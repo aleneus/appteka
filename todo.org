@@ -204,10 +204,12 @@
 *** DONE feat: add text field
 ** DONE feat: process zero-length phasor
 ** DONE ref: phasor_ui: clear diagram stuff
-** TODO test: phasor_ui: ref: split by feature
-** TODO ref: base class for phasor diagrams
-** TODO test: brush
+** DONE test: brush
+** DONE ref: base class for phasor diagrams
+** TODO docs: update release notes
 * later
+** TODO feat: generalize PhasorDiagramUI
+** TODO ref: phasor: extract item class (with arr and line)
 ** TODO ref: check if key duplicated
 ** TODO dist: add versions for the requirements
 ** TODO dist: reqs: update pyqtgraph version
