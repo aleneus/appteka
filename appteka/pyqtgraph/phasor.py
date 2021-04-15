@@ -15,7 +15,7 @@
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Phasor diagrams."""
+"""Here the different types of phasor diagrams are implemented."""
 
 from math import degrees
 from warnings import warn
@@ -194,7 +194,7 @@ class PhasorDiagram(BasePhasorDiagram):
         self.__update()
 
     def remove_phasors(self):
-        """Remove phasors and legend."""
+        """Remove all phasors and legend."""
 
         for key in self.__items:
             for subkey in self.__items[key]:
@@ -346,7 +346,7 @@ class PhasorDiagramUI(BasePhasorDiagram):
             self.plotItem.legend.setColumnCount(cols)
 
     def update_data(self, key, amp, phi):
-        """Change phasor value."""
+        """Change phasor data."""
         quant = self.__to_quant[key]
         self.__amps[quant][key] = amp
 
@@ -356,7 +356,7 @@ class PhasorDiagramUI(BasePhasorDiagram):
             self.__update_range_opt(key, amp)
 
     def remove_phasors(self):
-        """Remove all items."""
+        """Remove all phasors and legend."""
         for key in self.__items:
             self.removeItem(self.__items[key]['arr'])
             self.removeItem(self.__items[key]['line'])

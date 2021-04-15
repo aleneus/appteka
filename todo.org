@@ -206,15 +206,12 @@
 ** DONE ref: phasor_ui: clear diagram stuff
 ** DONE test: brush
 ** DONE ref: base class for phasor diagrams
-** TODO docs: update release notes
+** DONE docs: update release notes
 * later
 ** TODO feat: generalize PhasorDiagramUI
 ** TODO ref: phasor: extract item class (with arr and line)
 ** TODO ref: check if key duplicated
-** TODO dist: add versions for the requirements
-** TODO dist: reqs: update pyqtgraph version
 ** TODO ref: widget testing: extract asker
-** TODO fix: pyqt.testing: multiwaveform: can not run several test classes in one file
 ** TODO ref: setup_state(self, state_name, invisible=[], disabled=[])
 ** TODO feat: pyqtgraph: new widget for waveforms
 ** TODO ref: redloc pyqtgraph.waveform

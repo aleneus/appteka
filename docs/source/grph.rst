@@ -7,8 +7,8 @@ Waveforms
 .. automodule:: appteka.pyqtgraph.waveform
    :members:
 
-Phasor diagram
---------------
+Phasor diagrams
+---------------
 
 .. automodule:: appteka.pyqtgraph.phasor
    :members:

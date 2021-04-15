@@ -1,6 +1,11 @@
 Releases
 ========
 
+0.15
+----
+
+* Widget for phasor diagrams with two scales (for voltage and current) have been added.
+
 0.14
 ----
 
