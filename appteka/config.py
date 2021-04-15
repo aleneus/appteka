@@ -83,14 +83,14 @@ class Config:
     def read_settings(self):
         """ Read settings from file. Settings then can be achieved
         from 'settings' (OrderedDict) field. """
-        with open(self.fname) as f:
-            json_str = f.read()
+        with open(self.fname) as buf:
+            json_str = buf.read()
         settings = json.loads(json_str, object_pairs_hook=OrderedDict)
 
         if not self.is_version_valid(settings):
             self.upgrade()
-            with open(self.fname) as f:
-                json_str = f.read()
+            with open(self.fname) as buf:
+                json_str = buf.read()
             settings = json.loads(json_str, object_pairs_hook=OrderedDict)
 
         self.settings = settings
@@ -101,8 +101,8 @@ class Config:
         """ Save settings to config file. For example, can be used on
         exit program event. """
         json_str = json.dumps(self.settings, indent=4)
-        with open(self.fname, "w") as f:
-            f.write(json_str)
+        with open(self.fname, "w") as buf:
+            buf.write(json_str)
         return True
 
     def is_version_valid(self, settings):

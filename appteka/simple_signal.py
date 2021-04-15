@@ -30,9 +30,9 @@ class SimpleSignal:
 
     def emit(self, *args):
         """Emit signal."""
-        for s in self.slots:
-            if s:
-                s(args)
+        for func in self.slots:
+            if func:
+                func(args)
 
     def connect(self, slot):
         """Connect signal with slot.

@@ -33,22 +33,26 @@ class ControlsStateMachine:
             'disabled': []
         }
 
-    def setup_state(self, state_name, invisible=[], disabled=[]):
+    def setup_state(self, state_name, invisible=None, disabled=None):
         """ Setup sate. """
         if state_name not in self.__states:
             self.add_state(state_name)
-        self._setup_controls_state(invisible, state_name, 'invisible')
-        self._setup_controls_state(disabled, state_name, 'disabled')
+
+        _invisible = [] if invisible is None else invisible
+        _disabled = [] if disabled is None else disabled
+
+        self._setup_controls_state(_invisible, state_name, 'invisible')
+        self._setup_controls_state(_disabled, state_name, 'disabled')
 
     def set_state(self, state_name):
         """ Set currect state. """
-        for c in self.__controls:
-            c.setVisible(c not in self.__states[state_name]['invisible'])
-            c.setEnabled(c not in self.__states[state_name]['disabled'])
+        for cnt in self.__controls:
+            cnt.setVisible(cnt not in self.__states[state_name]['invisible'])
+            cnt.setEnabled(cnt not in self.__states[state_name]['disabled'])
 
     def _setup_controls_state(self, controls, state_name, key):
         self.__states[state_name][key] = []
-        for c in controls:
-            if c not in self.__controls:
-                self.__controls.append(c)
-            self.__states[state_name][key].append(c)
+        for cnt in controls:
+            if cnt not in self.__controls:
+                self.__controls.append(cnt)
+            self.__states[state_name][key].append(cnt)

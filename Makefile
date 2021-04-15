@@ -30,10 +30,10 @@ flake:
 	flake8 $(PACKAGE_FOLDER)
 
 lint:
-	pylint $(PACKAGE_FOLDER)
+	pylint $(PACKAGE_FOLDER) || true
 
 lint-e:
-	pylint --disable=R,C,W $(PACKAGE_FOLDER)
+	pylint --disable=R,C,W $(PACKAGE_FOLDER) || true
 
 docs:
 	sphinx-build docs/source/ docs/build/

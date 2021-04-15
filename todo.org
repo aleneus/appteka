@@ -207,6 +207,7 @@
 ** DONE test: brush
 ** DONE ref: base class for phasor diagrams
 ** DONE docs: update release notes
+** DONE ref: up lint result
 * later
 ** TODO feat: generalize PhasorDiagramUI
 ** TODO ref: phasor: extract item class (with arr and line)
