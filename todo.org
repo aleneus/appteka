@@ -212,8 +212,11 @@
 ** DONE ref: phasor: extract arrow class
 ** DONE ref: phasor: _phasors -> Arrow
 ** DONE fix: phasor: update range only by visible arrows
-** TODO ref: phasor: set_phasor_visible: rename
-** TODO ref: phasor: show_legend: rename
+** DONE ref: phasor: set_phasor_visible: rename
+** DONE ref: phasor: update_phasor: rename
+** DONE ref: phasor: show_legend: rename
+** TODO test: test_phasor.py: redloc
+** TODO feat: phasor.py: replace helpers for args for common use
 ** TODO docs: fix homepage
 ** TODO test: up coverage
 * later
@@ -234,3 +237,9 @@
    SCHEDULED: <2021-08-06 Пт>
 ** TODO depr: phasor diagram: remove end arg
    SCHEDULED: <2021-08-06 Пт>
+** TODO depr: phasor diagram: remove set_phasor_visible()
+   SCHEDULED: <2021-10-19 Вт>
+** TODO depr: phasor diagram: remove update_phasor()
+   SCHEDULED: <2021-10-19 Вт>
+** TODO depr: phasor diagram: remove show_legend()
+   SCHEDULED: <2021-10-19 Вт>

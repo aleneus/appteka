@@ -141,11 +141,8 @@ class PhasorDiagram(BasePhasorDiagram):
     def __init__(self, parent=None, size=None, end=None):
         super().__init__(parent)
 
-        if size is not None:
-            warn("size arg is deprecated and ignored", FutureWarning)
-
-        if end is not None:
-            warn("end arg is deprecated and ignored", FutureWarning)
+        _depr_arg(size, "size arg is deprecated and ignored")
+        _depr_arg(end, "end arg is deprecated and ignored")
 
         self.__init_data()
         self.__init_grid()
@@ -202,18 +199,9 @@ class PhasorDiagram(BasePhasorDiagram):
             Style of line. Can be 'solid', 'dashed' or
             'dotted'. Default is 'solid'.
         """
-
-        color = kwargs.get('color')
-        if not color:
-            color = DEFAULT_COLOR
-
-        width = kwargs.get('width')
-        if not width:
-            width = DEFAULT_WIDTH
-
-        linestyle = kwargs.get('linestyle')
-        if not linestyle:
-            linestyle = DEFAULT_LINESTYLE
+        color = _val_if_none(kwargs.get('color'), DEFAULT_COLOR)
+        width = _val_if_none(kwargs.get('width'), DEFAULT_WIDTH)
+        linestyle = _val_if_none(kwargs.get('linestyle'), DEFAULT_LINESTYLE)
 
         dash = _linestyle_to_dash(linestyle, width)
         line = self.plot(pen=pg.mkPen(color, width=width, dash=dash))
@@ -225,14 +213,14 @@ class PhasorDiagram(BasePhasorDiagram):
         for label in self.__labels:
             self._to_front(label)
 
-        self.update_phasor(key, amp, phi)
+        self.update_data(key, amp, phi)
 
-    def set_phasor_visible(self, key, value=True):
+    def set_visible(self, key, value=True):
         """Hide or show phasor."""
         if key in self._arrows:
             self._arrows[key].set_visible(value)
 
-    def update_phasor(self, key, amp, phi):
+    def update_data(self, key, amp, phi):
         """Change phasor value."""
         self._arrows[key].update(amp, phi)
 
@@ -248,10 +236,6 @@ class PhasorDiagram(BasePhasorDiagram):
 
         self.__init_data()
 
-    def show_legend(self):
-        """Show legend."""
-        self.add_legend()
-
     def __update_grid(self):
         for i in range(CIRCLES_NUM):
             rad = (i + 1) * self.__range / CIRCLES_NUM
@@ -266,6 +250,23 @@ class PhasorDiagram(BasePhasorDiagram):
             self.__labels[i].setText("{}".format(value))
             self.__labels[i].setPos(0, value)
 
+    def update_phasor(self, key, amp, phi):
+        """Deprecated."""
+        warn("update_phasor() is deprecated, use update_data()",
+             FutureWarning)
+        self.update_data(key, amp, phi)
+
+    def set_phasor_visible(self, key, value=True):
+        """Deprecated."""
+        warn("set_phasor_visible() is deprecated, use set_visible()",
+             FutureWarning)
+        self.set_visible(key, value)
+
+    def show_legend(self):
+        """Show legend."""
+        warn("show_legend() is deprecated, use add_legend()", FutureWarning)
+        self.add_legend()
+
 
 DEFAULT_MIN_RANGE = 0.001
 I_SCALE = 2/3
@@ -275,10 +276,8 @@ TEXT_FONT_SIZE = 14
 
 class PhasorDiagramUI(BasePhasorDiagram):
     """Phasor diagram with two scales: for voltage and current phasors."""
-
     def __init__(self, parent=None,
                  auto_range=True, min_range=DEFAULT_MIN_RANGE):
-
         super().__init__(parent)
 
         self.__min_range = min_range
@@ -369,13 +368,8 @@ class PhasorDiagramUI(BasePhasorDiagram):
         if key in self._arrows:
             raise ValueError("repeated key: {}".format(key))
 
-        color = kwargs.get('color')
-        if not color:
-            color = DEFAULT_COLOR
-
-        width = kwargs.get('width')
-        if not width:
-            width = DEFAULT_WIDTH
+        color = _val_if_none(kwargs.get('color'), DEFAULT_COLOR)
+        width = _val_if_none(kwargs.get('width'), DEFAULT_WIDTH)
 
         line = self.plot(pen=pg.mkPen(color, width=width))
         end = _end_item(color, width)
@@ -462,3 +456,12 @@ def _linestyle_to_dash(style, width):
         return (1, width)
 
     raise ValueError("Unknown style")
+
+
+def _val_if_none(var1, var2):
+    return var1 if var1 is not None else var2
+
+
+def _depr_arg(arg, msg):
+    if arg is not None:
+        warn(msg, FutureWarning)
