@@ -346,6 +346,7 @@ class PhasorDiagramUI(BasePhasorDiagram):
             self.removeItem(self._legend)
 
         self.__init_data()
+        self.update_range()
 
     def set_visible(self, key, visible=True):
         """Hide or show phasor."""

@@ -215,11 +215,11 @@
 ** DONE ref: phasor: set_phasor_visible: rename
 ** DONE ref: phasor: update_phasor: rename
 ** DONE ref: phasor: show_legend: rename
-** TODO test: test_phasor.py: redloc
-** TODO feat: phasor.py: replace helpers for args for common use
+** DONE test: test_phasor.py: redloc
 ** TODO docs: fix homepage
 ** TODO test: up coverage
 * later
+** TODO feat: phasor.py: replace helpers for args for common use
 ** TODO feat: generalize PhasorDiagramUI
 ** TODO ref: check if key duplicated
 ** TODO ref: widget testing: extract asker
