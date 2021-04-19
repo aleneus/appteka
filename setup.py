@@ -32,7 +32,7 @@ setup(
     author_email="aleneus@gmail.com",
     license="LGPLv3",
     keywords="application, gui",
-    url="https://bitbucket.org/aleneus/appteka",
+    url="https://github.com/aleneus/appteka",
     long_description=read('README'),
     packages=['appteka', 'appteka.pyqt', 'appteka.pyqtgraph'],
     install_requires=[

@@ -217,11 +217,11 @@
 ** DONE ref: phasor: show_legend: rename
 ** DONE test: test_phasor.py: redloc
 ** DONE test: up coverage
-** TODO docs: fix homepage
+** DONE docs: fix homepage
 * later
 ** TODO feat: phasor.py: replace helpers for args for common use
 ** TODO feat: generalize PhasorDiagramUI
-** TODO ref: check if key duplicated
+** TODO ref: phasor: check if key duplicated
 ** TODO ref: widget testing: extract asker
 ** TODO ref: setup_state(self, state_name, invisible=[], disabled=[])
 ** TODO feat: pyqtgraph: new widget for waveforms
