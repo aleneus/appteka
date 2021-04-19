@@ -29,6 +29,39 @@ DEFAULT_COLOR = (255, 255, 255)
 DEFAULT_WIDTH = 1
 
 
+class Arrow:
+    """Arrow to be plotted."""
+    def __init__(self, line, end, name=None):
+        self.line = line
+        self.end = end
+        self.name = name
+
+    def set_visible(self, value):
+        """Sets arrow visible or not."""
+        self.line.setVisible(value)
+        self.end.setVisible(value)
+
+    def update(self, amp, phi, amp_scale=1):
+        """Update arrow."""
+        if amp == 0:
+            self.end.setVisible(False)
+            self.line.setData([0], [0])
+        else:
+            self.end.setVisible(True)
+            compl = cmath.rect(amp_scale*amp, phi)
+            x = compl.real
+            y = compl.imag
+
+            self.line.setData([0, x], [0, y])
+            self.end.setStyle(angle=180 - degrees(phi))
+            self.end.setPos(x, y)
+
+    def remove_from(self, widget):
+        """Remove items from figure."""
+        widget.removeItem(self.line)
+        widget.removeItem(self.end)
+
+
 class BasePhasorDiagram(pg.PlotWidget):
     """Base class for phasor diagrams."""
     def __init__(self, parent=None):
@@ -52,9 +85,32 @@ class BasePhasorDiagram(pg.PlotWidget):
         self.plotItem.setMenuEnabled(False)
         self.hideButtons()
 
+        self._legend = None
+        self._arrows = {}
+        self._phasors = {}
+
+    def add_legend(self):
+        """Add legend."""
+        if self._legend:
+            return
+
+        self._legend = self.plotItem.addLegend()
+        for key in self._arrows:
+            self.plotItem.legend.addItem(
+                self._arrows[key].line, self.__build_name(key))
+            self.plotItem.legend.setColumnCount(self.__legend_cols())
+
     def _to_front(self, item):
         self.removeItem(item)
         self.addItem(item)
+
+    def __build_name(self, key):
+        if not self._arrows[key].name:
+            return "{}".format(key)
+        return self._arrows[key].name
+
+    def __legend_cols(self):
+        return 1 + (len(self._arrows) - 1) // 10
 
     def sizeHint(self):
         # pylint: disable=invalid-name,no-self-use,missing-docstring
@@ -95,10 +151,9 @@ class PhasorDiagram(BasePhasorDiagram):
         self.set_range(1)
 
     def __init_data(self):
-        self.__phasors = {}
-        self.__names = {}
-        self.__items = {}
-        self.__legend = None
+        self._phasors = {}
+        self._arrows = {}
+        self._legend = None
 
     def __init_grid(self):
         self.__circles = []
@@ -159,21 +214,11 @@ class PhasorDiagram(BasePhasorDiagram):
             linestyle = DEFAULT_LINESTYLE
 
         dash = _linestyle_to_dash(linestyle, width)
-        line = self.plot(
-            pen=pg.mkPen(color, width=width, dash=dash),
-        )
+        line = self.plot(pen=pg.mkPen(color, width=width, dash=dash))
+        end = _end_item(color, width)
+        self.addItem(end)
 
-        arr = pg.ArrowItem(
-            tailLen=0,
-            tailWidth=1,
-            pen=pg.mkPen(color, width=width),
-            headLen=width+4,
-            brush=None,
-        )
-        self.addItem(arr)
-
-        self.__items[key] = {'line': line, 'arr': arr}
-        self.__names[key] = name
+        self._arrows[key] = Arrow(line, end, name)
 
         for label in self.__labels:
             self._to_front(label)
@@ -182,60 +227,34 @@ class PhasorDiagram(BasePhasorDiagram):
 
     def set_phasor_visible(self, key, value=True):
         """Hide or show phasor."""
-        if key not in self.__items:
+        if key not in self._arrows:
             return
-
-        for item in self.__items[key]:
-            self.__items[key][item].setVisible(value)
+        self._arrows[key].set_visible(value)
 
     def update_phasor(self, key, amp, phi):
         """Change phasor value."""
-        self.__phasors[key] = (amp, phi)
+        self._phasors[key] = (amp, phi)
         self.__update()
 
     def remove_phasors(self):
         """Remove all phasors and legend."""
 
-        for key in self.__items:
-            for subkey in self.__items[key]:
-                self.removeItem(self.__items[key][subkey])
+        for key in self._arrows:
+            self._arrows[key].remove_from(self)
 
-        if self.__legend is not None:
-            self.__legend.clear()
-            self.removeItem(self.__legend)
+        if self._legend is not None:
+            self._legend.clear()
+            self.removeItem(self._legend)
 
         self.__init_data()
 
     def show_legend(self):
         """Show legend."""
-        if self.__legend:
-            return
-
-        self.__legend = self.plotItem.addLegend()
-        for key in self.__items:
-            name = self.__names[key]
-            if name:
-                self.plotItem.legend.addItem(
-                    self.__items[key]['line'], name)
-            else:
-                self.plotItem.legend.addItem(
-                    self.__items[key]['line'], key)
-            cols = 1 + (len(self.__items) - 1) // 10
-            self.plotItem.legend.setColumnCount(cols)
+        self.add_legend()
 
     def __update(self):
-        for key in self.__phasors:
-            phasor = self.__phasors[key]
-            compl = cmath.rect(*phasor)
-            x = compl.real
-            y = compl.imag
-
-            items = self.__items[key]
-
-            items['line'].setData([0, x], [0, y])
-            arr = items['arr']
-            arr.setStyle(angle=180 - degrees(phasor[1]))
-            arr.setPos(x, y)
+        for key in self._phasors:
+            self._arrows[key].update(*self._phasors[key])
 
     def __update_grid(self):
         for i in range(CIRCLES_NUM):
@@ -247,21 +266,9 @@ class PhasorDiagram(BasePhasorDiagram):
 
     def __update_labels(self):
         for i in range(LABELS_NUM):
-            self.__labels[i].setText("{}".format(self.__range / LABELS_NUM))
-            self.__labels[i].setPos(0, (i + 1) * self.__range / LABELS_NUM)
-
-
-def _linestyle_to_dash(style, width):
-    if style == 'solid':
-        return None
-
-    if style == 'dashed':
-        return (4, width)
-
-    if style == 'dotted':
-        return (1, width)
-
-    raise ValueError("Unknown style")
+            value = (i + 1) * self.__range / LABELS_NUM
+            self.__labels[i].setText("{}".format(value))
+            self.__labels[i].setPos(0, value)
 
 
 DEFAULT_MIN_RANGE = 0.001
@@ -287,10 +294,9 @@ class PhasorDiagramUI(BasePhasorDiagram):
         self.__init_text()
 
     def __init_data(self):
-        self.__phasors = {}
-        self.__names = {}
-        self.__items = {}
-        self.__legend = None
+        self._phasors = {}
+        self._arrows = {}
+        self._legend = None
         self.__invisibles = set()
         self.__to_quant = {}
         self.__amps = {'u': {}, 'i': {}}
@@ -327,53 +333,33 @@ class PhasorDiagramUI(BasePhasorDiagram):
         self.__add_phasor(key, name, **kwargs)
         self.__to_quant[key] = 'i'
 
-    def add_legend(self):
-        """Add legend."""
-        if self.__legend:
-            return
-
-        self.__legend = self.plotItem.addLegend()
-        for key in self.__items:
-            name = self.__names[key]
-            if name:
-                self.plotItem.legend.addItem(
-                    self.__items[key]['line'], name)
-            else:
-                self.plotItem.legend.addItem(
-                    self.__items[key]['line'], key)
-
-            cols = 1 + (len(self.__items) - 1) // 10
-            self.plotItem.legend.setColumnCount(cols)
-
     def update_data(self, key, amp, phi):
         """Change phasor data."""
         quant = self.__to_quant[key]
         self.__amps[quant][key] = amp
 
-        self.__phasors[key] = (amp, phi)
+        self._phasors[key] = (amp, phi)
         self.__update()
         if self.__auto_range:
             self.__update_range_opt(key, amp)
 
     def remove_phasors(self):
         """Remove all phasors and legend."""
-        for key in self.__items:
-            self.removeItem(self.__items[key]['arr'])
-            self.removeItem(self.__items[key]['line'])
+        for key in self._arrows:
+            self._arrows[key].remove_from(self)
 
-        if self.__legend is not None:
-            self.__legend.clear()
-            self.removeItem(self.__legend)
+        if self._legend is not None:
+            self._legend.clear()
+            self.removeItem(self._legend)
 
         self.__init_data()
 
     def set_visible(self, key, visible=True):
         """Hide or show phasor."""
-        if key not in self.__items:
+        if key not in self._arrows:
             return
 
-        self.__items[key]['line'].setVisible(visible)
-        self.__items[key]['arr'].setVisible(visible)
+        self._arrows[key].set_visible(visible)
 
         if not visible:
             self.__invisibles.add(key)
@@ -392,7 +378,7 @@ class PhasorDiagramUI(BasePhasorDiagram):
         self.__update_text_pos()
 
     def __add_phasor(self, key, name=None, **kwargs):
-        if key in self.__items:
+        if key in self._arrows:
             raise ValueError("repeated key: {}".format(key))
 
         color = kwargs.get('color')
@@ -404,49 +390,25 @@ class PhasorDiagramUI(BasePhasorDiagram):
             width = DEFAULT_WIDTH
 
         line = self.plot(pen=pg.mkPen(color, width=width))
-        arr = pg.ArrowItem(
-            tailLen=0,
-            tailWidth=1,
-            pen=pg.mkPen(color, width=width),
-            headLen=width+4,
-            brush=None
-        )
-        self.addItem(arr)
+        end = _end_item(color, width)
+        self.addItem(end)
 
-        self.__items[key] = {'line': line, 'arr': arr}
-        self.__names[key] = name
+        self._arrows[key] = Arrow(line, end, name)
 
         self._to_front(self.__label['u'])
         self._to_front(self.__label['i'])
 
     def __update(self):
-        for key in self.__phasors:
+        for key in self._phasors:
             if key in self.__invisibles:
                 continue
+            self._arrows[key].update(*self._phasors[key],
+                                     self.__get_amp_scale(key))
 
-            phasor = self.__phasors[key]
-
-            compl = None
-            quant = self.__to_quant[key]
-            if quant == 'i':
-                compl = cmath.rect(
-                    phasor[0] * self.__i_radius() / self.__range['i'],
-                    phasor[1])
-            else:
-                compl = cmath.rect(phasor[0], phasor[1])
-
-            x = compl.real
-            y = compl.imag
-
-            items = self.__items[key]
-            if phasor[0] == 0:
-                items['arr'].setVisible(False)
-                items['line'].setData([0], [0])
-            else:
-                items['arr'].setVisible(True)
-                items['line'].setData([0, x], [0, y])
-                items['arr'].setStyle(angle=180 - degrees(phasor[1]))
-                items['arr'].setPos(x, y)
+    def __get_amp_scale(self, key):
+        if self.__to_quant[key] == 'i':
+            return self.__i_radius() / self.__range['i']
+        return 1
 
     def __update_range_opt(self, key, amp):
         quant = self.__to_quant[key]
@@ -493,3 +455,24 @@ class PhasorDiagramUI(BasePhasorDiagram):
 
     def __i_radius(self):
         return I_SCALE * self.__range['u']
+
+
+def _end_item(color, width):
+    return pg.ArrowItem(
+        tailLen=0,
+        tailWidth=1,
+        pen=pg.mkPen(color, width=width),
+        headLen=width+4)
+
+
+def _linestyle_to_dash(style, width):
+    if style == 'solid':
+        return None
+
+    if style == 'dashed':
+        return (4, width)
+
+    if style == 'dotted':
+        return (1, width)
+
+    raise ValueError("Unknown style")

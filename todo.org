@@ -208,9 +208,13 @@
 ** DONE ref: base class for phasor diagrams
 ** DONE docs: update release notes
 ** DONE ref: up lint result
+* 0.15.1
+** DONE ref: phasor: extract arrow class
+** TODO ref: phasor: _phasors -> Arrow
+** TODO ref: phasor: show_legend(): deprecate
+** TODO docs: fix homepage
 * later
 ** TODO feat: generalize PhasorDiagramUI
-** TODO ref: phasor: extract item class (with arr and line)
 ** TODO ref: check if key duplicated
 ** TODO ref: widget testing: extract asker
 ** TODO ref: setup_state(self, state_name, invisible=[], disabled=[])
