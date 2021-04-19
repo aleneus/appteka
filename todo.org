@@ -210,9 +210,12 @@
 ** DONE ref: up lint result
 * 0.15.1
 ** DONE ref: phasor: extract arrow class
-** TODO ref: phasor: _phasors -> Arrow
-** TODO ref: phasor: show_legend(): deprecate
+** DONE ref: phasor: _phasors -> Arrow
+** DONE fix: phasor: update range only by visible arrows
+** TODO ref: phasor: set_phasor_visible: rename
+** TODO ref: phasor: show_legend: rename
 ** TODO docs: fix homepage
+** TODO test: up coverage
 * later
 ** TODO feat: generalize PhasorDiagramUI
 ** TODO ref: check if key duplicated

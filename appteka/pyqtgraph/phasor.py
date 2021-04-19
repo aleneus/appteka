@@ -35,19 +35,23 @@ class Arrow:
         self.line = line
         self.end = end
         self.name = name
+        self.visible = True
 
     def set_visible(self, value):
         """Sets arrow visible or not."""
         self.line.setVisible(value)
         self.end.setVisible(value)
+        self.visible = value
 
     def update(self, amp, phi, amp_scale=1):
         """Update arrow."""
         if amp == 0:
-            self.end.setVisible(False)
-            self.line.setData([0], [0])
+            if self.visible:
+                self.end.setVisible(False)
+                self.line.setData([0], [0])
         else:
-            self.end.setVisible(True)
+            if self.visible:
+                self.end.setVisible(True)
             compl = cmath.rect(amp_scale*amp, phi)
             x = compl.real
             y = compl.imag
@@ -85,9 +89,8 @@ class BasePhasorDiagram(pg.PlotWidget):
         self.plotItem.setMenuEnabled(False)
         self.hideButtons()
 
-        self._legend = None
         self._arrows = {}
-        self._phasors = {}
+        self._legend = None
 
     def add_legend(self):
         """Add legend."""
@@ -151,7 +154,6 @@ class PhasorDiagram(BasePhasorDiagram):
         self.set_range(1)
 
     def __init_data(self):
-        self._phasors = {}
         self._arrows = {}
         self._legend = None
 
@@ -227,14 +229,12 @@ class PhasorDiagram(BasePhasorDiagram):
 
     def set_phasor_visible(self, key, value=True):
         """Hide or show phasor."""
-        if key not in self._arrows:
-            return
-        self._arrows[key].set_visible(value)
+        if key in self._arrows:
+            self._arrows[key].set_visible(value)
 
     def update_phasor(self, key, amp, phi):
         """Change phasor value."""
-        self._phasors[key] = (amp, phi)
-        self.__update()
+        self._arrows[key].update(amp, phi)
 
     def remove_phasors(self):
         """Remove all phasors and legend."""
@@ -251,10 +251,6 @@ class PhasorDiagram(BasePhasorDiagram):
     def show_legend(self):
         """Show legend."""
         self.add_legend()
-
-    def __update(self):
-        for key in self._phasors:
-            self._arrows[key].update(*self._phasors[key])
 
     def __update_grid(self):
         for i in range(CIRCLES_NUM):
@@ -294,10 +290,8 @@ class PhasorDiagramUI(BasePhasorDiagram):
         self.__init_text()
 
     def __init_data(self):
-        self._phasors = {}
         self._arrows = {}
         self._legend = None
-        self.__invisibles = set()
         self.__to_quant = {}
         self.__amps = {'u': {}, 'i': {}}
         self.__range = {'u': DEFAULT_MIN_RANGE, 'i': DEFAULT_MIN_RANGE}
@@ -310,10 +304,10 @@ class PhasorDiagramUI(BasePhasorDiagram):
             self.addItem(self.__circles[quant])
 
     def __init_labels(self):
-        self.__label = {}
+        self.__labels = {}
         for quant in ['u', 'i']:
-            self.__label[quant] = pg.TextItem()
-            self.addItem(self.__label[quant])
+            self.__labels[quant] = pg.TextItem()
+            self.addItem(self.__labels[quant])
 
     def __init_text(self):
         self.__text = pg.TextItem()
@@ -338,10 +332,10 @@ class PhasorDiagramUI(BasePhasorDiagram):
         quant = self.__to_quant[key]
         self.__amps[quant][key] = amp
 
-        self._phasors[key] = (amp, phi)
-        self.__update()
         if self.__auto_range:
             self.__update_range_opt(key, amp)
+
+        self._arrows[key].update(amp, phi, self.__get_amp_scale(key))
 
     def remove_phasors(self):
         """Remove all phasors and legend."""
@@ -356,20 +350,14 @@ class PhasorDiagramUI(BasePhasorDiagram):
 
     def set_visible(self, key, visible=True):
         """Hide or show phasor."""
-        if key not in self._arrows:
-            return
-
-        self._arrows[key].set_visible(visible)
-
-        if not visible:
-            self.__invisibles.add(key)
-        else:
-            if key in self.__invisibles:
-                self.__invisibles.remove(key)
+        if key in self._arrows:
+            self._arrows[key].set_visible(visible)
+        if self.__auto_range:
+            self.update_range()
 
     def update_range(self):
         """Update range manually."""
-        self.__calc_maximums()
+        self.__calc_range()
         self.__apply_range()
 
     def set_text(self, text):
@@ -395,15 +383,8 @@ class PhasorDiagramUI(BasePhasorDiagram):
 
         self._arrows[key] = Arrow(line, end, name)
 
-        self._to_front(self.__label['u'])
-        self._to_front(self.__label['i'])
-
-    def __update(self):
-        for key in self._phasors:
-            if key in self.__invisibles:
-                continue
-            self._arrows[key].update(*self._phasors[key],
-                                     self.__get_amp_scale(key))
+        self._to_front(self.__labels['u'])
+        self._to_front(self.__labels['i'])
 
     def __get_amp_scale(self, key):
         if self.__to_quant[key] == 'i':
@@ -411,21 +392,26 @@ class PhasorDiagramUI(BasePhasorDiagram):
         return 1
 
     def __update_range_opt(self, key, amp):
+        if not self._arrows[key].visible:
+            return
+
         quant = self.__to_quant[key]
 
         if amp > self.__range[quant]:
             self.__range[quant] = amp
         else:
-            self.__calc_maximums()
+            self.__calc_range()
 
         self.__apply_range()
 
-    def __calc_maximums(self):
+    def __calc_range(self):
         for quant in ['u', 'i']:
-            total = 0
-            if self.__amps[quant]:
-                total = max(self.__amps[quant].values())
-            self.__range[quant] = max(total, self.__min_range)
+            self.__range[quant] = self.__min_range
+            for key in self.__amps[quant]:
+                if not self._arrows[key].visible:
+                    continue
+                self.__range[quant] = max(self.__range[quant],
+                                          self.__amps[quant][key])
 
     def __apply_range(self):
         self.setRange(QtCore.QRectF(*self.__u_rect()))
@@ -444,11 +430,11 @@ class PhasorDiagramUI(BasePhasorDiagram):
 
     def __update_labels(self):
         for quant in ['u', 'i']:
-            self.__label[quant].setText("{}".format(
+            self.__labels[quant].setText("{}".format(
                 round(self.__range[quant], ROUND_TO)))
 
-        self.__label['u'].setPos(0, self.__range['u'])
-        self.__label['i'].setPos(0, self.__i_radius())
+        self.__labels['u'].setPos(0, self.__range['u'])
+        self.__labels['i'].setPos(0, self.__i_radius())
 
     def __update_text_pos(self):
         self.__text.setPos(self.__range['u'], self.__range['u'])

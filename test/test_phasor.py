@@ -395,3 +395,28 @@ class TestPhasorDiagramUI(unittest.TestCase):
         d.add_u(0, 'u0', color=(255, 255, 0), width=1)
         d.update_data(0, 0, 1)
         app(d, ["Only grid"])
+
+    def test_scale_only_by_visibles(self):
+        app = testing.TestApp(self)
+        d = PhasorDiagramUI()
+        d.add_u(0)
+        d.add_u(1)
+        d.set_visible(1, False)
+
+        d.update_data(0, 1, 0)
+        d.update_data(1, 3, 1)
+
+        app(d, ["Range = 1"])
+
+    def test_change_visibility_and_range(self):
+        app = testing.TestApp(self)
+        d = PhasorDiagramUI()
+        d.add_u(0)
+        d.add_u(1)
+        d.set_visible(1, False)
+
+        d.update_data(0, 1, 1)
+        d.update_data(1, 3, 2)
+        d.set_visible(1, True)
+
+        app(d, ["Range = 3"])
