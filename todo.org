@@ -216,8 +216,8 @@
 ** DONE ref: phasor: update_phasor: rename
 ** DONE ref: phasor: show_legend: rename
 ** DONE test: test_phasor.py: redloc
+** DONE test: up coverage
 ** TODO docs: fix homepage
-** TODO test: up coverage
 * later
 ** TODO feat: phasor.py: replace helpers for args for common use
 ** TODO feat: generalize PhasorDiagramUI

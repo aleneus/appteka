@@ -32,7 +32,7 @@ class SimpleSignal:
         """Emit signal."""
         for func in self.slots:
             if func:
-                func(args)
+                func(*args)
 
     def connect(self, slot):
         """Connect signal with slot.
