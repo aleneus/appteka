@@ -1,13 +1,13 @@
 import unittest
 from PyQt5 import QtCore
-from appteka.pyqt import testing
+from pyqtest import TestApp
 from appteka.pyqtgraph.waveform import Waveform
 
 
 class TestWaveform(unittest.TestCase):
     """Test suite for Waveform widget."""
     def test_xlabel(self):
-        app = testing.TestApp(self)
+        app = TestApp(self)
 
         w = Waveform(xlabel="Time [sec]")
 
@@ -16,7 +16,7 @@ class TestWaveform(unittest.TestCase):
         ])
 
     def test_time_axis_false(self):
-        app = testing.TestApp(self)
+        app = TestApp(self)
 
         w = Waveform(time_axis=False)
         w.update_data([0, 1, 2, 3], [1, 2, 1, 2])
@@ -26,7 +26,7 @@ class TestWaveform(unittest.TestCase):
         ])
 
     def test_time_axis_true(self):
-        app = testing.TestApp(self)
+        app = TestApp(self)
 
         w = Waveform(None, time_axis=True)
         w.update_data([0, 1, 2, 3], [1, 2, 1, 2])
@@ -36,7 +36,7 @@ class TestWaveform(unittest.TestCase):
         ])
 
     def test_scaling(self):
-        app = testing.TestApp(self)
+        app = TestApp(self)
 
         w = Waveform()
         w.update_data([0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -55,7 +55,7 @@ class TestWaveform_Animation(unittest.TestCase):
         self.counter = 0
 
     def test_it(self):
-        app = testing.TestApp(self)
+        app = TestApp(self)
 
         w = Waveform()
 

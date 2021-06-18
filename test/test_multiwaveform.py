@@ -1,5 +1,5 @@
 import unittest
-from appteka.pyqt import testing
+from pyqtest import TestApp
 from appteka.pyqtgraph.waveform import MultiWaveform
 
 
@@ -7,7 +7,7 @@ class TestMultiWavefrom(unittest.TestCase):
     """MultiWavefrom."""
     def test_top_axis(self):
         """Switch on top axis."""
-        app = testing.TestApp(self)
+        app = TestApp(self)
 
         w = MultiWaveform()
 
@@ -19,7 +19,7 @@ class TestMultiWavefrom(unittest.TestCase):
 
     def test_scaling(self):
         """Scaling with keys CONTROL and SHIFT."""
-        app = testing.TestApp(self)
+        app = TestApp(self)
 
         w = MultiWaveform()
 
@@ -41,7 +41,7 @@ class TestMultiWavefrom(unittest.TestCase):
 
     def test_set_title(self):
         """Change title of given plot."""
-        app = testing.TestApp(self)
+        app = TestApp(self)
 
         w = MultiWaveform()
         w.add_plot('a', title='Title one')
@@ -51,7 +51,7 @@ class TestMultiWavefrom(unittest.TestCase):
         app(w, ["Title is 'Frequency: 50.123'"])
 
     def test_color(self):
-        app = testing.TestApp(self)
+        app = TestApp(self)
 
         w = MultiWaveform()
         w.add_plot('a')

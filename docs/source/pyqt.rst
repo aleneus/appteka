@@ -7,12 +7,6 @@ Build GUI helpers
 .. automodule:: appteka.pyqt.gui
    :members:
 
-Unit testing of widgets
------------------------
-
-.. automodule:: appteka.pyqt.testing
-   :members:
-
 Enabling/disabling controls
 ---------------------------
 

@@ -2,8 +2,8 @@ import unittest
 import random
 from PyQt5 import QtCore
 from pyqtgraph import setConfigOption
+from pyqtest import TestApp
 
-from appteka.pyqt import testing
 from appteka.pyqtgraph.phasor import PhasorDiagram
 from appteka.pyqtgraph.phasor import PhasorDiagramUI
 
@@ -12,7 +12,7 @@ setConfigOption("antialias", True)
 
 class TestPhasorDiagram(unittest.TestCase):
     def setUp(self):
-        self.app = testing.TestApp(self)
+        self.app = TestApp(self)
 
     def test_add_and_update_data(self):
         d = PhasorDiagram()
@@ -137,7 +137,7 @@ class TestPhasorDiagram_Animation(unittest.TestCase):
         self.counter = 0
 
     def test_three_phasors_animation(self):
-        app = testing.TestApp(self)
+        app = TestApp(self)
 
         d = PhasorDiagram()
         d.add_phasor('ph-1', color=(255, 0, 0), linestyle='dashed')
@@ -166,7 +166,7 @@ class TestPhasorDiagram_Animation(unittest.TestCase):
 
 class TestPhasorDiagram_Smoke(unittest.TestCase):
     def test_fast_update_data_and_range(self):
-        app = testing.TestApp(self)
+        app = TestApp(self)
 
         d = PhasorDiagram()
         d.add_phasor('ph-1', linestyle='dashed')
@@ -192,7 +192,7 @@ class TestPhasorDiagram_Smoke(unittest.TestCase):
 
 class TestPhasorDiagram_Deprecation(unittest.TestCase):
     def setUp(self):
-        testing.TestApp(self)
+        TestApp(self)
 
     def test_size_arg(self):
         with self.assertWarns(FutureWarning):
@@ -223,7 +223,7 @@ class TestPhasorDiagram_Deprecation(unittest.TestCase):
 
 class TestPhasorDiagramUI(unittest.TestCase):
     def setUp(self):
-        self.app = testing.TestApp(self)
+        self.app = TestApp(self)
 
     def test_u_and_i(self):
         d = PhasorDiagramUI()

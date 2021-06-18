@@ -1,5 +1,5 @@
 import unittest
-from appteka.pyqt import testing
+from pyqtest import TestApp
 from appteka.pyqt.code_text_edit import CodeTextEdit
 
 
@@ -7,7 +7,7 @@ class TestCodeTextEdit(unittest.TestCase):
     """Tests for CodeTextEdit"""
 
     def test_text(self):
-        app = testing.TestApp(self)
+        app = TestApp(self)
 
         e = CodeTextEdit()
 

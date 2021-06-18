@@ -38,6 +38,7 @@ setup(
     install_requires=[
         'PyQt5>=5.15',
         'pyqtgraph>=0.12',
+        'pyqtest>=0.1',
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",

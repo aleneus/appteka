@@ -218,11 +218,13 @@
 ** DONE test: test_phasor.py: redloc
 ** DONE test: up coverage
 ** DONE docs: fix homepage
+* 0.16.0
+** DONE feat: remove (deprecate) testing from qt (extract to pyqtest project)
+** TODO test: up coverage
 * later
 ** TODO feat: phasor.py: replace helpers for args for common use
 ** TODO feat: generalize PhasorDiagramUI
 ** TODO ref: phasor: check if key duplicated
-** TODO ref: widget testing: extract asker
 ** TODO ref: setup_state(self, state_name, invisible=[], disabled=[])
 ** TODO feat: pyqtgraph: new widget for waveforms
 ** TODO ref: redloc pyqtgraph.waveform
@@ -243,3 +245,5 @@
    SCHEDULED: <2021-10-19 Вт>
 ** TODO depr: phasor diagram: remove show_legend()
    SCHEDULED: <2021-10-19 Вт>
+** TODO depr: remove testing module and remove pyqtest from requirements
+   SCHEDULED: <2021-12-20 Пн>

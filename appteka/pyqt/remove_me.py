@@ -15,9 +15,7 @@
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""The tool for visual testing of widgets."""
-
 from warnings import warn
 from pyqtest import TestApp
 
-warn("module testing is deprecated, use pyqtest", FutureWarning)
+warn("module remove_me is deprecated, use pyqtest", FutureWarning)
