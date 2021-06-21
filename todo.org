@@ -221,7 +221,7 @@
 * 0.16.0
 ** DONE feat: remove (deprecate) testing from qt (extract to pyqtest project)
 ** DONE test: up coverage
-** TODO docs: release notes
+** DONE docs: release notes
 * later
 ** TODO ref: LatexReport: add_pic: abspath
 ** TODO feat: phasor.py: replace helpers for args for common use

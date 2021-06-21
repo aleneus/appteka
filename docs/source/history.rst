@@ -1,6 +1,11 @@
 Releases
 ========
 
+0.16
+----
+
+* The module for Qt widgets testing has been extracted to the separate PyQtest project.
+
 0.15
 ----
 
