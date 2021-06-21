@@ -220,8 +220,10 @@
 ** DONE docs: fix homepage
 * 0.16.0
 ** DONE feat: remove (deprecate) testing from qt (extract to pyqtest project)
-** TODO test: up coverage
+** DONE test: up coverage
+** TODO docs: release notes
 * later
+** TODO ref: LatexReport: add_pic: abspath
 ** TODO feat: phasor.py: replace helpers for args for common use
 ** TODO feat: generalize PhasorDiagramUI
 ** TODO ref: phasor: check if key duplicated

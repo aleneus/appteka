@@ -19,6 +19,8 @@
 
 import os
 
+HTML_PIC_WIDTH = 800
+
 
 class Reporter:
     """Base class for reporter."""
@@ -44,12 +46,12 @@ class Reporter:
         """
         raise NotImplementedError
 
-    def add_pic(self, pic):
+    def add_pic(self, pic_path):
         """Add image to report.
 
         Parameters
         ----------
-        pic : str
+        pic_path : str
             Name of image file.
         """
         raise NotImplementedError
@@ -73,13 +75,14 @@ class HtmlReporter(Reporter):
     """HTML reporter."""
     def begin(self):
         """Create the head of html-document and start the body."""
-        self._report += "<html>\n<head>"
-        self._report += "<Meta charset='UTF-8'/>"
-        self._report += "</head>\n<body>\n"
+        self._report += "<html>\n"
+        self._report += "<head><Meta charset='UTF-8'/></head>\n"
+        self._report += "<body>\n"
 
     def end(self):
         """Put close tags to the end of HTML-document."""
-        self._report += "</body>\n</html>\n"
+        self._report += "</body>\n"
+        self._report += "</html>\n"
 
     def add_header(self, header_text, level=1):
         """Add header.
@@ -93,15 +96,16 @@ class HtmlReporter(Reporter):
         """
         self._report += "<h{0}>{1}</h{0}>\n".format(level, header_text)
 
-    def add_pic(self, pic):
+    def add_pic(self, pic_path):
         """Add image to report.
 
         Parameters
         ----------
-        pic : str
+        pic_path : str
             Name of image file.
         """
-        self._report += "<img src='{}' width='800'>\n".format(pic)
+        self._report += "<img src='{}' width='{}'>\n".format(
+            pic_path, HTML_PIC_WIDTH)
 
     def add_text(self, text):
         """Add plain text to report.
@@ -140,16 +144,16 @@ class LatexReporter(Reporter):
         else:
             self._report += "\n{"+header_text+"}\n"
 
-    def add_pic(self, pic):
+    def add_pic(self, pic_path):
         """Add image to report.
 
         Parameters
         ----------
-        pic : str
+        pic_path : str
             Name of image file.
         """
         self._report += "\n\\InsertPicCommand{"
-        self._report += os.path.abspath(os.path.expanduser(pic))
+        self._report += os.path.abspath(os.path.expanduser(pic_path))
         self._report += "}\n"
 
     def add_text(self, text):
