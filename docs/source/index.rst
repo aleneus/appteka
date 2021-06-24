@@ -18,7 +18,6 @@ Parts
    :maxdepth: 2
 
    pyqt
-   grph
    sqlite
    misc
    history

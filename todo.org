@@ -229,8 +229,10 @@
 ** DONE ref: select item dialog
 ** DONE test: up coverage
 ** DONE docs: update release checklist
-** TODO docs: remove pyqtgraph
+** DONE docs: remove pyqtgraph
+** TODO ref: up lint result
 * later
+** TODO docs: CodeTextEdit: hide event handlers
 ** TODO ref: LatexReport: add_pic: abspath
 ** TODO ref: setup_state(self, state_name, invisible=[], disabled=[])
 ** TODO docs: add demo for test_sqlite_schema
