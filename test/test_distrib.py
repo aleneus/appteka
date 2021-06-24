@@ -1,5 +1,23 @@
 import unittest
 from appteka.distrib import micro_version, minor_version, major_version
+from appteka.distrib import build_folder_name
+
+
+class Test_build_folder_name(unittest.TestCase):
+    def test_no_appendix(self):
+        name = build_folder_name("NAME", "0.2.1")
+        self.assertIn("build/NAME-0.2.1-", name)
+        self.assertEqual(name[-3:], "bit")
+
+    def test_with_appendix(self):
+        name = build_folder_name("NAME", "0.2.1", "appendix")
+        self.assertIn("build/NAME-0.2.1-appendix-", name)
+        self.assertEqual(name[-3:], "bit")
+
+    def test_with_empty(self):
+        name = build_folder_name("NAME", "0.2.1", "")
+        self.assertNotIn("build/NAME-0.2.1--", name)
+        self.assertEqual(name[-3:], "bit")
 
 
 class Test_mirco_version(unittest.TestCase):

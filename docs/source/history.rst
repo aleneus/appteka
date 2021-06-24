@@ -1,6 +1,13 @@
 Releases
 ========
 
+0.17
+----
+
+* The pyqtgraph subpackage have been extracted to the separate project Pymuplot.
+* Gui: direcrtion for sublayouts is selected automatically.
+* More tests.
+
 0.16
 ----
 

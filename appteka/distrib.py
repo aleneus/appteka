@@ -28,12 +28,16 @@ from pkg_resources import resource_filename as resource
 def build_folder_name(name, version, appendix=None):
     """Return name of build folder."""
     bit_version = platform.architecture()[0]
+
     os_name = sys.platform
     if 'win' in os_name:
         os_name = 'win'
+
     res = "build/{}-{}".format(name, version)
-    if appendix is not None:
+
+    if appendix:
         res += "-{}".format(appendix)
+
     res += "-{}-{}".format(os_name, bit_version)
     return res
 

@@ -227,9 +227,9 @@
 ** DONE depl: setup: remove pyqtgraph
 ** DONE depl: setup: add pymuplot to requirements
 ** DONE ref: select item dialog
-** TODO test: up coverage
+** DONE test: up coverage
+** DONE docs: update release checklist
 ** TODO docs: remove pyqtgraph
-** TODO docs: update release checklist
 * later
 ** TODO ref: LatexReport: add_pic: abspath
 ** TODO ref: setup_state(self, state_name, invisible=[], disabled=[])
@@ -240,4 +240,6 @@
 ** TODO depr: remove testing module and remove pyqtest from requirements
    SCHEDULED: <2021-12-20 Пн>
 ** TODO depr: remove pyqtgraph subpackage and remove pymuplot from requirements
+   SCHEDULED: <2021-12-24 Пт>
+** TODO depr: add_sublayout: direction: remove
    SCHEDULED: <2021-12-24 Пт>
