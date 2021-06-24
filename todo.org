@@ -222,6 +222,13 @@
 ** DONE feat: remove (deprecate) testing from qt (extract to pyqtest project)
 ** DONE test: up coverage
 ** DONE docs: release notes
+* 0.17.0
+** DONE feat: remove (deprecate) pyqtgraph subpackage
+** TODO docs: update release checklist
+** TODO depl: setup.py: remove pyqtgraph
+** TODO depl: add pymuplot to requirements
+** TODO docs: remove pyqtgraph
+** TODO test: up coverage
 * later
 ** TODO ref: LatexReport: add_pic: abspath
 ** TODO feat: phasor.py: replace helpers for args for common use
@@ -249,3 +256,5 @@
    SCHEDULED: <2021-10-19 Вт>
 ** TODO depr: remove testing module and remove pyqtest from requirements
    SCHEDULED: <2021-12-20 Пн>
+** TODO depr: remove pyqtgraph subpackage and remove pymuplot from requirements
+   SCHEDULED: <2021-12-24 Пт>
