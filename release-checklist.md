@@ -10,7 +10,7 @@
 * No TODO notes: `make todo`
 * No flakes: `make flake`
 * No lint errors: `make lint-e`
-* Lint result >= 9.7: `make lint`
+* Lint result >= 9.9: `make lint`
 * Old deprecated code is removed (todo list)
 
 ## Docs

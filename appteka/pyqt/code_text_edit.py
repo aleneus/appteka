@@ -29,14 +29,14 @@ class CodeTextEdit(QtWidgets.QPlainTextEdit):
     """Text field for editing the source code."""
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.lineNumberArea = LineNumberArea(self)
+        self.__number_area = LineNumberArea(self)
 
-        self.blockCountChanged.connect(self.updateLineNumberAreaWidth)
-        self.updateRequest.connect(self.updateLineNumberArea)
-        self.cursorPositionChanged.connect(self.highlightCurrentLine)
+        self.blockCountChanged.connect(self.__update_line_number_area_width)
+        self.updateRequest.connect(self.__update_line_number_area)
+        self.cursorPositionChanged.connect(self.__highlight_current_line)
 
-        self.updateLineNumberAreaWidth(0)
-        self.highlightCurrentLine()
+        self.__update_line_number_area_width(0)
+        self.__highlight_current_line()
 
         font = QtGui.QFont(FONT)
         font.setStyleHint(QtGui.QFont.Monospace)
@@ -46,10 +46,50 @@ class CodeTextEdit(QtWidgets.QPlainTextEdit):
         """Set text."""
         self.document().setPlainText(text)
 
+    def line_number_area_width(self):
+        """Return the width of the number area."""
+
+        count = max(1, self.blockCount())
+        digits = 1
+        while count >= 10:
+            count = count / 10
+            digits = digits + 1
+
+        return 3 + self.fontMetrics().horizontalAdvance('9') * digits
+
+    def __highlight_current_line(self):
+        extra_selections = []
+        if not self.isReadOnly():
+            selection = QtWidgets.QTextEdit.ExtraSelection()
+            selection.format.setBackground(LINE_COLOR)
+            selection.format.setProperty(
+                QtGui.QTextFormat.FullWidthSelection, True)
+            selection.cursor = self.textCursor()
+            selection.cursor.clearSelection()
+            extra_selections.append(selection)
+
+        self.setExtraSelections(extra_selections)
+
+    def __update_line_number_area_width(self, new_block_count):
+        # pylint: disable=unused-argument
+        self.setViewportMargins(self.line_number_area_width(), 0, 0, 0)
+
+    def __update_line_number_area(self, rect, delta_y):
+        if delta_y:
+            self.__number_area.scroll(0, delta_y)
+        else:
+            self.__number_area.update(
+                0, rect.y(),
+                self.__number_area.width(),
+                rect.height())
+
+        if rect.contains(self.viewport().rect()):
+            self.__update_line_number_area_width(0)
+
     def lineNumberAreaPaintEvent(self, event):
         # pylint: disable=invalid-name,missing-docstring
 
-        painter = QtGui.QPainter(self.lineNumberArea)
+        painter = QtGui.QPainter(self.__number_area)
         painter.fillRect(event.rect(), Qt.lightGray)
 
         block = self.firstVisibleBlock()
@@ -63,7 +103,7 @@ class CodeTextEdit(QtWidgets.QPlainTextEdit):
                 number = "{}".format(block_number + 1)
                 painter.setPen(Qt.black)
                 painter.drawText(
-                    0, top, self.lineNumberArea.width(),
+                    0, top, self.__number_area.width(),
                     self.fontMetrics().height(), Qt.AlignRight,
                     number)
 
@@ -72,62 +112,27 @@ class CodeTextEdit(QtWidgets.QPlainTextEdit):
             bottom = top + self.blockBoundingRect(block).height()
             block_number = block_number + 1
 
-    def lineNumberAreaWidth(self):
-        count = max(1, self.blockCount())
-        digits = 1
-        while count >= 10:
-            count = count / 10
-            digits = digits + 1
-
-        return 3 + self.fontMetrics().horizontalAdvance('9') * digits
-
     def resizeEvent(self, e):
         # pylint: disable=invalid-name,missing-docstring
 
         super().resizeEvent(e)
 
         rect = self.contentsRect()
-        self.lineNumberArea.setGeometry(QRect(
+        self.__number_area.setGeometry(QRect(
             rect.left(), rect.top(),
-            self.lineNumberAreaWidth(), rect.height()))
-
-    def updateLineNumberAreaWidth(self, newBlockCount):
-        self.setViewportMargins(self.lineNumberAreaWidth(), 0, 0, 0)
-
-    def highlightCurrentLine(self):
-        extra_selections = []
-        if not self.isReadOnly():
-            selection = QtWidgets.QTextEdit.ExtraSelection()
-            selection.format.setBackground(LINE_COLOR)
-            selection.format.setProperty(
-                QtGui.QTextFormat.FullWidthSelection, True)
-            selection.cursor = self.textCursor()
-            selection.cursor.clearSelection()
-            extra_selections.append(selection)
-
-        self.setExtraSelections(extra_selections)
-
-    def updateLineNumberArea(self, rect, dy):
-        if dy:
-            self.lineNumberArea.scroll(0, dy)
-        else:
-            self.lineNumberArea.update(
-                0, rect.y(),
-                self.lineNumberArea.width(),
-                rect.height())
-
-        if rect.contains(self.viewport().rect()):
-            self.updateLineNumberAreaWidth(0)
+            self.line_number_area_width(), rect.height()))
 
 
 class LineNumberArea(QtWidgets.QWidget):
+    """Area for the line numbers."""
+
     def __init__(self, editor):
         super().__init__(editor)
         self.code_editor = editor
 
     def sizeHint(self):
         # pylint: disable=invalid-name,missing-docstring
-        return QSize(self.code_editor.lineNumberAreaWidth(), 0)
+        return QSize(self.code_editor.line_number_area_width(), 0)
 
     def paintEvent(self, event):
         # pylint: disable=invalid-name,missing-docstring
