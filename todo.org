@@ -224,11 +224,11 @@
 ** DONE docs: release notes
 * 0.17.0
 ** DONE feat: remove (deprecate) pyqtgraph subpackage
-** TODO docs: update release checklist
-** TODO depl: setup.py: remove pyqtgraph
-** TODO depl: add pymuplot to requirements
-** TODO docs: remove pyqtgraph
+** DONE depl: setup: remove pyqtgraph
+** DONE depl: setup: add pymuplot to requirements
 ** TODO test: up coverage
+** TODO docs: remove pyqtgraph
+** TODO docs: update release checklist
 * later
 ** TODO ref: LatexReport: add_pic: abspath
 ** TODO feat: phasor.py: replace helpers for args for common use
