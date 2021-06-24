@@ -22,59 +22,69 @@ from appteka.pyqt import gui
 
 
 class SelectItemDialog(QtWidgets.QDialog):
-    """ Dialog for selecting string item from list. """
+    """Dialog for selecting string item from list."""
+
     def __init__(self, title="Select item", question="Select item",
-                 ok_caption="Ok", cancel_caption="Cancel",
-                 parent=None):
+                 ok_caption="Ok", cancel_caption="Cancel", parent=None):
+
         QtWidgets.QDialog.__init__(self, parent)
-
-        self._items = []
-        self._index = None
-
-        self._make_gui(title, question, ok_caption, cancel_caption)
-
-    def _make_gui(self, title, question, ok_caption, cancel_caption):
-        self.setWindowTitle(title)
-        main_layout = QtWidgets.QVBoxLayout(self)
-        gui.add_label(question, main_layout)
-        self._quant_list = gui.add_widget(QtWidgets.QListWidget(), main_layout)
-        self._quant_list.setWordWrap(True)
-        self._quant_list.setSpacing(2)
-
-        buttons_layout = gui.add_sublayout(main_layout, 'h')
-        gui.add_button(ok_caption, self._ok_clicked,
-                       buttons_layout)
-        gui.add_button(cancel_caption, self._cancel_clicked,
-                       buttons_layout)
-
-    def exec(self):
-        """ Execute dialog. """
-        for item in self._items:
-            self._quant_list.addItem(item)
-        return super().exec()
-
-    def _ok_clicked(self):
-        """ OK button clicked handler. """
-        self._index = self._quant_list.currentRow()
-        self.accept()
-
-    def _cancel_clicked(self):
-        """ Cancel button clicked handler. """
-        self.reject()
+        self.__index = None
+        self.__make_gui(title, question, ok_caption, cancel_caption)
 
     def set_items(self, str_list):
-        """ Set the names of items. """
-        self._items = str_list
+        """Set the names of items."""
+        self.__widget.set_items(str_list)
 
     def get_item_name(self):
-        """ Return name selected item. """
-        ind = self.get_item_index()
-        name = self._items[ind]
-        return name
+        """Return name of selected item."""
+        self.__widget.get_item_name()
 
     def get_item_index(self):
-        """ Return index of selected item. """
-        if self._index is None:
-            raise RuntimeError("Index is None.")
-        ind = self._index
-        return ind
+        """Return index of selected item."""
+        return self.__index
+
+    def __on_ok(self):
+        self.__index = self.__widget.current_row()
+        self.accept()
+
+    def __on_cancel(self):
+        self.reject()
+
+    def __make_gui(self, title, question, ok_caption, cancel_caption):
+        self.setWindowTitle(title)
+        layout = QtWidgets.QVBoxLayout(self)
+        self.__widget = gui.add_widget(Items(question), layout)
+
+        l_buttons = gui.add_sublayout(layout, 'h')
+        gui.add_button(ok_caption, self.__on_ok, l_buttons)
+        gui.add_button(cancel_caption, self.__on_cancel, l_buttons)
+
+
+class Items(QtWidgets.QWidget):
+    """Items to select."""
+    def __init__(self, question="Select item", parent=None):
+        super().__init__(parent)
+        self.__items = []
+        self.__make_gui(question)
+
+    def __make_gui(self, question):
+        layout = QtWidgets.QVBoxLayout(self)
+        gui.add_label(question, layout)
+        self.__w_list = gui.add_widget(QtWidgets.QListWidget(), layout)
+        self.__w_list.setWordWrap(True)
+        self.__w_list.setSpacing(2)
+
+    def current_row(self):
+        """Return current row."""
+        return self.__w_list.currentRow()
+
+    def set_items(self, items):
+        """Set the names of items."""
+        self.__items = items
+        self.__w_list.clear()
+        for item in self.__items:
+            self.__w_list.addItem(item)
+
+    def get_item_name(self):
+        """Return name of selected item."""
+        return self.__items[self.get_item_index()]

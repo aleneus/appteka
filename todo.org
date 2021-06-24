@@ -226,34 +226,17 @@
 ** DONE feat: remove (deprecate) pyqtgraph subpackage
 ** DONE depl: setup: remove pyqtgraph
 ** DONE depl: setup: add pymuplot to requirements
+** DONE ref: select item dialog
 ** TODO test: up coverage
 ** TODO docs: remove pyqtgraph
 ** TODO docs: update release checklist
 * later
 ** TODO ref: LatexReport: add_pic: abspath
-** TODO feat: phasor.py: replace helpers for args for common use
-** TODO feat: generalize PhasorDiagramUI
-** TODO ref: phasor: check if key duplicated
 ** TODO ref: setup_state(self, state_name, invisible=[], disabled=[])
-** TODO feat: pyqtgraph: new widget for waveforms
-** TODO ref: redloc pyqtgraph.waveform
-** TODO feat: pyqtgraph.waveform: Add 'synchronized' to state
-** TODO feat: make Plot class and add get_plot() to waveforms classes
 ** TODO docs: add demo for test_sqlite_schema
 ** TODO feat: configuration: tools for adding of unexisting parameters and sections
 ** TODO feat: find something more convenient than conf.setting[key]
-** TODO feat: phasor: generate unique style for evenry next phasor
 * depr
-** TODO depr: phasor diagram: remove size arg
-   SCHEDULED: <2021-08-06 Пт>
-** TODO depr: phasor diagram: remove end arg
-   SCHEDULED: <2021-08-06 Пт>
-** TODO depr: phasor diagram: remove set_phasor_visible()
-   SCHEDULED: <2021-10-19 Вт>
-** TODO depr: phasor diagram: remove update_phasor()
-   SCHEDULED: <2021-10-19 Вт>
-** TODO depr: phasor diagram: remove show_legend()
-   SCHEDULED: <2021-10-19 Вт>
 ** TODO depr: remove testing module and remove pyqtest from requirements
    SCHEDULED: <2021-12-20 Пн>
 ** TODO depr: remove pyqtgraph subpackage and remove pymuplot from requirements
