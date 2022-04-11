@@ -34,7 +34,7 @@ setup(
     keywords="application, gui",
     url="https://github.com/aleneus/appteka",
     long_description=read('README'),
-    packages=['appteka', 'appteka.pyqt'],
+    packages=['appteka', 'appteka.pyqt', 'appteka.pyqtgraph'],
     install_requires=[
         'PyQt5>=5.15',
         'pyqtest>=0.1',

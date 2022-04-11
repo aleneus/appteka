@@ -231,6 +231,8 @@
 ** DONE docs: update release checklist
 ** DONE docs: remove pyqtgraph
 ** DONE ref: up lint result
+* 0.17.1
+** DONE fix: setup.py: + deprecated pyqtgraph
 * later
 ** TODO docs: CodeTextEdit: hide event handlers
 ** TODO ref: LatexReport: add_pic: abspath
