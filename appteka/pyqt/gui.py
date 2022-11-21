@@ -14,8 +14,6 @@
 
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-
 """Helpers for building Qt GUI."""
 
 from warnings import warn
@@ -42,12 +40,12 @@ def add_action(window, name, slot, pic=None, shortcut=None, menu=None):
 
 def add_sublayout(parent_layout, direction=None):
     """Add layout to another layout."""
-
     if direction is not None:
         warn("Argument 'direction' is deprecated and ignored.")
 
     layout = get_sublayout(parent_layout)
     parent_layout.addLayout(layout)
+
     return layout
 
 
@@ -64,6 +62,7 @@ def add_button(text, slot, layout):
     button = QtWidgets.QPushButton(text)
     button.clicked.connect(slot)
     layout.addWidget(button)
+
     return button
 
 
@@ -71,6 +70,7 @@ def add_edit(layout):
     """Add line edit to layout."""
     edit = QtWidgets.QLineEdit()
     layout.addWidget(edit)
+
     return edit
 
 
@@ -78,17 +78,22 @@ def add_label(text, layout):
     """Add text label to layout."""
     label = QtWidgets.QLabel(text)
     layout.addWidget(label)
+
     return label
 
 
 def add_widget(widget, layout):
     """Add widget to layout."""
     layout.addWidget(widget)
+
     return widget
 
 
-def show_about(title="About program", name="", version="",
-               descr="", parent=None):
+def show_about(title="About program",
+               name="",
+               version="",
+               descr="",
+               parent=None):
     """Show about window."""
 
     mbox = QtWidgets.QMessageBox(parent)

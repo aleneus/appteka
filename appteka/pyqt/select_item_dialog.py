@@ -14,7 +14,6 @@
 
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 """Select item Qt dialog."""
 
 from PyQt5 import QtWidgets
@@ -24,8 +23,12 @@ from appteka.pyqt import gui
 class SelectItemDialog(QtWidgets.QDialog):
     """Dialog for selecting string item from list."""
 
-    def __init__(self, title="Select item", question="Select item",
-                 ok_caption="Ok", cancel_caption="Cancel", parent=None):
+    def __init__(self,
+                 title="Select item",
+                 question="Select item",
+                 ok_caption="Ok",
+                 cancel_caption="Cancel",
+                 parent=None):
 
         QtWidgets.QDialog.__init__(self, parent)
         self.__index = None
@@ -55,13 +58,14 @@ class SelectItemDialog(QtWidgets.QDialog):
         layout = QtWidgets.QVBoxLayout(self)
         self.__widget = gui.add_widget(Items(question), layout)
 
-        l_buttons = gui.add_sublayout(layout, 'h')
+        l_buttons = gui.add_sublayout(layout)
         gui.add_button(ok_caption, self.__on_ok, l_buttons)
         gui.add_button(cancel_caption, self.__on_cancel, l_buttons)
 
 
 class Items(QtWidgets.QWidget):
     """Items to select."""
+
     def __init__(self, question="Select item", parent=None):
         super().__init__(parent)
         self.__items = []
