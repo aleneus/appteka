@@ -1,6 +1,6 @@
 # appteka - helpers collection
 
-# Copyright (C) 2018-2021 Aleksandr Popov
+# Copyright (C) 2018-2022 Aleksandr Popov
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the Lesser GNU General Public License as published by
@@ -14,12 +14,12 @@
 
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 """This module implements the base class for routines."""
 
 
 class Routine:
     """Base routine class."""
+
     def __init__(self):
         self.progress_hook = lambda x: True
         self.finished_hook = lambda: True
@@ -29,7 +29,7 @@ class Routine:
     def add_progress(self, part):
         """Add part value to progress."""
         self.ready += part
-        self.progress_hook(int(100*self.ready/self.volume))
+        self.progress_hook(int(100 * self.ready / self.volume))
 
     def __call__(self):
         raise NotImplementedError

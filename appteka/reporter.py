@@ -1,6 +1,6 @@
 # appteka - helpers collection
 
-# Copyright (C) 2018-2021 Aleksandr Popov
+# Copyright (C) 2018-2022 Aleksandr Popov
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the Lesser GNU General Public License as published by
@@ -14,7 +14,6 @@
 
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 """Classes for building simple reports with text and pictures."""
 
 import os
@@ -24,6 +23,7 @@ HTML_PIC_WIDTH = 800
 
 class Reporter:
     """Base class for reporter."""
+
     def __init__(self):
         self._report = ""
 
@@ -73,6 +73,7 @@ class Reporter:
 
 class HtmlReporter(Reporter):
     """HTML reporter."""
+
     def begin(self):
         """Create the head of html-document and start the body."""
         self._report += "<html>\n"
@@ -125,6 +126,7 @@ class HtmlReporter(Reporter):
 
 class LatexReporter(Reporter):
     """LaTeX reporter."""
+
     def add_header(self, header_text, level=1):
         """Add header.
 
@@ -136,13 +138,13 @@ class LatexReporter(Reporter):
             Level of header.
         """
         if level == 1:
-            self._report += "\n\\HeaderCommandOne{"+header_text+"}\n"
+            self._report += "\n\\HeaderCommandOne{" + header_text + "}\n"
         elif level == 2:
-            self._report += "\n\\HeaderCommandTwo{"+header_text+"}\n"
+            self._report += "\n\\HeaderCommandTwo{" + header_text + "}\n"
         elif level == 3:
-            self._report += "\n\\HeaderCommandThree{"+header_text+"}\n"
+            self._report += "\n\\HeaderCommandThree{" + header_text + "}\n"
         else:
-            self._report += "\n{"+header_text+"}\n"
+            self._report += "\n{" + header_text + "}\n"
 
     def add_pic(self, pic_path):
         """Add image to report.
@@ -164,7 +166,7 @@ class LatexReporter(Reporter):
         text : str
             Text
         """
-        self._report += "\n\\TraceTextCommand{"+text+"}\n"
+        self._report += "\n\\TraceTextCommand{" + text + "}\n"
 
     def report(self, file_name, encoding='utf-8'):
         """Save report."""

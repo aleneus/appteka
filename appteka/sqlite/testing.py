@@ -1,6 +1,6 @@
 # appteka - helpers collection
 
-# Copyright (C) 2018-2021 Aleksandr Popov
+# Copyright (C) 2018-2022 Aleksandr Popov
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the Lesser GNU General Public License as published by
@@ -14,7 +14,6 @@
 
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 """Helper for TDD of sqlite3 schema."""
 
 import sqlite3
@@ -42,6 +41,7 @@ class SchemaTester:
     >>>         self.h.assert_select(self, q, r)
 
     """
+
     def __init__(self, test_case):
         self._conn = sqlite3.connect(":memory:")
         self._cur = self._conn.cursor()

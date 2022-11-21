@@ -1,6 +1,6 @@
 # appteka - helpers collection
 
-# Copyright (C) 2018-2021 Aleksandr Popov
+# Copyright (C) 2018-2022 Aleksandr Popov
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the Lesser GNU General Public License as published by
@@ -14,13 +14,12 @@
 
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-
 """State machine for enabling/disabling controls."""
 
 
 class ControlsStateMachine:
     """ State machine for enable/disable/hide/show controls. """
+
     def __init__(self):
         """ Initialization. """
         self.__states = {}
@@ -28,10 +27,7 @@ class ControlsStateMachine:
 
     def add_state(self, state_name):
         """ Add new state (or reset existing one). """
-        self.__states[state_name] = {
-            'invisible': [],
-            'disabled': []
-        }
+        self.__states[state_name] = {'invisible': [], 'disabled': []}
 
     def setup_state(self, state_name, invisible=None, disabled=None):
         """ Setup sate. """

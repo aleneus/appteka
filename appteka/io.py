@@ -1,6 +1,6 @@
 # appteka - helpers collection
 
-# Copyright (C) 2018-2021 Aleksandr Popov
+# Copyright (C) 2018-2022 Aleksandr Popov
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the Lesser GNU General Public License as published by
@@ -14,7 +14,6 @@
 
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 """Writing data to IO text buffer using queue and working in separate
 thread."""
 
@@ -25,6 +24,7 @@ from time import sleep
 
 class QueuedWriter:
     """Tool for record data to text buffer using queue and thread."""
+
     def __init__(self, buff=None, write_on='time', write_every=1):
         _check_write_on(write_on)
 
@@ -67,6 +67,7 @@ class QueuedWriter:
 
 class PyRecordThread(Thread):
     """Thread in which samples recorded to IO buffer."""
+
     def __init__(self, save_func, write_on='time', write_every=1):
         super().__init__()
         self._lock = Lock()

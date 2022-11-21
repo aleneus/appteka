@@ -1,6 +1,6 @@
 # appteka - helpers collection
 
-# Copyright (C) 2018-2021 Aleksandr Popov
+# Copyright (C) 2018-2022 Aleksandr Popov
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the Lesser GNU General Public License as published by
@@ -14,7 +14,6 @@
 
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 """Here the text edit with line numbers and highlighting of current
 line is implemented."""
 
@@ -27,6 +26,7 @@ FONT = "monospace"
 
 class CodeTextEdit(QtWidgets.QPlainTextEdit):
     """Text field for editing the source code."""
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.__number_area = LineNumberArea(self)
@@ -62,8 +62,8 @@ class CodeTextEdit(QtWidgets.QPlainTextEdit):
         if not self.isReadOnly():
             selection = QtWidgets.QTextEdit.ExtraSelection()
             selection.format.setBackground(LINE_COLOR)
-            selection.format.setProperty(
-                QtGui.QTextFormat.FullWidthSelection, True)
+            selection.format.setProperty(QtGui.QTextFormat.FullWidthSelection,
+                                         True)
             selection.cursor = self.textCursor()
             selection.cursor.clearSelection()
             extra_selections.append(selection)
@@ -78,10 +78,8 @@ class CodeTextEdit(QtWidgets.QPlainTextEdit):
         if delta_y:
             self.__number_area.scroll(0, delta_y)
         else:
-            self.__number_area.update(
-                0, rect.y(),
-                self.__number_area.width(),
-                rect.height())
+            self.__number_area.update(0, rect.y(), self.__number_area.width(),
+                                      rect.height())
 
         if rect.contains(self.viewport().rect()):
             self.__update_line_number_area_width(0)
@@ -102,10 +100,9 @@ class CodeTextEdit(QtWidgets.QPlainTextEdit):
             if block.isVisible() and bottom >= event.rect().top():
                 number = "{}".format(block_number + 1)
                 painter.setPen(Qt.black)
-                painter.drawText(
-                    0, top, self.__number_area.width(),
-                    self.fontMetrics().height(), Qt.AlignRight,
-                    number)
+                painter.drawText(0, top, self.__number_area.width(),
+                                 self.fontMetrics().height(), Qt.AlignRight,
+                                 number)
 
             block = block.next()
             top = bottom
@@ -118,9 +115,9 @@ class CodeTextEdit(QtWidgets.QPlainTextEdit):
         super().resizeEvent(e)
 
         rect = self.contentsRect()
-        self.__number_area.setGeometry(QRect(
-            rect.left(), rect.top(),
-            self.line_number_area_width(), rect.height()))
+        self.__number_area.setGeometry(
+            QRect(rect.left(), rect.top(), self.line_number_area_width(),
+                  rect.height()))
 
 
 class LineNumberArea(QtWidgets.QWidget):

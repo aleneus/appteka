@@ -1,6 +1,6 @@
 # appteka - helpers collection
 
-# Copyright (C) 2018-2021 Aleksandr Popov
+# Copyright (C) 2018-2022 Aleksandr Popov
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the Lesser GNU General Public License as published by
@@ -14,7 +14,6 @@
 
 # You should have received a copy of the Lesser GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 """ Class for work with JSON config files. """
 
 from collections import OrderedDict
@@ -30,6 +29,7 @@ LOG = logging.getLogger(__name__)
 class Config:
     """ Work with config files: create desired file if it not exists,
     read and save settings. """
+
     def __init__(self, desired_location, resource_file, package):
         """
         Initiailzation.
@@ -128,10 +128,8 @@ class Config:
         self.open(self.desired_location)
 
     def _copy_resource_file(self):
-        filename = pkg_resources.resource_filename(
-            self.package,
-            self.resource_file
-        )
+        filename = pkg_resources.resource_filename(self.package,
+                                                   self.resource_file)
         shutil.copy(filename, self.desired_location)
 
     def _backup(self):
