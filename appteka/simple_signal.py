@@ -42,12 +42,14 @@ class SimpleSignal:
         slot
             Function to be connected with signal.
         """
-        for i in range(len(self.slots)):
+        for i, _ in enumerate(self.slots):
             if self.slots[i] == slot:
                 return
+
             if self.slots[i] is None:
                 self.slots[i] = slot
                 return
+
         self.slots.append(slot)
 
     def disconnect(self, slot):
@@ -58,6 +60,6 @@ class SimpleSignal:
         slot
             Name of connected function.
         """
-        for i in range(len(self.slots)):
+        for i, _ in enumerate(self.slots):
             if self.slots[i] == slot:
                 self.slots[i] = None

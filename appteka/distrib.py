@@ -31,13 +31,12 @@ def build_folder_name(name, version, appendix=None):
     if 'win' in os_name:
         os_name = 'win'
 
-    res = "build/{}-{}".format(name, version)
+    res = f'build/{name}-{version}'
 
     if appendix:
-        res += "-{}".format(appendix)
+        res += f'-{appendix}'
 
-    res += "-{}-{}".format(os_name, bit_version)
-    return res
+    return res + f'-{os_name}-{bit_version}'
 
 
 def init_translation(package_name, resource_name, module_name):

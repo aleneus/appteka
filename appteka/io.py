@@ -91,6 +91,7 @@ class PyRecordThread(Thread):
         self._can_quit.clear()
         with self._lock:
             self._must_write = True
+
         self._loop_func(*self._loop_func_args)
         self._can_quit.set()
 
@@ -119,5 +120,6 @@ class PyRecordThread(Thread):
 
 def _check_write_on(write_on):
     values = ['time', 'data']
+
     if write_on not in values:
-        raise RuntimeError("write_on must be in {}".format(values))
+        raise RuntimeError(f'write_on must be in {values}')

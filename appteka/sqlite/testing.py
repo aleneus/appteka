@@ -56,9 +56,8 @@ class SchemaTester:
     def dot_read(self, path):
         """Execute all queries from path. See .read command of
         sqlite."""
-        with open(path) as buf:
-            script = buf.read()
-            for query in script.split(";"):
+        with open(path, encoding='utf8') as buf:
+            for query in buf.read().split(";"):
                 self._cur.execute(query)
 
     def close(self):

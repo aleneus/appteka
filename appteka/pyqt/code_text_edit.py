@@ -98,11 +98,15 @@ class CodeTextEdit(QtWidgets.QPlainTextEdit):
 
         while block.isValid() and top <= event.rect().bottom():
             if block.isVisible() and bottom >= event.rect().top():
-                number = "{}".format(block_number + 1)
                 painter.setPen(Qt.black)
-                painter.drawText(0, top, self.__number_area.width(),
-                                 self.fontMetrics().height(), Qt.AlignRight,
-                                 number)
+                painter.drawText(
+                    0,
+                    top,
+                    self.__number_area.width(),
+                    self.fontMetrics().height(),
+                    Qt.AlignRight,
+                    f'{block_number + 1}',
+                )
 
             block = block.next()
             top = bottom

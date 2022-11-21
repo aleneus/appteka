@@ -3,7 +3,9 @@ from appteka.simple_signal import SimpleSignal
 
 
 class TestSimpleSignal_Touch(unittest.TestCase):
+
     def test_signal_with_args(self):
+
         def func(a):
             a.append(1)
 

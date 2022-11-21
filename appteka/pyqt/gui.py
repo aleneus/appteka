@@ -98,7 +98,7 @@ def show_about(title="About program",
 
     mbox = QtWidgets.QMessageBox(parent)
     mbox.setWindowTitle(title)
-    text = "<p><b>{} {}</b></p>".format(name, version)
-    text += "<p> {} </p>".format(descr)
+    text = f'<p><b>{name} {version}</b></p>'
+    text += f'<p> {descr} </p>'
     mbox.setText(text)
     mbox.exec()

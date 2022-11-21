@@ -46,7 +46,7 @@ class Reporter:
         """
         raise NotImplementedError
 
-    def add_pic(self, pic_path):
+    def add_pic(self, path):
         """Add image to report.
 
         Parameters
@@ -95,9 +95,9 @@ class HtmlReporter(Reporter):
         level : int
             Level of header.
         """
-        self._report += "<h{0}>{1}</h{0}>\n".format(level, header_text)
+        self._report += f'<h{level}>{header_text}</h{level}>\n'
 
-    def add_pic(self, pic_path):
+    def add_pic(self, path):
         """Add image to report.
 
         Parameters
@@ -105,8 +105,7 @@ class HtmlReporter(Reporter):
         pic_path : str
             Name of image file.
         """
-        self._report += "<img src='{}' width='{}'>\n".format(
-            pic_path, HTML_PIC_WIDTH)
+        self._report += f'<img src=\'{path}\' width=\'{HTML_PIC_WIDTH}\'>\n'
 
     def add_text(self, text):
         """Add plain text to report.
@@ -116,7 +115,7 @@ class HtmlReporter(Reporter):
         text : str
             Text
         """
-        self._report += "<pre>{}</pre>\n".format(text)
+        self._report += f'<pre>{text}</pre>\n'
 
     def report(self, file_name, encoding='utf-8'):
         """Save report."""
@@ -146,7 +145,7 @@ class LatexReporter(Reporter):
         else:
             self._report += "\n{" + header_text + "}\n"
 
-    def add_pic(self, pic_path):
+    def add_pic(self, path):
         """Add image to report.
 
         Parameters
@@ -155,7 +154,7 @@ class LatexReporter(Reporter):
             Name of image file.
         """
         self._report += "\n\\InsertPicCommand{"
-        self._report += os.path.abspath(os.path.expanduser(pic_path))
+        self._report += os.path.abspath(os.path.expanduser(path))
         self._report += "}\n"
 
     def add_text(self, text):
