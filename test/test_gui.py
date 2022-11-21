@@ -5,6 +5,7 @@ from appteka.pyqt import gui
 
 
 class Test_gui(unittest.TestCase):
+
     def test_add_elements(self):
         app = TestApp(self)
         w = QtWidgets.QWidget()

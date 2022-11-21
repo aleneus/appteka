@@ -16,7 +16,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Helpers for building Qt GUI."""
 
-from warnings import warn
 from PyQt5 import QtWidgets, QtGui
 
 
@@ -38,11 +37,8 @@ def add_action(window, name, slot, pic=None, shortcut=None, menu=None):
     return action
 
 
-def add_sublayout(parent_layout, direction=None):
+def add_sublayout(parent_layout):
     """Add layout to another layout."""
-    if direction is not None:
-        warn("Argument 'direction' is deprecated and ignored.")
-
     layout = get_sublayout(parent_layout)
     parent_layout.addLayout(layout)
 
