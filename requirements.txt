@@ -1,0 +1,13 @@
+cx-Freeze
+flake8
+jedi
+pyqtest
+nose2
+nose2-cov
+pylint
+yapf
+
+pymuplot
+
+pyqtgraph>=0.13.1
+pyqt5>=5.15.2
