@@ -36,7 +36,7 @@ setup(
     long_description=read('README'),
     packages=['appteka', 'appteka.pyqt'],
     install_requires=[
-        'PyQt5>=5.15',
+        'PyQt5>=5.15.2',
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",

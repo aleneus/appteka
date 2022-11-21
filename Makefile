@@ -1,4 +1,4 @@
-.PHONY: docs
+.PHONY: docs test
 
 PACKAGE_FOLDER = appteka
 
@@ -7,33 +7,42 @@ all: help
 help:
 	@echo "check"
 	@echo "cover"
-	@echo "todo"
-	@echo "flake"
 	@echo "lint"
-	@echo "lint-e"
 	@echo "ver"
 	@echo "upload"
 	@echo "uml"
 	@echo "docs"
 
-check:
+check: test fixme flake lint-e
+
+test:
 	@nose2 -vvv --with-coverage
 
-cover:
-	@nose2 --with-coverage --coverage-report=html
+fixme:
+	@rgrep "TODO" -n \
+		--include="*py" \
+		--include="*rst" \
+		--include="*md" \
+		--exclude-dir=env \
+		--exclude="release-checklist.md" \
+		|| true
 
-todo:
-	@rgrep "TODO" --include="*py" --include="*md" --include="*rst" --exclude="release-checklist.md" || true
-	@rgrep "def this_test" --include="*py" || true
+	@rgrep "# REF" -n \
+		--include="*py" \
+		--exclude-dir=env \
+		|| true
 
 flake:
 	flake8 $(PACKAGE_FOLDER)
 
-lint:
-	pylint $(PACKAGE_FOLDER) || true
-
 lint-e:
 	pylint --disable=R,C,W $(PACKAGE_FOLDER) || true
+
+cover:
+	@nose2 --with-coverage --coverage-report=html
+
+lint:
+	pylint $(PACKAGE_FOLDER) || true
 
 docs:
 	sphinx-build docs/source/ docs/build/

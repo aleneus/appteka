@@ -1,23 +1,19 @@
 # Release checklist
 
-## Test
+## Auto check
 
-* All passed: `make check`
-* Coverage >= 69%: `make check`
+* No errors: `make check`
+* Coverage by tests >= 71%
 
-## Code
+## Code quality
 
-* No TODO notes: `make todo`
-* No flakes: `make flake`
-* No lint errors: `make lint-e`
 * Lint result >= 9.9: `make lint`
-* Old deprecated code is removed (todo list)
+* Old deprecated code is removed
 
 ## Docs
 
 * Successful build: `make docs`
 * History is updated: `head -n 20 docs/source/history.rst`
-* All necessary modules are included
 
 ## Distribution
 

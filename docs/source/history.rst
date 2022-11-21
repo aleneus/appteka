@@ -1,6 +1,11 @@
 Releases
 ========
 
+0.18
+----
+
+* Deprecated code has been removed.
+
 0.17
 ----
 

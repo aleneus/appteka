@@ -16,4 +16,4 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Initialization."""
 
-__version__ = '0.17.1'
+__version__ = '0.18.0'

@@ -26,18 +26,19 @@ class ProgressMessages:
     Some operation ... ready [n sec].
     """
 
-    def __init__(self, digits=1):
+    def __init__(self, digits=1, output=sys.stdout):
         self.start_time = None
         self.digits = digits
+        self.__output = output
 
     def begin(self, message):
         """Show start part of message and three points."""
         self.start_time = time.time()
-        sys.stdout.write(f'{message} ... ')
-        sys.stdout.flush()
+        self.__output.write(f'{message} ... ')
+        self.__output.flush()
 
     def end(self):
         """Show end part of message."""
         end_time = round(time.time() - self.start_time, self.digits)
 
-        sys.stdout.write(f'ready [{end_time} sec]\n')
+        self.__output.write(f'ready [{end_time} sec]\n')
