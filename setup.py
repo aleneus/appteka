@@ -37,7 +37,6 @@ setup(
     packages=['appteka', 'appteka.pyqt', 'appteka.pyqtgraph'],
     install_requires=[
         'PyQt5>=5.15',
-        'pymuplot>=0.1',
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
