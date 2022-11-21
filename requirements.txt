@@ -1,7 +1,6 @@
 cx-Freeze
 flake8
 jedi
-pyqtest
 nose2
 nose2-cov
 pylint
