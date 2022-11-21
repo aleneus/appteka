@@ -32,7 +32,17 @@ class SelectItemDialog(QtWidgets.QDialog):
 
         QtWidgets.QDialog.__init__(self, parent)
         self.__index = None
-        self.__make_gui(title, question, ok_caption, cancel_caption)
+
+        self.__init_gui(title, question, ok_caption, cancel_caption)
+
+    def __init_gui(self, title, question, ok_caption, cancel_caption):
+        self.setWindowTitle(title)
+        layout = QtWidgets.QVBoxLayout(self)
+        self.__widget = gui.add_widget(Items(question), layout)
+
+        l_buttons = gui.add_sublayout(layout)
+        gui.add_button(ok_caption, self.__on_ok, l_buttons)
+        gui.add_button(cancel_caption, self.__on_cancel, l_buttons)
 
     def set_items(self, str_list):
         """Set the names of items."""
@@ -52,15 +62,6 @@ class SelectItemDialog(QtWidgets.QDialog):
 
     def __on_cancel(self):
         self.reject()
-
-    def __make_gui(self, title, question, ok_caption, cancel_caption):
-        self.setWindowTitle(title)
-        layout = QtWidgets.QVBoxLayout(self)
-        self.__widget = gui.add_widget(Items(question), layout)
-
-        l_buttons = gui.add_sublayout(layout)
-        gui.add_button(ok_caption, self.__on_ok, l_buttons)
-        gui.add_button(cancel_caption, self.__on_cancel, l_buttons)
 
 
 class Items(QtWidgets.QWidget):
@@ -86,9 +87,10 @@ class Items(QtWidgets.QWidget):
         """Set the names of items."""
         self.__items = items
         self.__w_list.clear()
+
         for item in self.__items:
             self.__w_list.addItem(item)
 
     def get_item_name(self):
         """Return name of selected item."""
-        return self.__items[self.get_item_index()]
+        return self.__items[self.current_row()]
