@@ -1,6 +1,6 @@
 # appteka - helpers collection
 
-# Copyright (C) 2018 Aleksandr Popov
+# Copyright (C) 2018-2024 Aleksandr Popov
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the Lesser GNU General Public License as published by
@@ -20,8 +20,10 @@ from setuptools import setup
 from appteka import __version__
 
 
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+def _read(fname):
+    with open(os.path.join(os.path.dirname(__file__), fname),
+              encoding='utf-8') as buf:
+        return buf.read()
 
 
 setup(
@@ -33,8 +35,8 @@ setup(
     license="LGPLv3",
     keywords="application, gui",
     url="https://github.com/aleneus/appteka",
-    long_description=read('README'),
-    packages=['appteka', 'appteka.pyqt'],
+    long_description=_read('README'),
+    packages=['appteka', 'appteka.pyqt', 'appteka.sqlite'],
     install_requires=[
         'PyQt5>=5.15.2',
     ],
