@@ -1,3 +1,5 @@
+pyqtest
+
 cx-Freeze
 flake8
 jedi

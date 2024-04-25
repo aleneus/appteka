@@ -101,12 +101,11 @@ class CodeTextEdit(QtWidgets.QPlainTextEdit):
                 painter.setPen(Qt.black)
                 painter.drawText(
                     0,
-                    top,
+                    int(top),
                     self.__number_area.width(),
                     self.fontMetrics().height(),
                     Qt.AlignRight,
-                    f'{block_number + 1}',
-                )
+                    f'{block_number + 1}')
 
             block = block.next()
             top = bottom
