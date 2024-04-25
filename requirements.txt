@@ -6,7 +6,7 @@ jedi
 nose2
 nose2-cov
 pylint
-yapf
+yapf==0.40.1
 sphinx>=5.3.0
 
 pyqt5>=5.15.2
