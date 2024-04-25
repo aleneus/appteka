@@ -19,4 +19,4 @@
 
 * Actual version: `make ver`
 * Dependencies are relevant: `setup.py`
-* Installation successful: `python3 setup.py install --user`
+* Installation successful: `pip3 install .`
