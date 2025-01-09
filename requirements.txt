@@ -8,5 +8,6 @@ nose2-cov
 pylint
 yapf==0.40.1
 sphinx>=5.3.0
+twine
 
 pyqt5>=5.15.2
