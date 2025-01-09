@@ -42,7 +42,7 @@ def build_folder_name(name, version, appendix=None):
 def init_translation(package_name, resource_name, module_name):
     """Return function for specifying of places to be translated."""
 
-    lang = locale.getdefaultlocale()[0]
+    lang = locale.setlocale(locale.LC_CTYPE, None)
     gettext.install(module_name)
 
     def _echo(text):
